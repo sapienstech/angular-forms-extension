@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {LibModule} from 'quickstart-lib';
+import {HybridFormsModule} from 'quickstart-lib';
 
 import {AppComponent} from './app.component';
 
 @NgModule({
-  imports: [BrowserModule, LibModule],
+  imports: [BrowserModule, HybridFormsModule],
   declarations: [AppComponent],
   bootstrap: [AppComponent]
 })

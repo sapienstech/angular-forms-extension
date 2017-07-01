@@ -1,3 +1,3 @@
-export {LibComponent} from './src/component/lib.component';
-export {LibService} from './src/service/lib.service';
-export {LibModule} from './src/module';
+export {HybridFormsModule} from './src/hybrid-forms.module';
+export {FormGroupComponent} from './src/component/form-group.component';
+export {FormFieldComponent} from './src/component/form-field.component';

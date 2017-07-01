@@ -1,14 +1,24 @@
 import {Component} from '@angular/core';
-import {LibService} from 'quickstart-lib';
 
 @Component({
   selector: 'demo-app',
-  templateUrl: './app.component.html'
+  template: `
+    <hf-form-group>
+
+      <hf-form-field>
+        <input #hfField required>
+      </hf-form-field>
+
+      <hf-form-field>
+        <input #hfField required>
+      </hf-form-field>
+
+      <hf-form-field>
+        <input #hfField required>
+      </hf-form-field>
+
+    </hf-form-group>
+  `
 })
 export class AppComponent {
-  meaning: number;
-
-  constructor(libService: LibService) {
-    this.meaning = libService.getMeaning();
-  }
 }

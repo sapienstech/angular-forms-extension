@@ -23,46 +23,28 @@ const es2015OutputFolder = path.join(compilationFolder, 'lib-es2015');
 
 return Promise.resolve()
 // Copy library to temporary folder and inline html/css.
-  .then(() = > _relativeCopy(`**/*`, srcFolder, tempLibFolder)
-  .then(() = > inlineResources(tempLibFolder)
-)
-.
-then(() = > console.log('Inlining succeeded.')
-)
+  .then(() => _relativeCopy(`**/*`, srcFolder, tempLibFolder)
+  .then(() => inlineResources(tempLibFolder))
+.then(() => console.log('Inlining succeeded.'))
 )
 // Compile to ES2015.
-.
-then(() = > ngc({project: `${tempLibFolder}/tsconfig.lib.json`})
-  .then(exitCode = > exitCode === 0 ? Promise.resolve() : Promise.reject()
-)
-.
-then(() = > console.log('ES2015 compilation succeeded.')
-)
+.then(() => ngc({ project: `${tempLibFolder}/tsconfig.lib.json` })
+  .then(exitCode => exitCode === 0 ? Promise.resolve() : Promise.reject())
+.then(() => console.log('ES2015 compilation succeeded.'))
 )
 // Compile to ES5.
-.
-then(() = > ngc({project: `${tempLibFolder}/tsconfig.es5.json`})
-  .then(exitCode = > exitCode === 0 ? Promise.resolve() : Promise.reject()
-)
-.
-then(() = > console.log('ES5 compilation succeeded.')
-)
+.then(() => ngc({ project: `${tempLibFolder}/tsconfig.es5.json` })
+  .then(exitCode => exitCode === 0 ? Promise.resolve() : Promise.reject())
+.then(() => console.log('ES5 compilation succeeded.'))
 )
 // Copy typings and metadata to `dist/` folder.
-.
-then(() = > Promise.resolve()
-  .then(() = > _relativeCopy('**/*.d.ts', es2015OutputFolder, distFolder)
-)
-.
-then(() = > _relativeCopy('**/*.metadata.json', es2015OutputFolder, distFolder)
-)
-.
-then(() = > console.log('Typings and metadata copy succeeded.')
-)
+.then(() => Promise.resolve()
+  .then(() => _relativeCopy('**/*.d.ts', es2015OutputFolder, distFolder))
+.then(() => _relativeCopy('**/*.metadata.json', es2015OutputFolder, distFolder))
+.then(() => console.log('Typings and metadata copy succeeded.'))
 )
 // Bundle lib.
-.
-then(() = > {
+.then(() => {
   // Base configuration.
   const es5Entry = path.join(es5OutputFolder, `${libName}.js`);
 const es2015Entry = path.join(es2015OutputFolder, `${libName}.js`);
@@ -122,46 +104,31 @@ const allBundles = [
   minifiedUmdConfig,
   fesm5config,
   fesm2015config
-].map(cfg = > rollup.rollup(cfg).then(bundle = > bundle.write(cfg)
-))
-;
+].map(cfg => rollup.rollup(cfg).then(bundle => bundle.write(cfg)));
 
 return Promise.all(allBundles)
-  .then(() = > console.log('All bundles generated successfully.')
-)
+  .then(() => console.log('All bundles generated successfully.'))
 })
 // Copy package files
-.
-then(() = > Promise.resolve()
-  .then(() = > _relativeCopy('LICENSE', rootFolder, distFolder)
+.then(() => Promise.resolve()
+  .then(() => _relativeCopy('LICENSE', rootFolder, distFolder))
+.then(() => _relativeCopy('package.json', rootFolder, distFolder))
+.then(() => _relativeCopy('README.md', rootFolder, distFolder))
+.then(() => console.log('Package files copy succeeded.'))
 )
-.
-then(() = > _relativeCopy('package.json', rootFolder, distFolder)
-)
-.
-then(() = > _relativeCopy('README.md', rootFolder, distFolder)
-)
-.
-then(() = > console.log('Package files copy succeeded.')
-)
-)
-.
-catch(e = > {
+.catch(e => {
   console.error('\Build failed. See below for errors.\n');
 console.error(e);
 process.exit(1);
-})
-;
+});
 
 
 // Copy files maintaining relative paths.
 function _relativeCopy(fileGlob, from, to) {
-  return new Promise((resolve, reject) = > {
-    glob(fileGlob, {cwd: from, nodir: true},(err, files) =
->
-  {
+  return new Promise((resolve, reject) => {
+    glob(fileGlob, { cwd: from, nodir: true }, (err, files) => {
     if (err) reject(err);
-    files.forEach(file = > {
+    files.forEach(file => {
       const origin = path.join(from, file);
     const dest = path.join(to, file);
     const data = fs.readFileSync(origin, 'utf-8');
@@ -169,10 +136,8 @@ function _relativeCopy(fileGlob, from, to) {
     fs.writeFileSync(dest, data);
     resolve();
   })
-  }
-)
-})
-  ;
+  })
+});
 }
 
 // Recursively create a dir.
