@@ -21,13 +21,13 @@ import {Directive, EventEmitter, forwardRef, Inject, Input, Optional, Output, Se
 })
 export class FormControlDirective extends AngularFormControlDirective {
 
-  @Input() fieldName;
+  @Input('formFieldName') fieldName;
 
   @Input(FormControlDirective.SELECTOR) fieldValue;
 
   @Output(FormControlDirective.SELECTOR) fieldValueChange = new EventEmitter();
 
-  static readonly SELECTOR = 'hfFormControl';
+  static readonly SELECTOR = 'formFieldValue';
 
   /* @override */
   constructor(@Optional() @Self() @Inject(NG_VALIDATORS) validators: Array<Validator | ValidatorFn>,

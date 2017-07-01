@@ -5,7 +5,7 @@ import {Component} from '@angular/core';
   template: `
     <hf-form-group>
 
-        <input [(hfFormControl)]="value" required>
+        <input formFieldName="key" [(formFieldValue)]="value" required>
 
     </hf-form-group>
   `

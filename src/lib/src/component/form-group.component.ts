@@ -25,6 +25,6 @@ export class FormGroupComponent implements AfterContentInit {
   }
 
   private addControls() {
-    this.formControlDirectives.forEach(f => this.group.addControl(f.name, f.control));
+    this.formControlDirectives.forEach(f => this.group.addControl(f.fieldName, f.control));
   }
 }
