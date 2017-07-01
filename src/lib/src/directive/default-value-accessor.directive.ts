@@ -8,7 +8,7 @@ import {FormControlDirective} from './form-control.directive';
 
 @Directive({
   selector:
-  FormControlDirective.SELECTOR,
+    `[${FormControlDirective.SELECTOR}]`,
   host: {
     '(input)': '_handleInput($event.target.value)',
     '(blur)': 'onTouched()',

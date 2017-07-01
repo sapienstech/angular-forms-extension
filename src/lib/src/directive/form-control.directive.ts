@@ -11,10 +11,10 @@ import {
   Validator,
   ValidatorFn
 } from '@angular/forms';
-import {Directive, forwardRef, Inject, Optional, Self} from '@angular/core';
+import {Directive, forwardRef, Inject, Optional, Self, SimpleChange} from '@angular/core';
 
 @Directive({
-  selector: FormControlDirective.SELECTOR, providers: [{
+  selector: `[${FormControlDirective.SELECTOR}]`, providers: [{
     provide: NgControl,
     useExisting: forwardRef(() => FormControlDirective)
   }], exportAs: 'ngForm'

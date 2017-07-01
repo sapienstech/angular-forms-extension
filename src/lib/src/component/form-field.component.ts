@@ -1,5 +1,5 @@
-import {AfterContentInit, Component, EventEmitter, Input, Output, SimpleChange} from '@angular/core';
-import {ControlValueAccessor} from '@angular/forms';
+import {AfterContentInit, Component, ContentChild, EventEmitter, Input, Output, SimpleChange} from '@angular/core';
+import {ControlValueAccessor, FormControl} from '@angular/forms';
 import {FormControlDirective} from '../directive/form-control.directive';
 
 @Component({
@@ -22,22 +22,23 @@ export class FormFieldComponent<T> implements AfterContentInit, ControlValueAcce
   @Output() valueChange = new EventEmitter<T>();
 
 
-  private static readonly TARGET_SELECTOR = 'hfField';
-
   private _directive: FormControlDirective;
 
+  get control(): FormControl {
+    return this.directive.form;
+  }
 
   get directive(): FormControlDirective {
     return this._directive;
   }
 
+  @ContentChild(FormControlDirective)
   set directive(value: FormControlDirective) {
     this._directive = value;
-    this._directive.ngOnChanges({form: new SimpleChange(null, '', true)});
   }
 
   private get valueAccessor(): ControlValueAccessor {
-    return this._directive.valueAccessor;
+    return this.directive.valueAccessor;
   }
 
   private onChange = _ => _;
@@ -58,9 +59,9 @@ export class FormFieldComponent<T> implements AfterContentInit, ControlValueAcce
   }
 
   registerOnChange(fn: (_: any) => void): void {
-    this.onChange = _ => {
-      fn(_);
-      this.valueChange.emit();
+    this.onChange = v => {
+      fn(v);
+      this.valueChange.emit(v);
     };
   }
 
@@ -75,7 +76,7 @@ export class FormFieldComponent<T> implements AfterContentInit, ControlValueAcce
 
   private assertControlValueAccessor(target: ControlValueAccessor | any) {
     if (!target)
-      throw new Error(`Form Entry "${this.name}" does not contain any component marked with #${FormFieldComponent.TARGET_SELECTOR}`);
+      throw new Error(`Form Entry "${this.name}" does not contain any component marked with #${FormControlDirective.SELECTOR}`);
 
     if (!FormFieldComponent.isControlValueAccessor(target))
       throw new Error(`Form Entry "${this.name}" contains a component that does not implement ControlValueAccessor: ${target}`);

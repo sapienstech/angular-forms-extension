@@ -6,15 +6,7 @@ import {Component} from '@angular/core';
     <hf-form-group>
 
       <hf-form-field>
-        <input #hfField required>
-      </hf-form-field>
-
-      <hf-form-field>
-        <input #hfField required>
-      </hf-form-field>
-
-      <hf-form-field>
-        <input #hfField required>
+        <input hfFormControl required>
       </hf-form-field>
 
     </hf-form-group>
