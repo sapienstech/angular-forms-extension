@@ -9,6 +9,8 @@ import {FormControlDirective} from '../directive/form-control.directive';
     <div [formGroup]="group">
       <ng-content></ng-content>
     </div>
+    
+    {{group.value | json}}
   `
 })
 export class FormGroupComponent implements AfterContentInit {

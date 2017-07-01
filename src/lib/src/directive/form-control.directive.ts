@@ -28,5 +28,6 @@ export class FormControlDirective extends AngularFormControlDirective {
               @Optional() @Self() @Inject(NG_VALUE_ACCESSOR) valueAccessors: ControlValueAccessor[]) {
     super(validators, asyncValidators, valueAccessors);
     this.form = new FormControl();
+    this.ngOnChanges({form: new SimpleChange(null, this.form, true)});
   }
 }
