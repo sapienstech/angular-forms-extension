@@ -5,12 +5,11 @@ import {Component} from '@angular/core';
   template: `
     <hf-form-group>
 
-      <hf-form-field>
-        <input hfFormControl required>
-      </hf-form-field>
+        <input [(hfFormControl)]="value" required>
 
     </hf-form-group>
   `
 })
 export class AppComponent {
+  value = 'roni';
 }

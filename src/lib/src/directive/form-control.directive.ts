@@ -11,7 +11,7 @@ import {
   Validator,
   ValidatorFn
 } from '@angular/forms';
-import {Directive, forwardRef, Inject, Optional, Self, SimpleChange} from '@angular/core';
+import {Directive, EventEmitter, forwardRef, Inject, Input, Optional, Output, Self, SimpleChange} from '@angular/core';
 
 @Directive({
   selector: `[${FormControlDirective.SELECTOR}]`, providers: [{
@@ -20,6 +20,13 @@ import {Directive, forwardRef, Inject, Optional, Self, SimpleChange} from '@angu
   }], exportAs: 'ngForm'
 })
 export class FormControlDirective extends AngularFormControlDirective {
+
+  @Input() fieldName;
+
+  @Input(FormControlDirective.SELECTOR) fieldValue;
+
+  @Output(FormControlDirective.SELECTOR) fieldValueChange = new EventEmitter();
+
   static readonly SELECTOR = 'hfFormControl';
 
   /* @override */
@@ -29,5 +36,10 @@ export class FormControlDirective extends AngularFormControlDirective {
     super(validators, asyncValidators, valueAccessors);
     this.form = new FormControl();
     this.ngOnChanges({form: new SimpleChange(null, this.form, true)});
+  }
+
+  ngOnInit() {
+    this.form.setValue(this.fieldValue);
+    this.form.valueChanges.subscribe(v => this.fieldValueChange.emit(v));
   }
 }

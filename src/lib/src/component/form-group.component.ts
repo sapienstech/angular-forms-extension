@@ -1,6 +1,5 @@
 import {AfterContentInit, Component, ContentChildren, QueryList} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {FormFieldComponent} from './form-field.component';
 import {FormControlDirective} from '../directive/form-control.directive';
 
 @Component({
@@ -15,7 +14,7 @@ import {FormControlDirective} from '../directive/form-control.directive';
 })
 export class FormGroupComponent implements AfterContentInit {
 
-  @ContentChildren(FormFieldComponent, {descendants: false})
+  @ContentChildren(FormControlDirective, {descendants: false})
   private formControlDirectives: QueryList<FormControlDirective>;
 
   group: FormGroup = new FormGroup({});
