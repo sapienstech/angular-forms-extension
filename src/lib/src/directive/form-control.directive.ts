@@ -1,4 +1,4 @@
-import {Directive, Input, Output} from '@angular/core';
+import {Directive, EventEmitter, Input, Output} from '@angular/core';
 import {FormControl, FormGroupDirective} from '@angular/forms';
 
 @Directive({
@@ -10,7 +10,7 @@ export class FormControlNameDirective {
 
   @Input() formControlValue;
 
-  @Output() formControlValueChange;
+  @Output() formControlValueChange = new EventEmitter();
 
   formControl = new FormControl();
 
