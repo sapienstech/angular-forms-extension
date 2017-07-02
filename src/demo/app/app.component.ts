@@ -4,11 +4,14 @@ import {FormGroupDirective} from '@angular/forms';
 @Component({
   selector: 'demo-app',
   template: `
-      <div [formGroup]="''|formGroup">
+      <form-group [formGroup]="''|formGroup">
+        <form-control>
           <input formControlName="bar" [formControlValue]="value" required>
-      </div>
-
+        </form-control>
+      </form-group>
+      
     {{formGroupDir.control.value | json}}
+    {{formGroupDir.control.valid | json}}
   `
 })
 export class AppComponent {
