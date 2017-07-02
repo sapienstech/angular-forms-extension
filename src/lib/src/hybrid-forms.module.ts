@@ -1,14 +1,12 @@
 import {NgModule} from '@angular/core';
-import {FormGroupComponent} from './component/form-group.component';
-import {FormControlDirective} from './directive/form-control.directive';
-import {DefaultValueAccessor} from './directive/default-value-accessor.directive';
-import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {FormControlNameDirective} from './directive/form-control.directive';
+import {FormGroupPipe} from './pipe/form-group.pipe';
 
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule],
-  declarations: [FormGroupComponent, FormControlDirective, DefaultValueAccessor],
-  exports: [FormGroupComponent, FormControlDirective, DefaultValueAccessor]
+  imports: [CommonModule],
+  declarations: [FormControlNameDirective, FormGroupPipe],
+  exports: [FormControlNameDirective, FormGroupPipe]
 })
 export class HybridFormsModule {
 }

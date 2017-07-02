@@ -1,15 +1,19 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {FormGroupDirective} from '@angular/forms';
 
 @Component({
   selector: 'demo-app',
   template: `
-    <hf-form-group>
+      <div [formGroup]="null|formGroup">
+          <input formControlName="bar" [formControlValue]="value" required>
+      </div>
 
-        <input formFieldName="key" [(formFieldValue)]="value" required>
-
-    </hf-form-group>
+    {{formGroupDir.control.value | json}}
   `
 })
 export class AppComponent {
+  @ViewChild(FormGroupDirective)
+  formGroupDir;
+
   value = 'roni';
 }

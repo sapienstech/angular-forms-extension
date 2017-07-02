@@ -1,45 +1,25 @@
-import {
-  AsyncValidator,
-  AsyncValidatorFn,
-  ControlValueAccessor,
-  FormControl,
-  FormControlDirective as AngularFormControlDirective,
-  NG_ASYNC_VALIDATORS,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  NgControl,
-  Validator,
-  ValidatorFn
-} from '@angular/forms';
-import {Directive, EventEmitter, forwardRef, Inject, Input, Optional, Output, Self, SimpleChange} from '@angular/core';
+import {Directive, Input, Output} from '@angular/core';
+import {FormControl, FormGroupDirective} from '@angular/forms';
 
 @Directive({
-  selector: `[${FormControlDirective.SELECTOR}]`, providers: [{
-    provide: NgControl,
-    useExisting: forwardRef(() => FormControlDirective)
-  }], exportAs: 'ngForm'
+  selector: `[formControlName]`,
 })
-export class FormControlDirective extends AngularFormControlDirective {
+export class FormControlNameDirective {
 
-  @Input('formFieldName') fieldName;
+  @Input() formControlName;
 
-  @Input(FormControlDirective.SELECTOR) fieldValue;
+  @Input() formControlValue;
 
-  @Output(FormControlDirective.SELECTOR) fieldValueChange = new EventEmitter();
+  @Output() formControlValueChange;
 
-  static readonly SELECTOR = 'formFieldValue';
+  formControl = new FormControl();
 
-  /* @override */
-  constructor(@Optional() @Self() @Inject(NG_VALIDATORS) validators: Array<Validator | ValidatorFn>,
-              @Optional() @Self() @Inject(NG_ASYNC_VALIDATORS) asyncValidators: Array<AsyncValidator | AsyncValidatorFn>,
-              @Optional() @Self() @Inject(NG_VALUE_ACCESSOR) valueAccessors: ControlValueAccessor[]) {
-    super(validators, asyncValidators, valueAccessors);
-    this.form = new FormControl();
-    this.ngOnChanges({form: new SimpleChange(null, this.form, true)});
+  constructor(private formGroup: FormGroupDirective) {
   }
 
   ngOnInit() {
-    this.form.setValue(this.fieldValue);
-    this.form.valueChanges.subscribe(v => this.fieldValueChange.emit(v));
+    this.formControl.setValue(this.formControlValue);
+    this.formControl.valueChanges.subscribe(v => this.formControlValueChange.emit(v));
+    this.formGroup.form.addControl(this.formControlName, this.formControl);
   }
 }
