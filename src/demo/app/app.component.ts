@@ -4,7 +4,7 @@ import {FormGroupDirective} from '@angular/forms';
 @Component({
   selector: 'demo-app',
   template: `
-      <div [formGroup]="null|formGroup">
+      <div [formGroup]="''|formGroup">
           <input formControlName="bar" [formControlValue]="value" required>
       </div>
 
