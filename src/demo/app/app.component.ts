@@ -5,10 +5,14 @@ import {FormGroupDirective} from '@angular/forms';
   selector: 'demo-app',
   template: `
     <form-group [formGroup]="''|formGroup">
-      <form-group formGroupName="foo" [formGroup]="''|formGroup">
-        <form-control>
-          <input formControlName="bar" [formControlValue]="value" required>
-        </form-control>
+      <form-group formGroupName="foo1">
+        <form-group formGroupName="foo2">
+          <form-group formGroupName="foo3">
+            <form-control>
+              <input formControlName="bar" [formControlValue]="value" required>
+            </form-control>
+          </form-group>
+        </form-group>
       </form-group>
     </form-group>
       

@@ -8,16 +8,16 @@ export class FormGroupNameDirective {
 
   @Input() formGroupName: string;
 
-  @Input() formGroup: FormGroup;
-
   @Output() formControlValueChange = new EventEmitter();
 
-  constructor(@Optional() @SkipSelf() private parent: FormGroupDirective) {
+  formGroup: FormGroup = new FormGroup({});
+
+  constructor(@SkipSelf() private root: FormGroupDirective, @Optional() @SkipSelf() private parent: FormGroupNameDirective) {
   }
 
   ngOnInit() {
+    let parentFormGroup = this.parent ? this.parent.formGroup : this.root.form;
     this.formGroup.valueChanges.subscribe(v => this.formControlValueChange.emit(v));
-    if (this.parent)
-      this.parent.form.addControl(this.formGroupName, this.formGroup);
+    parentFormGroup.addControl(this.formGroupName, this.formGroup);
   }
 }
