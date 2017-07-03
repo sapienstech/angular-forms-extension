@@ -12,7 +12,8 @@ export class FormGroupNameDirective {
 
   formGroup: FormGroup = new FormGroup({});
 
-  constructor(@SkipSelf() private root: FormGroupDirective, @Optional() @SkipSelf() private parent: FormGroupNameDirective) {
+  constructor(@SkipSelf() private root: FormGroupDirective,
+              @Optional() @SkipSelf() private parent: FormGroupNameDirective) {
   }
 
   ngOnInit() {
