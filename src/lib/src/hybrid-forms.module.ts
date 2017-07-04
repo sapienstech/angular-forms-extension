@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormControlNameDirective} from './directive/form-control.directive';
+import {FormControlNameDirective} from './directive/form-control-name.directive';
 import {FormGroupPipe} from './pipe/form-group.pipe';
 import {FormControlComponent} from './component/form-control.component';
 import {FormGroupComponent} from './component/form-group.component';
-import {FormGroupNameDirective} from './directive/form-group.directive';
+import {FormGroupNameDirective} from './directive/form-group-name.directive';
 
 @NgModule({
   imports: [CommonModule],
