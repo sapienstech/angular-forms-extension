@@ -47,6 +47,8 @@ class App {
 Now, yes, we can clean this up a bit by using `FormGroupBuilder`.
 But what if we could get away with only the template, like the template driven approach, while still enabling us to combine and reuse forms like the model-driven approach?
 
+## Usage
+
 With `angular-hybrid-forms` you can use this template: 
 ```angular2html
 <form [formGroup]="''|formGroup">
