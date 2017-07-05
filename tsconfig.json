@@ -5,7 +5,6 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "inlineSources": true,
-    "declaration": true,
     "experimentalDecorators": true,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,

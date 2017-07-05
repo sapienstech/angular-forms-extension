@@ -58,12 +58,16 @@ const rollupBaseConfig = {
     // The key here is library name, and the value is the the name of the global variable name
     // the window object.
     // See https://github.com/rollup/rollup/wiki/JavaScript-API#globals for more.
-    '@angular/core': 'ng.core'
+    '@angular/common': 'ng.common',
+    '@angular/core': 'ng.core',
+    '@angular/forms': 'ng.forms',
   },
   external: [
     // List of dependencies
     // See https://github.com/rollup/rollup/wiki/JavaScript-API#external for more.
-    '@angular/core'
+    '@angular/common',
+    '@angular/core',
+    '@angular/forms'
   ],
   plugins: [
     sourcemaps()
