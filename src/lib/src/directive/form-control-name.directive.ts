@@ -14,7 +14,7 @@ export class FormControlNameDirective implements OnInit {
 
   @Output() formControlValidValueChange = new EventEmitter();
 
-  formControl = new FormControl();
+  private formControl = new FormControl();
 
 
   constructor(@SkipSelf() private formGroupDirective: FormGroupDirective,
@@ -28,6 +28,18 @@ export class FormControlNameDirective implements OnInit {
 
   get formControlValue() {
     return this.formControl.value;
+  }
+
+  get valid() {
+    return this.formControl.valid;
+  }
+
+  get pristine() {
+    return this.formControl.pristine;
+  }
+
+  get errors() {
+    return this.formControl.errors;
   }
 
   ngOnInit() {
