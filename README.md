@@ -1,6 +1,8 @@
 # Angular Hybrid Forms
 A form library implementing a template driven form methodology using Angular's Reactive Forms  
 
+** This library is under active development and did has not reached its final form yet **
+
 ## Why?
 Angular offers two form modules:  [Template-driven](https://angular.io/guide/forms#template-driven-forms) and [Model-driven](https://angular.io/guide/reactive-forms) (aka Reactive forms).    
 Which one is better? The Angular team claims [neither one is](https://angular.io/guide/reactive-forms#which-is-better-reactive-or-template-driven). 
