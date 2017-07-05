@@ -7,8 +7,10 @@ A form library implementing a template driven form methodology using Angular's R
 Angular offers two form modules:  [Template-driven](https://angular.io/guide/forms#template-driven-forms) and [Model-driven](https://angular.io/guide/reactive-forms) (aka Reactive forms).    
 Which one is better? The Angular team claims [neither one is](https://angular.io/guide/reactive-forms#which-is-better-reactive-or-template-driven). 
 Instead, you're encouraged to choose the approach that works best for you, weighing out their strengths and weaknesses.  
-When looking at Template-driven, the caveats manifest mostly around be able to reuse the form model in a parent child way.  
+
+When looking at Template-driven, the caveats manifest mostly around be able to reuse the form model in a parent child way.    
 When looking at Model-driven, we had to repeatedly update the model based on the form model in cases where we needed two way binding. We also hated the fact we had needed to build the form model programmatically, match it to the form control by name, bind to the `valueChanges` event programmatically...
+
 Angular Hybrid Forms offers an opinionated compromise between the two, which nevertheless can configured and customized.  
 Consider the following template:
 ```angular2html
