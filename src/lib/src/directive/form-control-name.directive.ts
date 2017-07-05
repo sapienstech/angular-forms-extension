@@ -10,6 +10,8 @@ export class FormControlNameDirective implements OnInit {
 
   @Output() formControlValueChange = new EventEmitter();
 
+  @Output() formControlValidValueChange = new EventEmitter();
+
   formControl = new FormControl();
 
   constructor(@SkipSelf() private formGroupDirective: FormGroupDirective,
@@ -30,6 +32,7 @@ export class FormControlNameDirective implements OnInit {
       this.formGroupDirective,
       this.formControlName,
       this.formControl,
-      this.formControlValueChange);
+      this.formControlValueChange,
+      this.formControlValidValueChange);
   }
 }
