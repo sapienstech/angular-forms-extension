@@ -1,11 +1,13 @@
 import {Directive, EventEmitter, Input, OnInit, Optional, Output, SkipSelf} from '@angular/core';
 import {FormGroup, FormGroupDirective} from '@angular/forms';
-import {addControl} from './shared';
+import {addControl, defaultValidValueChangeDebounce} from './shared';
 
 @Directive({selector: `[formGroupName]`})
 export class FormGroupNameDirective implements OnInit {
 
   @Input() formGroupName: string;
+
+  @Input() validValueChangeDebounce = defaultValidValueChangeDebounce;
 
   @Output() formControlValueChange = new EventEmitter();
 
@@ -23,6 +25,7 @@ export class FormGroupNameDirective implements OnInit {
       this.formGroupName,
       this.formGroup,
       this.formControlValueChange,
-      this.formControlValidValueChange);
+      this.formControlValidValueChange,
+      this.validValueChangeDebounce);
   }
 }
