@@ -1,6 +1,130 @@
 # Angular Hybrid Forms
 A form library implementing a template driven form methodology using Angular's Reactive Forms  
 
+## Why?
+Angular offers two form modules:  [Template-driven](https://angular.io/guide/forms#template-driven-forms) and [Model-driven](https://angular.io/guide/reactive-forms) (aka Reactive forms).    
+Which one is better? The Angular team claims [neither one is](https://angular.io/guide/reactive-forms#which-is-better-reactive-or-template-driven). 
+Instead, you're encouraged to choose the approach that works best for you, weighing out their strengths and weaknesses.  
+When looking at Template-driven, the caveats manifest mostly around be able to reuse the form model in a parent child way.  
+When looking at Model-driven, we had to repeatedly update the model based on the form model in cases where we needed two way binding. We also hated the fact we had needed to build the form model programmatically, match it to the form control by name, bind to the `valueChanges` event programmatically...
+Angular Hybrid Forms offers an opinionated compromise between the two, which nevertheless can configured and customized.  
+Consider the following template:
+```angular2html
+<form [formGroup]="formGroup">
+  <input formControlName="username"/>
+  ...
+  <div formGroupName="address">
+    <input formControlName="city"/>
+    <input formControlName="street"/>
+    <input formControlName="zipcode"/>
+  </div>
+  ...
+      
+</form>
+```
+For this to work, one would have to build the `formGroup` and `formControl` matching with a `name` in their component like so:
+```typescript
+class App {
+  private formGroup: FormGroup = new FormGroup({});
+  private user: User;
+  private address: Address;
+  
+  constructor() {
+    formGroup.addControl('username', this.user.name);
+    const addressFormGroup = new FormGroup({});
+    addressFormGroup.addControl('city', address.city);
+    addressFormGroup.addControl('street', address.street);
+    addressFormGroup.addControl('zipcode', address.zipcode);
+    formGroup.addControl('afress', addressFormGroup);
+  }
+}
+```
+ 
+Now, yes, we can clean this up a bit by using `FormGroupBuilder`.
+But what if we could get away with only the template, like the template driven approach, while still enabling us to combine and reuse forms like the model-driven approach?
+
+With `angular-hybrid-forms` you can use this template: 
+```angular2html
+<form [formGroup]="''|formGroup">
+  <input formControlName="username" [formControlValue]="user.name"/>
+  ...
+  <div formGroupName="address">
+    <input formControlName="city" [formControlValue]="address.city"/>
+    <input formControlName="street" [formControlValue]="address.street"/>
+    <input formControlName="zipcode" [formControlValue]="address.zipcode"/>
+  </div>
+  ...
+      
+</form>
+```
+With this component:
+```typescript
+class App {
+  private user: User;
+  private address: Address;
+}
+```  
+Angular Hybrid Form will handle all the wiring of the `FormGroup`s and `FormControl`s for you!  
+
+You can of course apply any validations:
+```angular2html
+ <input formControlName="username" [formControlValue]="user.name" required/>
+```
+
+You can use two way binding:
+```angular2html
+ <input formControlName="username" [(formControlValue)]="user.name" required/>
+```  
+
+Or in a more "reactive" mode:
+```angular2html
+ <input formControlName="username" [formControlName]="user.name" (formControlValue)="usernameChange($event)" required/>
+```  
+
+We also expose a way for you to know when a change was made AND the value is valid, so you can save it:
+```angular2html
+ <input formControlName="username" [formControlName]="user.name" (formControlValidValue)="saveUsername($event)" required/>
+```  
+We denounce this particular event emission by default, as you usually don't want to rush off and save on every change.
+You can change that if you feel like it doesn't work for you.
+```angular2html
+ <input formControlName="username" [formControlName]="user.name" (formControlValidValue)="saveUsername($event)" [formControlValidValueDelay]="0" required/>
+```  
+
+It works with nested `formGroupName`s too!  
+You can also reuse your nested forms rather easily:
+```Typescript
+@Component({selector: 'address-form-group', 
+template: `
+  <div formGroupName="address">
+      <input formControlName="city" [formControlValue]="address.city"/>
+      <input formControlName="street" [formControlValue]="address.street"/>
+      <input formControlName="zipcode" [formControlValue]="address.zipcode"/>
+  </div>
+`
+})
+class AdressFormGroup {
+  @Input() address: Address;
+}
+```
+```Typescript
+@Component({selector: 'address-form-group', 
+template: `
+  <form [formGroup]="''|formGroup">
+    <input formControlName="username" [formControlValue]="user.name"/>
+    <address-form-group [address]="user.address">
+    </address-form-group>
+  </div>
+`
+})
+class UserForm {
+  @Input() user: User;
+}
+```
+
+
+# Build
+
 ## Steps
 Common tasks are present as npm scripts:
 
