@@ -13,7 +13,7 @@ When looking at Model-driven, we had to repeatedly update the model based on the
 
 Angular Hybrid Forms offers an opinionated compromise between the two, which nevertheless can configured and customized.  
 Consider the following template:
-```angular2html
+```html
 <form [formGroup]="formGroup">
   <input formControlName="username"/>
   ...
@@ -50,7 +50,7 @@ But what if we could get away with only the template, like the template driven a
 ## Usage
 
 With `angular-hybrid-forms` you can use this template: 
-```angular2html
+```html
 <form [formGroup]="''|formGroup">
   <input formControlName="username" [formControlValue]="user.name"/>
   ...
@@ -73,27 +73,27 @@ class App {
 Angular Hybrid Form will handle all the wiring of the `FormGroup`s and `FormControl`s for you!  
 
 You can of course apply any validations:
-```angular2html
+```html
  <input formControlName="username" [formControlValue]="user.name" required/>
 ```
 
 You can use two way binding:
-```angular2html
+```html
  <input formControlName="username" [(formControlValue)]="user.name" required/>
 ```  
 
 Or in a more "reactive" mode:
-```angular2html
+```html
  <input formControlName="username" [formControlName]="user.name" (formControlValue)="usernameChange($event)" required/>
 ```  
 
 We also expose a way for you to know when a change was made AND the value is valid, so you can save it:
-```angular2html
+```html
  <input formControlName="username" [formControlName]="user.name" (formControlValidValue)="saveUsername($event)" required/>
 ```  
 We denounce this particular event emission by default, as you usually don't want to rush off and save on every change.
 You can change that if you feel like it doesn't work for you.
-```angular2html
+```html
  <input formControlName="username" [formControlName]="user.name" (formControlValidValue)="saveUsername($event)" [formControlValidValueDelay]="0" required/>
 ```  
 
