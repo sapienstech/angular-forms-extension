@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'form-group',
+  selector: 'hf-form-group',
   template: `<ng-content></ng-content>`
 })
 
