@@ -1,6 +1,7 @@
 import {Directive, EventEmitter, Input, OnInit, Optional, Output, SkipSelf} from '@angular/core';
 import {FormGroup, FormGroupDirective} from '@angular/forms';
 import {addControl, defaultValidValueChangeDebounce} from './shared';
+import {Subject} from 'rxjs/Subject';
 
 @Directive({selector: `[formGroupName]`})
 export class FormGroupNameDirective implements OnInit {
@@ -12,6 +13,8 @@ export class FormGroupNameDirective implements OnInit {
   @Output() formControlValueChange = new EventEmitter();
 
   @Output() formControlValidValueChange = new EventEmitter();
+
+  formControlValidValueDebounceStarted = new Subject();
 
   formGroup: FormGroup = new FormGroup({});
 
@@ -26,6 +29,7 @@ export class FormGroupNameDirective implements OnInit {
       this.formGroup,
       this.formControlValueChange,
       this.formControlValidValueChange,
+      this.formControlValidValueDebounceStarted,
       this.validValueChangeDebounce);
   }
 }

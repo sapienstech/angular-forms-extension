@@ -8,7 +8,7 @@ import {FormGroupDirective} from '@angular/forms';
       <hf-form-group formGroupName="foo1">
         <hf-form-group formGroupName="foo2">
           <hf-form-control>
-            <input formControlName="bar" [formControlValue]="value">
+            <input formControlName="roni" required>
           </hf-form-control>
           <hf-form-group formGroupName="foo3">
             <hf-form-control>
@@ -46,4 +46,8 @@ export class AppComponent {
   formGroupDir;
 
   value = 'roni';
+
+  onValidValueChange(e) {
+    console.log(e);
+  }
 }
