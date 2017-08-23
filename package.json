@@ -1,11 +1,11 @@
 {
-  "name": "quickstart-lib",
-  "version": "1.0.0",
-  "description": "Library QuickStart package.json from the documentation, supplemented with testing support",
+  "name": "angular-hybrid-forms",
+  "version": "0.0.1",
+  "description": "An Angular form library offering a middleground between a template-driven, reactive forms and more",
   "main": "./bundles/quickstart-lib.umd.js",
-  "module": "./quickstart-lib.es5.js",
-  "es2015": "./quickstart-lib.js",
-  "typings": "./quickstart-lib.d.ts",
+  "module": "./angular-hybrid-forms.es5.js",
+  "es2015": "./angular-hybrid-forms.js",
+  "typings": "./angular-hybrid-forms.d.ts",
   "author": "",
   "license": "MIT",
   "repository": {},
@@ -43,6 +43,7 @@
     "@angular/compiler": "~4.1.3",
     "@angular/compiler-cli": "~4.1.3",
     "@angular/core": "~4.1.3",
+    "@angular/forms": "~4.1.3",
     "@angular/platform-browser": "~4.1.3",
     "@angular/platform-browser-dynamic": "~4.1.3",
     "@types/jasmine": "2.5.36",
@@ -67,7 +68,7 @@
     "standard-version": "^4.0.0",
     "systemjs": "^0.19.40",
     "tslint": "^4.4.2",
-    "typescript": "^2.2.1",
+    "typescript": "^2.5.1",
     "zone.js": "^0.8.4"
   }
 }

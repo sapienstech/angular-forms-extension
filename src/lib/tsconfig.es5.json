@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.lib.json",
   "compilerOptions": {
+    "declaration": true,
     "target": "es5",
     "outDir": "../../out-tsc/lib-es5/",
     "baseUrl": "",
@@ -14,8 +15,8 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "skipTemplateCodegen": true,
-    "flatModuleOutFile": "quickstart-lib.js",
-    "flatModuleId": "quickstart-lib",
+    "flatModuleOutFile": "angular-hybrid-forms.js",
+    "flatModuleId": "angular-hybrid-forms",
     "genDir": "../../out-tsc/lib-gen-dir/"
   }
 }
