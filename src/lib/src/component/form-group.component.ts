@@ -1,5 +1,6 @@
 import {Component, ContentChild} from '@angular/core';
 import {FormGroupNameDirective} from '../directive/form-group-name.directive';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'hf-form-group',
@@ -10,7 +11,7 @@ export class FormGroupComponent {
   @ContentChild(FormGroupNameDirective)
   formGroupNameDirective: FormGroupNameDirective;
 
-  get group() {
+  get group(): FormGroup {
     return this.formGroupNameDirective.formGroup;
   }
 }
