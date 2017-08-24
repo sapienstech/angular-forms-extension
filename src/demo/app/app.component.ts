@@ -4,7 +4,8 @@ import {FormGroupDirective} from '@angular/forms';
 @Component({
   selector: 'demo-app',
   template: `
-    <form [formGroup]="''|formGroup">
+    <hf-form #form [formGroup]="form.group" 
+             (validSubmit)="onSubmit($event)">
       <hf-form-group formGroupName="foo1">
         <hf-form-group formGroupName="foo2">
           <hf-form-control>
@@ -35,8 +36,9 @@ import {FormGroupDirective} from '@angular/forms';
           </hf-form-group>
         </hf-form-group>
       </hf-form-group>
-    </form>
-      
+
+      <button>submit</button>
+    </hf-form>
     {{formGroupDir.control.value | json}}
     {{formGroupDir.control.valid | json}}
   `
@@ -48,6 +50,10 @@ export class AppComponent {
   value = 'roni';
 
   onValidValueChange(e) {
+    console.log(e);
+  }
+
+  onSubmit(e) {
     console.log(e);
   }
 }

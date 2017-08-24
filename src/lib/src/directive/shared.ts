@@ -13,12 +13,17 @@ export function addControl<T>(formGroupNameDirective: FormGroupNameDirective,
                               validValueChangeDebounceStarted: Observer<T>,
                               validValueChangeDebounce: number) {
   let parent = formGroupNameDirective ? formGroupNameDirective.formGroup : formGroupDirective.form;
+  assertNameGiven(name);
   parent.addControl(name, control);
   control.valueChanges.subscribe(v => valueChange.emit(v));
   control.valueChanges
     .subscribe(v => control.valid ? validValueChangeDebounceStarted.next(v) : null);
   control.valueChanges.debounceTime(validValueChangeDebounce)
     .subscribe(v => control.valid ? validValueChange.emit(v) : null);
+}
+
+function assertNameGiven(name: string) {
+  if (!name) throw new Error(`A name must be provided for all form controls or groups. Did you forget to put 'formControlName' or 'formGroupName' on 'hf-form-group' or 'hf-form-control'?`);
 }
 
 export const defaultValidValueChangeDebounce = 400;
