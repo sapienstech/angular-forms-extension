@@ -41,6 +41,10 @@ export class FormControlNameDirective implements OnInit {
     return this.formControl.pristine;
   }
 
+  get groupSubmitted() {
+    return this.formGroupDirective.submitted;
+  }
+
   get errors() {
     return this.formControl.errors;
   }

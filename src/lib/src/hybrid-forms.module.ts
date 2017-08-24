@@ -5,11 +5,25 @@ import {FormGroupPipe} from './pipe/form-group.pipe';
 import {FormControlComponent} from './component/form-control.component';
 import {FormGroupComponent} from './component/form-group.component';
 import {FormGroupNameDirective} from './directive/form-group-name.directive';
+import {FormComponent} from './component/form.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [FormControlNameDirective, FormGroupPipe, FormControlComponent, FormGroupComponent, FormGroupNameDirective],
-  exports: [FormControlNameDirective, FormGroupPipe, FormControlComponent, FormGroupComponent, FormGroupNameDirective]
+  imports: [CommonModule, ReactiveFormsModule],
+  declarations: [
+    FormComponent,
+    FormControlNameDirective,
+    FormGroupPipe,
+    FormControlComponent,
+    FormGroupComponent,
+    FormGroupNameDirective],
+  exports: [
+    FormComponent,
+    FormControlNameDirective,
+    FormGroupPipe,
+    FormControlComponent,
+    FormGroupComponent,
+    FormGroupNameDirective]
 })
 export class HybridFormsModule {
 }
