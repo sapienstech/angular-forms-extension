@@ -18,7 +18,7 @@ export class FormComponent {
 
   @Output() validSubmit = new EventEmitter();
 
-  private group = new FormGroup({});
+  group = new FormGroup({});
 
   onSubmit(e) {
     if (this.group.valid) {

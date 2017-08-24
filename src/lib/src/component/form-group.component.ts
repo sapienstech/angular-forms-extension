@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ContentChild} from '@angular/core';
+import {FormGroupNameDirective} from '../directive/form-group-name.directive';
 
 @Component({
   selector: 'hf-form-group',
   template: `<ng-content></ng-content>`
 })
 
-export class FormGroupComponent implements OnInit {
-  constructor() {
-  }
+export class FormGroupComponent {
+  @ContentChild(FormGroupNameDirective)
+  formGroupNameDirective: FormGroupNameDirective;
 
-  ngOnInit() {
+  get group() {
+    return this.formGroupNameDirective.formGroup;
   }
 }
