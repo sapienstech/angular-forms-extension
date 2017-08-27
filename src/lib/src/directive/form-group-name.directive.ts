@@ -23,12 +23,11 @@ export class FormGroupNameDirective implements OnInit {
 
   constructor(@Optional() @Self() private self: FormGroupDirective,
               @Optional() @SkipSelf() private formGroupDirective: FormGroupDirective,
-              @Optional() @SkipSelf() private formGroupNameDirective: FormGroupNameDirective, private cd: ChangeDetectorRef) {
+              @Optional() @SkipSelf() private formGroupNameDirective: FormGroupNameDirective) {
   }
 
   ngOnInit() {
     if(!this.formGroupName) this.formGroup = this.self.form;
-    this.cd.detach();
 
     addControl(this.formGroupNameDirective,
       this.formGroupDirective,
@@ -38,8 +37,5 @@ export class FormGroupNameDirective implements OnInit {
       this.formControlValidValueChange,
       this.formControlValidValueDebounceStarted,
       this.validValueChangeDebounce);
-    this.cd.reattach();
-
-    this.cd.markForCheck();
   }
 }
