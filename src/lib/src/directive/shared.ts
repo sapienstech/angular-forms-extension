@@ -28,8 +28,8 @@ export function addControl<T>(formGroupNameDirective: FormGroupNameDirective,
 }
 
 function addToParent(parent: FormGroup, name: string, control: AbstractControl) {
-  assertNoNameConflicts(parent, name);
   if (parent) {
+    assertNoNameConflicts(parent, name);
     parent.addControl(name, control)
   }
 }
