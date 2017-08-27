@@ -7,7 +7,7 @@ import {FormGroupDirective} from '@angular/forms';
     <hf-form #form [formGroup]="form.group" 
              (validSubmit)="onSubmit($event)">
       <hf-form-group formGroupName="foo1">
-        <hf-form-group formGroupName="foo2">
+        <hf-form-group #form2 [formGroup]="form2.group">
           <hf-form-control>
             <input formControlName="roni" required>
           </hf-form-control>

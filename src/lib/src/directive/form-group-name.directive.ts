@@ -1,9 +1,9 @@
-import {Directive, EventEmitter, Input, OnInit, Optional, Output, SkipSelf} from '@angular/core';
+import {Directive, EventEmitter, Input, OnInit, Optional, Output, Self, SkipSelf} from '@angular/core';
 import {FormGroup, FormGroupDirective} from '@angular/forms';
 import {addControl, defaultValidValueChangeDebounce} from './shared';
 import {Subject} from 'rxjs/Subject';
 
-@Directive({selector: `[formGroupName]`})
+@Directive({selector: `[formGroupName],[formGroup]`})
 export class FormGroupNameDirective implements OnInit {
 
   @Input() formGroupName: string;
@@ -18,11 +18,14 @@ export class FormGroupNameDirective implements OnInit {
 
   formGroup: FormGroup = new FormGroup({});
 
-  constructor(@SkipSelf() private formGroupDirective: FormGroupDirective,
+  constructor(@Optional() @Self() private self: FormGroupDirective,
+              @Optional() @SkipSelf() private formGroupDirective: FormGroupDirective,
               @Optional() @SkipSelf() private formGroupNameDirective: FormGroupNameDirective) {
   }
 
   ngOnInit() {
+    if(!this.formGroupName) this.formGroup = this.self.form;
+
     addControl(this.formGroupNameDirective,
       this.formGroupDirective,
       this.formGroupName,
