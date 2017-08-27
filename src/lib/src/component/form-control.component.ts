@@ -36,7 +36,7 @@ export class FormControlComponent implements AfterContentInit {
 
   get valid() {
     return this.formControlNameDirective &&
-      (this.formControlNameDirective.groupSubmitted && this.formControlNameDirective.pristine || this.formControlNameDirective.valid);
+      (!this.formControlNameDirective.groupSubmitted && this.formControlNameDirective.pristine || this.formControlNameDirective.valid);
   }
 
   get errors() {
