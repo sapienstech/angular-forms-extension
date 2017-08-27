@@ -8,7 +8,7 @@ import {FormControlNameDirective} from '../directive/form-control-name.directive
     <div class="hf-field"
          [class.hf-field--required]="required" 
          [class.hf-field--invalid]="!valid" 
-         [hf-field--valid-value-changes]="validValueChanges">
+         [class.hf-field--valid-value-changes]="validValueChanges">
       <label class="hf-field__label">{{label}}</label>
       <span class="hf-field__control"><ng-content></ng-content></span>
       <label *ngIf="!valid" class="hf-field__errors">{{errors|json}}</label>
