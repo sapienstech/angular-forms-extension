@@ -37,6 +37,6 @@ export class FormGroupNameDirective implements OnInit {
       this.formControlValidValueChange,
       this.formControlValidValueDebounceStarted,
       this.validValueChangeDebounce);
-    this.cd.detectChanges();
+    this.cd.markForCheck();
   }
 }
