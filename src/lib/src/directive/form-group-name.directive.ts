@@ -1,4 +1,7 @@
-import {Directive, EventEmitter, Input, OnInit, Optional, Output, Self, SkipSelf} from '@angular/core';
+import {
+  ChangeDetectorRef, Directive, EventEmitter, Input, OnInit, Optional, Output, Self,
+  SkipSelf
+} from '@angular/core';
 import {FormGroup, FormGroupDirective} from '@angular/forms';
 import {addControl, defaultValidValueChangeDebounce} from './shared';
 import {Subject} from 'rxjs/Subject';
@@ -20,7 +23,7 @@ export class FormGroupNameDirective implements OnInit {
 
   constructor(@Optional() @Self() private self: FormGroupDirective,
               @Optional() @SkipSelf() private formGroupDirective: FormGroupDirective,
-              @Optional() @SkipSelf() private formGroupNameDirective: FormGroupNameDirective) {
+              @Optional() @SkipSelf() private formGroupNameDirective: FormGroupNameDirective, private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -34,5 +37,6 @@ export class FormGroupNameDirective implements OnInit {
       this.formControlValidValueChange,
       this.formControlValidValueDebounceStarted,
       this.validValueChangeDebounce);
+    this.cd.detectChanges();
   }
 }
