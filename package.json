@@ -1,6 +1,6 @@
 {
   "name": "angular-hybrid-forms",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "An Angular form library offering a middleground between a template-driven, reactive forms and more",
   "main": "./bundles/quickstart-lib.umd.js",
   "module": "./angular-hybrid-forms.es5.js",
