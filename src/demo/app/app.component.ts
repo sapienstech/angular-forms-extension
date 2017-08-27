@@ -4,21 +4,13 @@ import {FormGroupDirective} from '@angular/forms';
 @Component({
   selector: 'demo-app',
   template: `
-    <hf-form #form [formGroup]="form.group" 
-             (validSubmit)="onSubmit($event)">
+    <form [formGroup]="''|formGroup"
+          (validSubmit)="onSubmit($event)">
+
       <inner></inner>
-      <hf-form-group formGroupName="foo4">
-        <hf-form-group formGroupName="foo2">
-          <hf-form-group formGroupName="foo3">
-            <hf-form-control>
-              <input formControlName="bar" [formControlValue]="value" required>
-            </hf-form-control>
-          </hf-form-group>
-        </hf-form-group>
-      </hf-form-group>
 
       <button>submit</button>
-    </hf-form>
+    </form>
     {{formGroupDir.control.value | json}}
     {{formGroupDir.control.valid | json}}
   `
@@ -26,7 +18,6 @@ import {FormGroupDirective} from '@angular/forms';
 export class AppComponent {
   @ViewChild(FormGroupDirective)
   formGroupDir;
-
   value = 'roni';
 
   onValidValueChange(e) {
@@ -41,27 +32,31 @@ export class AppComponent {
 @Component({
   selector: 'inner',
   template: `
-    <hf-form-group #form2 [formGroup]="form2.group">
-      <hf-form-control>
-        <input formControlName="roni" required>
+    <hf-form-group #form [formGroup]="''|formGroup">
+      <hf-form-control [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec">
+        <input class="user-display-name-input-spec"
+               formControlName="username"
+               [(formControlValue)]="userName"
+               required>
       </hf-form-control>
-      <hf-form-group formGroupName="foo3">
-        <hf-form-control>
-          <input formControlName="bar" [formControlValue]="value" required>
-        </hf-form-control>
-        <hf-form-control>
-          <input formControlName="bar1" [formControlValue]="value" required>
-        </hf-form-control>
-        <hf-form-control>
-          <input formControlName="bar2" [formControlValue]="value" required>
-        </hf-form-control>
-        <hf-form-control>
-          <input formControlName="bar3" [formControlValue]="value" required>
-        </hf-form-control>
-      </hf-form-group>
+
+      <hf-form-control [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec">
+        <input formControlName="displayname"
+               [(formControlValue)]="userDisplayName"
+               required>
+      </hf-form-control>
+
+      <hf-form-control [label]="'Email'" class="form-group flex-container align-items-center">
+        <input type="email"
+               formControlName="email"
+               [(formControlValue)]="userMailAddress"
+               email="">
+      </hf-form-control>
     </hf-form-group>
   `
 })
 export class InnerAppComponent {
-  value = 'brachi';
+  userName = '';
+  userDisplayName = 'userDisplayName';
+  userMailAddress = 'userMailAddress';
 }

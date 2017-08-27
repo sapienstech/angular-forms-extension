@@ -5,20 +5,20 @@ import {FormGroupPipe} from './pipe/form-group.pipe';
 import {FormControlComponent} from './component/form-control.component';
 import {FormGroupComponent} from './component/form-group.component';
 import {FormGroupNameDirective} from './directive/form-group-name.directive';
-import {FormComponent} from './component/form.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ValidSubmitDirective} from './directive/valid-submit.directive';
 
 @NgModule({
   imports: [CommonModule, ReactiveFormsModule],
   declarations: [
-    FormComponent,
+    ValidSubmitDirective,
     FormControlNameDirective,
     FormGroupPipe,
     FormControlComponent,
     FormGroupComponent,
     FormGroupNameDirective],
   exports: [
-    FormComponent,
+    ValidSubmitDirective,
     FormControlNameDirective,
     FormGroupPipe,
     FormControlComponent,
