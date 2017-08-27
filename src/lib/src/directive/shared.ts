@@ -1,12 +1,13 @@
 import {AbstractControl, FormGroup, FormGroupDirective} from '@angular/forms';
-import {EventEmitter} from '@angular/core';
+import {ChangeDetectorRef, EventEmitter} from '@angular/core';
 import 'rxjs/add/operator/debounceTime';
 import {Observer} from 'rxjs/Observer';
 import {FormGroupNameDirective} from './form-group-name.directive';
 
 export const defaultValidValueChangeDebounce = 400;
 
-export function addControl<T>(formGroupNameDirective: FormGroupNameDirective,
+export function addControl<T>(cd: ChangeDetectorRef,
+                              formGroupNameDirective: FormGroupNameDirective,
                               formGroupDirective: FormGroupDirective,
                               name: string,
                               control: AbstractControl,
@@ -14,6 +15,8 @@ export function addControl<T>(formGroupNameDirective: FormGroupNameDirective,
                               validValueChange: EventEmitter<T>,
                               validValueChangeDebounceStarted: Observer<T>,
                               validValueChangeDebounce: number) {
+  cd.detach();
+
   const parent = formGroupNameDirective && formGroupNameDirective.formGroup || formGroupDirective && formGroupDirective.form;
 
   if (parent != control) {
@@ -25,6 +28,8 @@ export function addControl<T>(formGroupNameDirective: FormGroupNameDirective,
     control.valueChanges.debounceTime(validValueChangeDebounce)
       .subscribe(v => control.valid ? validValueChange.emit(v) : null);
   }
+
+  setTimeout(() => cd.reattach(), 0);
 }
 
 function addToParent(parent: FormGroup, name: string, control: AbstractControl) {

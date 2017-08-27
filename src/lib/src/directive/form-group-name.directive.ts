@@ -21,7 +21,8 @@ export class FormGroupNameDirective implements OnInit {
 
   formGroup: FormGroup = new FormGroup({});
 
-  constructor(@Optional() @Self() private self: FormGroupDirective,
+  constructor(private cd: ChangeDetectorRef,
+              @Optional() @Self() private self: FormGroupDirective,
               @Optional() @SkipSelf() private formGroupDirective: FormGroupDirective,
               @Optional() @SkipSelf() private formGroupNameDirective: FormGroupNameDirective) {
   }
@@ -29,7 +30,8 @@ export class FormGroupNameDirective implements OnInit {
   ngOnInit() {
     if(!this.formGroupName) this.formGroup = this.self.form;
 
-    addControl(this.formGroupNameDirective,
+    addControl(this.cd,
+      this.formGroupNameDirective,
       this.formGroupDirective,
       this.formGroupName,
       this.formGroup,

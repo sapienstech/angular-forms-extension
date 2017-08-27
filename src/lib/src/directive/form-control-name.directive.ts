@@ -51,8 +51,8 @@ export class FormControlNameDirective implements OnInit {
   }
 
   ngOnInit() {
-    this.cd.detach();
-    addControl(this.formGroupNameDirective,
+    addControl(this.cd,
+      this.formGroupNameDirective,
       this.formGroupDirective,
       this.formControlName,
       this.formControl,
@@ -60,6 +60,5 @@ export class FormControlNameDirective implements OnInit {
       this.formControlValidValueChange,
       this.formControlValidValueDebounceStarted,
       this.validValueChangeDebounce);
-    setTimeout(() => this.cd.reattach(), 0);
   }
 }
