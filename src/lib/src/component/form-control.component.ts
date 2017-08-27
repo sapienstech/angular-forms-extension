@@ -1,11 +1,14 @@
 import {AfterContentInit, Component, ContentChild, Input} from '@angular/core';
 import {RequiredValidator} from '@angular/forms';
 import {FormControlNameDirective} from '../directive/form-control-name.directive';
-// "hf-field,{'hf-field--required': required},{'hf-field--invalid': !valid},{'hf-field--valid-value-changes': !validValueChanges}"
+
 @Component({
   selector: 'hf-form-control',
   template: `
-    <div [ngClass]="{'hf-field': true, 'hf-field--required': required, 'hf-field--invalid': !valid, 'hf-field--valid-value-changes': validValueChanges}">
+    <div class="hf-field"
+         [class.hf-field--required]="required" 
+         [class.hf-field--invalid]="!valid" 
+         [hf-field--valid-value-changes]="validValueChanges">
       <label class="hf-field__label">{{label}}</label>
       <span class="hf-field__control"><ng-content></ng-content></span>
       <label *ngIf="!valid" class="hf-field__errors">{{errors|json}}</label>
@@ -37,6 +40,6 @@ export class FormControlComponent implements AfterContentInit {
   }
 
   get errors() {
-    return this.formControlNameDirective.errors;
+    return this.formControlNameDirective && this.formControlNameDirective.errors;
   }
 }
