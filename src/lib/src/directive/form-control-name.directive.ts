@@ -21,8 +21,7 @@ export class FormControlNameDirective implements OnInit {
 
 
   constructor(@SkipSelf() private formGroupDirective: FormGroupDirective,
-              @Optional() @SkipSelf() private formGroupNameDirective: FormGroupNameDirective,
-              private cd: ChangeDetectorRef) {
+              @Optional() @SkipSelf() private formGroupNameDirective: FormGroupNameDirective) {
   }
 
   @Input()
@@ -59,6 +58,5 @@ export class FormControlNameDirective implements OnInit {
       this.formControlValidValueChange,
       this.formControlValidValueDebounceStarted,
       this.validValueChangeDebounce);
-    this.cd.detectChanges();
   }
 }
