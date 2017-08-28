@@ -1,11 +1,13 @@
 import {Component, ViewChild} from '@angular/core';
-import {FormGroupDirective} from '@angular/forms';
+import {FormGroup, FormGroupDirective} from '@angular/forms';
 
 @Component({
   selector: 'demo-app',
   template: `
-    <form [formGroup]="''|formGroup"
-          (validSubmit)="onSubmit($event)">
+    <form [formGroup]="form"
+          (validSubmit)="onSubmit($event)"
+          (unsaved)="onUnsavedChange($event)"
+    >
 
       <inner></inner>
 
@@ -13,9 +15,14 @@ import {FormGroupDirective} from '@angular/forms';
     </form>
     {{formGroupDir.control.value | json}}
     {{formGroupDir.control.valid | json}}
+    
+    <br>
+    {{unsaved}}
   `
 })
 export class AppComponent {
+  unsaved = false;
+  form = new FormGroup({});
   @ViewChild(FormGroupDirective)
   formGroupDir;
   value = 'roni';
@@ -27,12 +34,17 @@ export class AppComponent {
   onSubmit(e) {
     console.log(e);
   }
+
+  onUnsavedChange(e) {
+    this.unsaved = e;
+    console.log(e);
+  }
 }
 
 @Component({
   selector: 'inner',
   template: `
-    <hf-form-group #form [formGroup]="''|formGroup">
+    <hf-form-group [formGroup]="form">
       <hf-form-control [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec">
         <input class="user-display-name-input-spec"
                formControlName="username"
@@ -56,6 +68,7 @@ export class AppComponent {
   `
 })
 export class InnerAppComponent {
+  form = new FormGroup({});
   userName = '';
   userDisplayName = 'userDisplayName';
   userMailAddress = 'userMailAddress';
