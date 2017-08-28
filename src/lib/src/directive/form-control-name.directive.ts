@@ -1,10 +1,9 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Input, OnInit, Optional, Output, SkipSelf} from '@angular/core';
-import {FormControl, FormGroupDirective} from '@angular/forms';
-import {FormGroupNameDirective} from './form-group-name.directive';
-import {addControl, defaultValidValueChangeDebounce} from './shared';
+import {ChangeDetectorRef, Directive, EventEmitter, Input, OnInit, Output, Self, SkipSelf} from '@angular/core';
+import {FormControl, FormControlDirective, FormGroupDirective} from '@angular/forms';
+import {addControl, addToParent, defaultValidValueChangeDebounce, id} from './shared';
 import {Subject} from 'rxjs/Subject';
 
-@Directive({selector: `[formControlName]`})
+@Directive({selector: `[formControl]`})
 export class FormControlNameDirective implements OnInit {
 
   @Input() formControlName;
@@ -20,9 +19,11 @@ export class FormControlNameDirective implements OnInit {
   private formControl = new FormControl();
 
 
-  constructor(@SkipSelf() private formGroupDirective: FormGroupDirective,
-              @Optional() @SkipSelf() private formGroupNameDirective: FormGroupNameDirective,
+  constructor(@Self() self: FormControlDirective,
+              @SkipSelf() private parent: FormGroupDirective,
               private cd: ChangeDetectorRef) {
+    self.form = this.formControl;
+    addToParent(parent.form, id(), self.form);
   }
 
   @Input()
@@ -43,7 +44,7 @@ export class FormControlNameDirective implements OnInit {
   }
 
   get groupSubmitted() {
-    return this.formGroupDirective.submitted;
+    return this.parent.submitted;
   }
 
   get errors() {
@@ -52,9 +53,6 @@ export class FormControlNameDirective implements OnInit {
 
   ngOnInit() {
     addControl(this.cd,
-      this.formGroupNameDirective,
-      this.formGroupDirective,
-      this.formControlName,
       this.formControl,
       this.formControlValueChange,
       this.formControlValidValueChange,
