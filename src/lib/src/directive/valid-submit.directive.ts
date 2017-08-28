@@ -1,5 +1,4 @@
-import {Directive, EventEmitter, HostListener, Output} from '@angular/core';
-import {FormGroup} from '@angular/forms';
+import {Directive, EventEmitter, HostListener, Input, Output} from '@angular/core';
 
 @Directive({
   selector: '[validSubmit]',
@@ -9,11 +8,11 @@ export class ValidSubmitDirective {
 
   @Output() validSubmit = new EventEmitter();
 
-  group = new FormGroup({});
+  @Input() formGroup;
 
   @HostListener('submit', ['$event'])
   onSubmit(e) {
-    if (this.group.valid) {
+    if (this.formGroup.valid) {
       this.validSubmit.emit(e);
     }
   }
