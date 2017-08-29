@@ -3,10 +3,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HybridFormsModule} from 'quickstart-lib';
 
 import {AppComponent, InnerAppComponent} from './app.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
-  imports: [BrowserModule, HybridFormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, HybridFormsModule, FormsModule,],
   declarations: [AppComponent, InnerAppComponent],
   bootstrap: [AppComponent]
 })

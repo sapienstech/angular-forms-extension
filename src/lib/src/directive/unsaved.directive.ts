@@ -1,6 +1,6 @@
 import {Directive, EventEmitter, HostListener, OnInit, Output, Self} from '@angular/core';
-import {FormGroupDirective} from '@angular/forms';
 import {ValidSubmitDirective} from './valid-submit.directive';
+import {NgForm} from '@angular/forms';
 
 @Directive({
   selector: 'form[unsaved]'
@@ -13,7 +13,8 @@ export class UnsavedDirective implements OnInit {
 
   submitted: boolean;
 
-  constructor(@Self() private formGroupDirective: FormGroupDirective, @Self() private hasSubmitButton: ValidSubmitDirective) {
+  constructor(@Self() private ngForm: NgForm,
+              @Self() private hasSubmitButton: ValidSubmitDirective) {
   }
 
   ngOnInit(): void {
@@ -42,6 +43,6 @@ export class UnsavedDirective implements OnInit {
   }
 
   private get form() {
-    return this.formGroupDirective.form;
+    return this.ngForm.form;
   }
 }
