@@ -27,7 +27,7 @@ export class FormControlComponent implements AfterContentInit {
 
   ngAfterContentInit(): void {
     this.formControlNameDirective.formControlValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
-    this.formControlNameDirective.formControlValidValueChange.subscribe(_ => this.validValueChanges = false);
+    this.formControlNameDirective.ngModelValid.subscribe(_ => this.validValueChanges = false);
   }
 
   get required() {

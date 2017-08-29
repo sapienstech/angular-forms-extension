@@ -1,38 +1,28 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Input, OnInit, Output, Self, SkipSelf} from '@angular/core';
-import {FormControl, FormControlDirective, FormGroupDirective} from '@angular/forms';
-import {addControl, addToParent, defaultValidValueChangeDebounce, id} from './shared';
+import {Directive, EventEmitter, Input, OnInit, Output, Self, SkipSelf} from '@angular/core';
+import {NgForm, NgModel} from '@angular/forms';
+import {addControl, defaultValidValueChangeDebounce} from './shared';
 import {Subject} from 'rxjs/Subject';
 
-@Directive({selector: `[formControl]`})
+@Directive({selector: `[ngModel]`})
 export class FormControlNameDirective implements OnInit {
-
-  @Input() formControlName;
 
   @Input() validValueChangeDebounce = defaultValidValueChangeDebounce;
 
-  @Output() formControlValueChange = new EventEmitter();
-
-  @Output() formControlValidValueChange = new EventEmitter();
+  @Output() ngModelValid = new EventEmitter();
 
   formControlValidValueDebounceStarted= new Subject();
 
-  private formControl = new FormControl();
+  constructor(@Self() private self: NgModel,
+              @SkipSelf() private parent: NgForm) {
+  }
 
-
-  constructor(@Self() self: FormControlDirective,
-              @SkipSelf() private parent: FormGroupDirective,
-              private cd: ChangeDetectorRef) {
-    self.form = this.formControl;
-    addToParent(parent.form, id(), self.form);
+  get formControl() {
+    return this.self.control;
   }
 
   @Input()
   set formControlValue(value) {
     this.formControl.setValue(value);
-  }
-
-  get formControlValue() {
-    return this.formControl.value;
   }
 
   get valid() {
@@ -52,10 +42,8 @@ export class FormControlNameDirective implements OnInit {
   }
 
   ngOnInit() {
-    addControl(this.cd,
-      this.formControl,
-      this.formControlValueChange,
-      this.formControlValidValueChange,
+    addControl(this.formControl,
+      this.ngModelValid,
       this.formControlValidValueDebounceStarted,
       this.validValueChangeDebounce);
   }

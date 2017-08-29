@@ -8,10 +8,4 @@ import {FormGroup} from '@angular/forms';
 })
 
 export class FormGroupComponent {
-  @ContentChild(FormGroupNameDirective)
-  formGroupNameDirective: FormGroupNameDirective;
-
-  get group(): FormGroup {
-    return this.formGroupNameDirective.formGroup;
-  }
 }
