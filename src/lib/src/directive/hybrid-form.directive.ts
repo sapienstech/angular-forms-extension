@@ -1,5 +1,5 @@
 import {Directive, EventEmitter, Input, OnInit, Optional, Output, Self, SkipSelf} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {FormGroup, NgForm} from '@angular/forms';
 import {addControl, defaultValidValueChangeDebounce} from './shared';
 import {Subject} from 'rxjs/Subject';
 
@@ -26,7 +26,7 @@ export class HybridForm implements OnInit {
       this.ngFormValidChangeDebounce);
   }
 
-  get form() {
+  get form(): FormGroup {
     return this.self.form;
   }
   get sequence(): string {

@@ -18,6 +18,7 @@ import {UnsavedDirective} from './directive/unsaved.directive';
     HybridFormGroupComponent,
     HybridForm],
   exports: [
+    FormsModule,
     UnsavedDirective,
     ValidSubmitDirective,
     HybridFormModelDirective,
