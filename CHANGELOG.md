@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.0.33"></a>
+## [0.0.33](https://github.com/sapienstech/angular-hybrid-forms/compare/v0.0.32...v0.0.33) (2017-08-29)
+
+
+
 <a name="0.0.32"></a>
 ## [0.0.32](https://github.com/sapienstech/angular-hybrid-forms/compare/v0.0.31...v0.0.32) (2017-08-29)
 
