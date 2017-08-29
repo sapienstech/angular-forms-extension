@@ -1,9 +1,9 @@
 import {AfterContentInit, Component, ContentChild, Input} from '@angular/core';
 import {RequiredValidator} from '@angular/forms';
-import {FormControlNameDirective} from '../directive/form-control-name.directive';
+import {HybridFormModelDirective} from '../directive/hybrid-form-model.directive';
 
 @Component({
-  selector: 'hf-form-control',
+  selector: 'hf-field',
   template: `
     <div class="hf-field"
          [class.hf-field--required]="required" 
@@ -14,20 +14,20 @@ import {FormControlNameDirective} from '../directive/form-control-name.directive
       <label *ngIf="!valid" class="hf-field__errors">{{errors|json}}</label>
     </div>`
 })
-export class FormControlComponent implements AfterContentInit {
+export class HybridFormFieldComponent implements AfterContentInit {
   @Input() label: string;
 
   @ContentChild(RequiredValidator)
   requiredValidator: RequiredValidator;
 
-  @ContentChild(FormControlNameDirective)
-  formControlNameDirective: FormControlNameDirective;
+  @ContentChild(HybridFormModelDirective)
+  formControlNameDirective: HybridFormModelDirective;
 
   validValueChanges = false;
 
   ngAfterContentInit(): void {
     this.formControlNameDirective.formControlValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
-    this.formControlNameDirective.ngModelValid.subscribe(_ => this.validValueChanges = false);
+    this.formControlNameDirective.ngModelValidChange.subscribe(_ => this.validValueChanges = false);
   }
 
   get required() {

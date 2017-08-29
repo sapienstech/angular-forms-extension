@@ -1,11 +1,11 @@
 import {Component, ContentChild} from '@angular/core';
-import {FormGroupNameDirective} from '../directive/form-group-name.directive';
+import {HybridForm} from '../directive/hybrid-form.directive';
 import {FormGroup} from '@angular/forms';
 
 @Component({
-  selector: 'hf-form-group',
+  selector: 'hf-form',
   template: `<ng-content></ng-content>`
 })
 
-export class FormGroupComponent {
+export class HybridFormGroupComponent {
 }

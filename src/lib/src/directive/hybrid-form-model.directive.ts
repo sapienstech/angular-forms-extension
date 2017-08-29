@@ -4,11 +4,11 @@ import {addControl, defaultValidValueChangeDebounce} from './shared';
 import {Subject} from 'rxjs/Subject';
 
 @Directive({selector: `[ngModel]`})
-export class FormControlNameDirective implements OnInit {
+export class HybridFormModelDirective implements OnInit {
 
-  @Input() validValueChangeDebounce = defaultValidValueChangeDebounce;
+  @Input() ngModelValidChangeDebounce = defaultValidValueChangeDebounce;
 
-  @Output() ngModelValid = new EventEmitter();
+  @Output() ngModelValidChange = new EventEmitter();
 
   formControlValidValueDebounceStarted= new Subject();
 
@@ -18,11 +18,6 @@ export class FormControlNameDirective implements OnInit {
 
   get formControl() {
     return this.self.control;
-  }
-
-  @Input()
-  set formControlValue(value) {
-    this.formControl.setValue(value);
   }
 
   get valid() {
@@ -43,8 +38,8 @@ export class FormControlNameDirective implements OnInit {
 
   ngOnInit() {
     addControl(this.formControl,
-      this.ngModelValid,
+      this.ngModelValidChange,
       this.formControlValidValueDebounceStarted,
-      this.validValueChangeDebounce);
+      this.ngModelValidChangeDebounce);
   }
 }

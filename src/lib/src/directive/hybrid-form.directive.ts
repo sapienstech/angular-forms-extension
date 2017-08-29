@@ -4,16 +4,16 @@ import {addControl, defaultValidValueChangeDebounce} from './shared';
 import {Subject} from 'rxjs/Subject';
 
 @Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`})
-export class FormGroupNameDirective implements OnInit {
+export class HybridForm implements OnInit {
 
-  @Input() validValueChangeDebounce = defaultValidValueChangeDebounce;
+  @Input() ngFormValidChangeDebounce = defaultValidValueChangeDebounce;
 
-  @Output() formControlValidValueChange = new EventEmitter();
+  @Output() ngFormValidChange = new EventEmitter();
 
   formControlValidValueDebounceStarted = new Subject();
 
   constructor(@Self() private self: NgForm,
-              @Optional() @SkipSelf() private parent: FormGroupNameDirective) {
+              @Optional() @SkipSelf() private parent: HybridForm) {
     if(parent)
       parent.addFormGroup(self);
   }
@@ -21,21 +21,21 @@ export class FormGroupNameDirective implements OnInit {
   ngOnInit() {
     addControl(
       this.self.form,
-      this.formControlValidValueChange,
+      this.ngFormValidChange,
       this.formControlValidValueDebounceStarted,
-      this.validValueChangeDebounce);
+      this.ngFormValidChangeDebounce);
   }
 
   get form() {
     return this.self.form;
   }
+  get sequence(): string {
+    return this.unique++ as any;
+  }
+
 
   addFormGroup(formGroup: NgForm) {
     this.self.form.addControl(formGroup.name || this.sequence, formGroup.form);
-  }
-
-  get sequence(): string {
-    return this.unique++ as any;
   }
 
   private unique = 0;

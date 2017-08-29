@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormControlNameDirective} from './directive/form-control-name.directive';
-import {FormControlComponent} from './component/form-control.component';
-import {FormGroupComponent} from './component/form-group.component';
-import {FormGroupNameDirective} from './directive/form-group-name.directive';
+import {HybridFormModelDirective} from './directive/hybrid-form-model.directive';
+import {HybridFormFieldComponent} from './component/hybrid-form-field.component';
+import {HybridFormGroupComponent} from './component/hybrid-form.component';
+import {HybridForm} from './directive/hybrid-form.directive';
 import {FormsModule} from '@angular/forms';
 import {ValidSubmitDirective} from './directive/valid-submit.directive';
 import {UnsavedDirective} from './directive/unsaved.directive';
@@ -13,17 +13,17 @@ import {UnsavedDirective} from './directive/unsaved.directive';
   declarations: [
     UnsavedDirective,
     ValidSubmitDirective,
-    FormControlNameDirective,
-    FormControlComponent,
-    FormGroupComponent,
-    FormGroupNameDirective],
+    HybridFormModelDirective,
+    HybridFormFieldComponent,
+    HybridFormGroupComponent,
+    HybridForm],
   exports: [
     UnsavedDirective,
     ValidSubmitDirective,
-    FormControlNameDirective,
-    FormControlComponent,
-    FormGroupComponent,
-    FormGroupNameDirective]
+    HybridFormModelDirective,
+    HybridFormFieldComponent,
+    HybridFormGroupComponent,
+    HybridForm]
 })
 export class HybridFormsModule {
 }

@@ -4,7 +4,7 @@ import {NgForm} from '@angular/forms';
 @Component({
   selector: 'demo-app',
   template: `
-    <form
+    <hf-form ngForm
       (validSubmit)="onSubmit($event)"
           (unsaved)="onUnsavedChange($event)"
     >
@@ -12,7 +12,7 @@ import {NgForm} from '@angular/forms';
 
       {{ngForm.form.value | json}}
       <button>submit</button>
-    </form>
+    </hf-form>
     
     <br>
     {{unsaved}}
@@ -41,27 +41,27 @@ export class AppComponent {
 @Component({
   selector: 'inner',
   template: `
-    <hf-form-group ngForm>
-      <hf-form-control [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec">
+    <hf-form ngForm>
+      <hf-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec">
         <input class="user-display-name-input-spec"
                [name]="'username'"
                [(ngModel)]="userName"
                required>
-      </hf-form-control>
+      </hf-field>
 
-      <hf-form-control [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec">
+      <hf-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec">
         <input [name]="'display'"
                [(ngModel)]="userDisplayName"
                required>
-      </hf-form-control>
+      </hf-field>
 
-      <hf-form-control [label]="'Email'" class="form-group flex-container align-items-center">
+      <hf-field [label]="'Email'" class="form-group flex-container align-items-center">
         <input type="email"
                [name]="'email'"
                [(ngModel)]="userMailAddress"
                email="">
-      </hf-form-control>
-    </hf-form-group>
+      </hf-field>
+    </hf-form>
   `
 })
 export class InnerAppComponent {
