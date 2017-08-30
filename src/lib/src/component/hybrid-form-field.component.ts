@@ -26,9 +26,15 @@ export class HybridFormFieldComponent implements AfterContentInit {
   validValueChanges = false;
 
   ngAfterContentInit(): void {
-    if(!this.formControlNameDirective) throw new Error('NgModel is missing from an "hf-field". Did you forget to add [ngModel]?')
+    this.assertNgModelExists();
+
     this.formControlNameDirective.formControlValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
     this.formControlNameDirective.ngModelValidChange.subscribe(_ => this.validValueChanges = false);
+  }
+
+  private assertNgModelExists() {
+    if (!this.formControlNameDirective)
+      throw new Error('NgModel is missing from an "hf-field". Did you forget to add [ngModel]');
   }
 
   get required() {
