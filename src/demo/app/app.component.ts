@@ -4,7 +4,7 @@ import {NgForm} from '@angular/forms';
 @Component({
   selector: 'demo-app',
   template: `
-    <hf-form ngForm
+    <form ngForm
       (validSubmit)="onSubmit($event)"
           (unsaved)="onUnsavedChange($event)"
     >
@@ -12,7 +12,7 @@ import {NgForm} from '@angular/forms';
 
       {{ngForm.form.value | json}}
       <button>submit</button>
-    </hf-form>
+    </form>
     
     <br>
     {{unsaved}}
@@ -41,7 +41,7 @@ export class AppComponent {
 @Component({
   selector: 'inner',
   template: `
-    <hf-form ngForm>
+    <form>
       <hf-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec">
         <input class="user-display-name-input-spec"
                [name]="'username'"
@@ -61,7 +61,7 @@ export class AppComponent {
                [(ngModel)]="userMailAddress"
                email="">
       </hf-field>
-    </hf-form>
+    </form>
   `
 })
 export class InnerAppComponent {

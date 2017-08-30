@@ -1,7 +1,7 @@
 import {Directive, EventEmitter, HostListener, Output, Self} from '@angular/core';
 import {NgForm} from '@angular/forms';
 
-@Directive({selector: 'form[validSubmit]'})
+@Directive({selector: '[validSubmit]'})
 export class ValidSubmitDirective {
 
   @Output() validSubmit = new EventEmitter();

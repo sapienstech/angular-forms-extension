@@ -20,21 +20,26 @@ export class HybridForm implements OnInit {
 
   ngOnInit() {
     addControl(
-      this.self.form,
+      this.form,
       this.ngFormValidChange,
       this.formControlValidValueDebounceStarted,
       this.ngFormValidChangeDebounce);
   }
 
-  get form(): FormGroup {
+  reset(onlySelf?: boolean) {
+    this.form.reset(null, {onlySelf: onlySelf});
+  }
+
+  private get form(): FormGroup {
     return this.self.form;
   }
-  get sequence(): string {
+
+  private get sequence(): string {
     return this.unique++ as any;
   }
 
 
-  addFormGroup(formGroup: NgForm) {
+  private addFormGroup(formGroup: NgForm) {
     this.self.form.addControl(formGroup.name || this.sequence, formGroup.form);
   }
 

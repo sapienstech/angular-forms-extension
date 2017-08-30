@@ -1,9 +1,10 @@
-import {Directive, EventEmitter, HostListener, OnInit, Output, Self} from '@angular/core';
+import {Directive, EventEmitter, HostListener, OnInit, Optional, Output, Self} from '@angular/core';
 import {ValidSubmitDirective} from './valid-submit.directive';
 import {NgForm} from '@angular/forms';
+import {HybridForm} from './hybrid-form.directive';
 
 @Directive({
-  selector: 'form[unsaved]'
+  selector: '[unsaved]'
 })
 export class UnsavedDirective implements OnInit {
 
@@ -14,7 +15,13 @@ export class UnsavedDirective implements OnInit {
   submitted: boolean;
 
   constructor(@Self() private ngForm: NgForm,
-              @Self() private hasSubmitButton: ValidSubmitDirective) {
+              @Self() hybridForm: HybridForm,
+              @Self() @Optional() private hasSubmitButton: ValidSubmitDirective) {
+    if(!hasSubmitButton) {
+      hybridForm.ngFormValidChange.subscribe(c => {
+        this.submitted = true;
+        this.unsavedParameterChange();});
+    }
   }
 
   ngOnInit(): void {
@@ -32,9 +39,8 @@ export class UnsavedDirective implements OnInit {
   }
 
   unsavedParameterChange() {
-    const unsaved = this.hasSubmitButton ?
-      this.form.dirty && (!this.submitted || !this.form.valid):
-      !this.form.valid;
+    const unsaved =
+      this.form.dirty && (!this.submitted || !this.form.valid);
 
     if (unsaved != this.unsaved) {
       this.unsaved = unsaved;
