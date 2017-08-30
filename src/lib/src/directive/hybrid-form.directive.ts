@@ -30,6 +30,10 @@ export class HybridForm implements OnInit {
     this.form.reset(null, {onlySelf: onlySelf});
   }
 
+  get submitted() {
+    return this.parent && this.parent.submitted || this.self.submitted;
+  }
+
   private get form(): FormGroup {
     return this.self.form;
   }

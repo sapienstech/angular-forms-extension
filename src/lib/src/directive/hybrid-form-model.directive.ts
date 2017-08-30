@@ -1,7 +1,9 @@
-import {Directive, EventEmitter, Input, OnInit, Output, Self, SkipSelf} from '@angular/core';
+import {Directive, EventEmitter, Input, OnInit, Optional, Output, Self, SkipSelf} from '@angular/core';
 import {FormControl, NgForm, NgModel} from '@angular/forms';
 import {addControl, defaultValidValueChangeDebounce} from './shared';
 import {Subject} from 'rxjs/Subject';
+import {ValidSubmitDirective} from './valid-submit.directive';
+import {HybridForm} from './hybrid-form.directive';
 
 @Directive({selector: `[ngModel]`})
 export class HybridFormModelDirective implements OnInit {
@@ -13,7 +15,7 @@ export class HybridFormModelDirective implements OnInit {
   formControlValidValueDebounceStarted= new Subject();
 
   constructor(@Self() private self: NgModel,
-              @SkipSelf() private parent: NgForm) {
+              private parent: HybridForm) {
   }
 
   get formControl(): FormControl {
