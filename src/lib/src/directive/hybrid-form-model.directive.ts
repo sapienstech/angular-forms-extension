@@ -38,6 +38,10 @@ export class HybridFormModelDirective implements OnInit {
     return this.formControl.errors;
   }
 
+  get name() {
+    return this.self.name;
+  }
+
   ngOnInit() {
     addControl(this.formControl,
       this.ngModelValidChange,

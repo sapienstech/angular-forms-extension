@@ -1,4 +1,15 @@
-import {Directive, EventEmitter, Input, OnInit, Optional, Output, Self, SkipSelf} from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  Renderer2,
+  Self,
+  SkipSelf
+} from '@angular/core';
 import {FormGroup, NgForm} from '@angular/forms';
 import {addControl, defaultValidValueChangeDebounce} from './shared';
 import {Subject} from 'rxjs/Subject';
@@ -12,13 +23,17 @@ export class HybridForm implements OnInit {
 
   formControlValidValueDebounceStarted = new Subject();
 
-  constructor(@Self() private self: NgForm,
+  constructor(private el: ElementRef,
+              private renderer: Renderer2,
+              @Self() private self: NgForm,
               @Optional() @SkipSelf() private parent: HybridForm) {
     if(parent)
       parent.addFormGroup(self);
   }
 
   ngOnInit() {
+    this.renderer.setAttribute(this.el.nativeElement, 'novalidate', 'novalidate');
+
     addControl(
       this.form,
       this.ngFormValidChange,

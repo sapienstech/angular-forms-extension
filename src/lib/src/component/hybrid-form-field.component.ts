@@ -1,6 +1,7 @@
 import {AfterContentInit, Component, ContentChild, Input} from '@angular/core';
 import {RequiredValidator} from '@angular/forms';
 import {HybridFormModelDirective} from '../directive/hybrid-form-model.directive';
+import {ErrorMessageService} from '../service/error-messages.service';
 
 @Component({
   selector: 'hf-field',
@@ -11,7 +12,9 @@ import {HybridFormModelDirective} from '../directive/hybrid-form-model.directive
          [class.hf-field--valid-value-changes]="validValueChanges">
       <label class="hf-field__label">{{label}}</label>
       <span class="hf-field__control"><ng-content></ng-content></span>
-      <label *ngIf="!valid" class="hf-field__errors">{{errors|json}}</label>
+      <span *ngIf="!valid" class="hf-field__errors">
+        <label *ngFor="let error of errors" class="hf-field__error">{{error}}</label>
+      </span>
     </div>`
 })
 export class HybridFormFieldComponent implements AfterContentInit {
@@ -21,32 +24,36 @@ export class HybridFormFieldComponent implements AfterContentInit {
   requiredValidator: RequiredValidator;
 
   @ContentChild(HybridFormModelDirective)
-  formControlNameDirective: HybridFormModelDirective;
+  formModel: HybridFormModelDirective;
 
   validValueChanges = false;
+
+  constructor(private messageService: ErrorMessageService) {
+  }
 
   ngAfterContentInit(): void {
     this.assertNgModelExists();
 
-    this.formControlNameDirective.formControlValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
-    this.formControlNameDirective.ngModelValidChange.subscribe(_ => this.validValueChanges = false);
+    this.formModel.formControlValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
+    this.formModel.ngModelValidChange.subscribe(_ => this.validValueChanges = false);
   }
-
-  private assertNgModelExists() {
-    if (!this.formControlNameDirective)
-      throw new Error('NgModel is missing from an "hf-field". Did you forget to add [ngModel]');
-  }
-
   get required() {
     return this.requiredValidator && this.requiredValidator.required;
   }
 
   get valid() {
-    return this.formControlNameDirective &&
-      (!this.formControlNameDirective.groupSubmitted && this.formControlNameDirective.pristine || this.formControlNameDirective.valid);
+    return this.formModel &&
+      (!this.formModel.groupSubmitted && this.formModel.pristine || this.formModel.valid);
   }
 
   get errors() {
-    return this.formControlNameDirective && this.formControlNameDirective.errors;
+    const errors = this.formModel.errors;
+    return Object.keys(errors).map(error =>
+      this.messageService.getErrorMessage(this.label, error, errors[error]));
+  }
+
+  private assertNgModelExists() {
+    if (!this.formModel)
+      throw new Error('NgModel is missing from an "hf-field". Did you forget to add [ngModel]');
   }
 }

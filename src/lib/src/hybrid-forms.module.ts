@@ -6,8 +6,10 @@ import {HybridForm} from './directive/hybrid-form.directive';
 import {FormsModule} from '@angular/forms';
 import {ValidSubmitDirective} from './directive/valid-submit.directive';
 import {UnsavedDirective} from './directive/unsaved.directive';
+import {ErrorMessageService} from './service/error-messages.service';
 
 @NgModule({
+  providers: [ErrorMessageService],
   imports: [CommonModule, FormsModule],
   declarations: [
     UnsavedDirective,
