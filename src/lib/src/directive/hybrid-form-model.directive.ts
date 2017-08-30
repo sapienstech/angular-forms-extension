@@ -1,8 +1,7 @@
-import {Directive, EventEmitter, Input, OnInit, Optional, Output, Self, SkipSelf} from '@angular/core';
-import {FormControl, NgForm, NgModel} from '@angular/forms';
+import {Directive, EventEmitter, Input, OnInit, Output, Self} from '@angular/core';
+import {FormControl, NgModel} from '@angular/forms';
 import {addControl, defaultValidValueChangeDebounce} from './shared';
 import {Subject} from 'rxjs/Subject';
-import {ValidSubmitDirective} from './valid-submit.directive';
 import {HybridForm} from './hybrid-form.directive';
 
 @Directive({selector: `[ngModel]`})
