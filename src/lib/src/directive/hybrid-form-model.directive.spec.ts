@@ -131,4 +131,13 @@ describe('HybridFormModelDirective', () => {
       }));
     });
   });
+
+  describe('clearing out the subscriptions', () => {
+
+    beforeEach(async(() => fixture.destroy()));
+
+    it('should clear the all form subscriptions when the component is destroyed', async(() => {
+      hybridFormModel['subscriptions'].forEach(s => expect(s.closed).toBeTruthy());
+    }))
+  })
 });
