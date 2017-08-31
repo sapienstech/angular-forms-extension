@@ -11,52 +11,44 @@ import {
   SkipSelf
 } from '@angular/core';
 import {FormGroup, NgForm} from '@angular/forms';
-import {addControl, defaultValidValueChangeDebounce} from './shared';
-import {Subject} from 'rxjs/Subject';
+import {AbstractHybridFormDirective} from './abstract-hybrid-form.directive';
 
 @Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`})
-export class HybridForm implements OnInit {
+export class HybridForm extends AbstractHybridFormDirective implements OnInit {
 
-  @Input() ngFormValidChangeDebounce = defaultValidValueChangeDebounce;
+  @Input() ngModelValidChangeDebounce = AbstractHybridFormDirective.defaultValidValueChangeDebounce;
 
-  @Output() ngFormValidChange = new EventEmitter();
-
-  formControlValidValueDebounceStarted = new Subject();
+  @Output('ngFormValidChange') ngModelValidChange = new EventEmitter();
 
   constructor(private el: ElementRef,
               private renderer: Renderer2,
-              @Self() private self: NgForm,
-              @Optional() @SkipSelf() private parent: HybridForm) {
+              @Self() protected self: NgForm,
+              @Optional() @SkipSelf() protected parent: HybridForm) {
+    super();
     if(parent)
       parent.addFormGroup(self);
   }
 
   ngOnInit() {
+    super.ngOnInit();
     this.renderer.setAttribute(this.el.nativeElement, 'novalidate', 'novalidate');
-
-    addControl(
-      this.form,
-      this.ngFormValidChange,
-      this.formControlValidValueDebounceStarted,
-      this.ngFormValidChangeDebounce);
   }
 
   reset(onlySelf?: boolean) {
-    this.form.reset(null, {onlySelf: onlySelf});
+    this.control.reset(null, {onlySelf: onlySelf});
   }
 
   get submitted() {
     return this.parent && this.parent.submitted || this.self.submitted;
   }
 
-  private get form(): FormGroup {
+  protected get control() {
     return this.self.form;
   }
 
   private get sequence(): string {
     return this.unique++ as any;
   }
-
 
   private addFormGroup(formGroup: NgForm) {
     this.self.form.addControl(formGroup.name || this.sequence, formGroup.form);

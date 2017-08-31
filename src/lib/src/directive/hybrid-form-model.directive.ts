@@ -1,32 +1,22 @@
-import {Directive, EventEmitter, Input, OnInit, Output, Self} from '@angular/core';
+import {Directive, OnDestroy, OnInit, Self} from '@angular/core';
 import {FormControl, NgModel} from '@angular/forms';
-import {addControl, defaultValidValueChangeDebounce} from './shared';
-import {Subject} from 'rxjs/Subject';
 import {HybridForm} from './hybrid-form.directive';
+import {AbstractHybridFormDirective} from './abstract-hybrid-form.directive';
 
 @Directive({selector: `[ngModel]`})
-export class HybridFormModelDirective implements OnInit {
+export class HybridFormModelDirective extends AbstractHybridFormDirective implements OnInit, OnDestroy {
 
-  @Input() ngModelValidChangeDebounce = defaultValidValueChangeDebounce;
-
-  @Output() ngModelValidChange = new EventEmitter();
-
-  formControlValidValueDebounceStarted= new Subject();
-
-  constructor(@Self() private self: NgModel,
-              private parent: HybridForm) {
-  }
-
-  get formControl(): FormControl {
-    return this.self.control;
+  constructor(@Self() protected self: NgModel,
+              protected parent: HybridForm) {
+    super();
   }
 
   get valid() {
-    return this.formControl.valid;
+    return this.control.valid;
   }
 
   get pristine() {
-    return this.formControl.pristine;
+    return this.control.pristine;
   }
 
   get groupSubmitted() {
@@ -34,17 +24,14 @@ export class HybridFormModelDirective implements OnInit {
   }
 
   get errors() {
-    return this.formControl.errors;
+    return this.control.errors;
   }
 
   get name() {
     return this.self.name;
   }
 
-  ngOnInit() {
-    addControl(this.formControl,
-      this.ngModelValidChange,
-      this.formControlValidValueDebounceStarted,
-      this.ngModelValidChangeDebounce);
+  protected get control() {
+    return this.self.control;
   }
 }

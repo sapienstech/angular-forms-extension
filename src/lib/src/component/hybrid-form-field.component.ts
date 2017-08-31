@@ -34,7 +34,7 @@ export class HybridFormFieldComponent implements AfterContentInit {
   ngAfterContentInit(): void {
     this.assertNgModelExists();
 
-    this.formModel.formControlValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
+    this.formModel.ngModelValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
     this.formModel.ngModelValidChange.subscribe(_ => this.validValueChanges = false);
   }
   get required() {

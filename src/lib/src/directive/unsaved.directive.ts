@@ -18,7 +18,7 @@ export class UnsavedDirective implements OnInit {
               @Self() hybridForm: HybridForm,
               @Self() @Optional() private hasSubmitButton: ValidSubmitDirective) {
     if(!hasSubmitButton) {
-      hybridForm.ngFormValidChange.subscribe(c => {
+      hybridForm.ngModelValidChange.subscribe(c => {
         this.submitted = true;
         this.unsavedParameterChange();});
     }
