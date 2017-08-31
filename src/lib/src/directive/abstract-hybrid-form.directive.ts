@@ -9,7 +9,7 @@ export abstract class AbstractHybridFormDirective implements OnInit, OnDestroy {
 
   static readonly defaultValidValueChangeDebounce = 400;
 
-  readonly subscriptions: Subscription[] = [];
+  private readonly subscriptions: Subscription[] = [];
 
   @Input() ngModelValidChangeDebounce = AbstractHybridFormDirective.defaultValidValueChangeDebounce;
 

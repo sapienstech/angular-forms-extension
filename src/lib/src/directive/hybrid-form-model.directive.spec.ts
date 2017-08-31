@@ -68,6 +68,13 @@ describe('HybridFormModelDirective', () => {
       expect(hybridFormModel.errors).toBe(instance.ngModel.control.errors));
   }));
 
+  [true, false].forEach(submitted =>
+    it(`should ${submitted ? '' : 'NOT'} be submitted when parent [ngForm] is ${submitted ? '' : 'NOT'}`, async(() => {
+      if (submitted) instance.ngForm.onSubmit(new Event('click'));
+      fixture.detectChanges();
+      fixture.whenStable().then(() => expect(hybridFormModel.groupSubmitted).toBe(submitted));
+    })));
+
   describe('when the model has changed', () => {
 
     describe('when the changed model is valid', () => {
