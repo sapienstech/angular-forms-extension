@@ -32,4 +32,4 @@ jobs:
       - run: npm test
 
       - store_test_results:
-          path: $CIRCLE_TEST_REPORTS/junit/
+          path: ./target/junit/
