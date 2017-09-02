@@ -34,7 +34,7 @@ jobs:
       - deploy:
           name: Publish to NPM Registry
           command: |
-            export COMMIT_MESSAGE=\"$(git log --format=oneline -n 1 $CIRCLE_SHA1)\"" >> ~/.bashrc
+            echo "export COMMIT_MESSAGE=\"$(git log --format=oneline -n 1 $CIRCLE_SHA1)\"" >> ~/.bashrc
             if [[ "${CIRCLE_BRANCH}" == "master"]] && [["${COMMIT_MESSAGE}" == "\(chore\) release*" ]]; then
               git config --global user.email "bot@sapiens.com"
               git config --global user.name "DECISIONbot"
