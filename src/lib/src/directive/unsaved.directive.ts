@@ -1,7 +1,7 @@
 import {Directive, EventEmitter, HostListener, OnInit, Optional, Output, Self} from '@angular/core';
 import {ValidSubmitDirective} from './valid-submit.directive';
 import {NgForm} from '@angular/forms';
-import {HybridForm} from './hybrid-form.directive';
+import {FxForm} from './fx-form.directive';
 
 @Directive({
   selector: '[unsaved]'
@@ -15,7 +15,7 @@ export class UnsavedDirective implements OnInit {
   submitted: boolean;
 
   constructor(@Self() private ngForm: NgForm,
-              @Self() hybridForm: HybridForm,
+              @Self() hybridForm: FxForm,
               @Self() @Optional() private hasSubmitButton: ValidSubmitDirective) {
     if(!hasSubmitButton) {
       hybridForm.ngModelValidChange.subscribe(c => {

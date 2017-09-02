@@ -1,13 +1,13 @@
 import {Directive, OnDestroy, OnInit, Self} from '@angular/core';
 import {FormControl, NgModel} from '@angular/forms';
-import {HybridForm} from './hybrid-form.directive';
-import {AbstractHybridFormDirective} from './abstract-hybrid-form.directive';
+import {FxForm} from './fx-form.directive';
+import {AbstractFxDirective} from './abstract-fx-form.directive';
 
 @Directive({selector: `[ngModel]`})
-export class HybridFormModelDirective extends AbstractHybridFormDirective implements OnInit, OnDestroy {
+export class FxModelDirective extends AbstractFxDirective implements OnInit, OnDestroy {
 
   constructor(@Self() protected self: NgModel,
-              protected parent: HybridForm) {
+              protected parent: FxForm) {
     super();
   }
 

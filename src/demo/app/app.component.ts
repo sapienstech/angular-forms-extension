@@ -42,25 +42,25 @@ export class AppComponent {
   selector: 'inner',
   template: `
     <form>
-      <hf-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec">
+      <fx-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec">
         <input class="user-display-name-input-spec"
                [name]="'username'"
                [(ngModel)]="userName"
                required>
-      </hf-field>
+      </fx-field>
 
-      <hf-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec">
+      <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec">
         <input [name]="'display'"
                [(ngModel)]="userDisplayName"
                required>
-      </hf-field>
+      </fx-field>
 
-      <hf-field [label]="'Email'" class="form-group flex-container align-items-center">
+      <fx-field [label]="'Email'" class="form-group flex-container align-items-center">
         <input type="email"
                [name]="'email'"
                [(ngModel)]="userMailAddress"
                email="">
-      </hf-field>
+      </fx-field>
     </form>
   `
 })

@@ -1,8 +1,8 @@
-import {HybridForm} from './hybrid-form.directive';
+import {FxForm} from './fx-form.directive';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {HybridFormsModule} from '../hybrid-forms.module';
+import {FormExtensionsModule} from '../form-extensions.module';
 import {Component, ViewChild} from '@angular/core';
-import {HybridFormModelDirective} from './hybrid-form-model.directive';
+import {FxModelDirective} from './fx-model.directive';
 import {NgForm, NgModel} from '@angular/forms';
 
 describe('HybridFormModelDirective', () => {
@@ -14,7 +14,7 @@ describe('HybridFormModelDirective', () => {
       </form>`
   })
   class TestComponent {
-    @ViewChild(HybridFormModelDirective) hybridFormModel: HybridFormModelDirective;
+    @ViewChild(FxModelDirective) hybridFormModel: FxModelDirective;
 
     @ViewChild(NgModel) ngModel: NgModel;
 
@@ -29,10 +29,10 @@ describe('HybridFormModelDirective', () => {
 
   let fixture: ComponentFixture<TestComponent>;
   let instance: TestComponent;
-  let hybridFormModel: HybridFormModelDirective;
+  let hybridFormModel: FxModelDirective;
 
   beforeEach(() => {
-    fixture = TestBed.configureTestingModule({imports: [HybridFormsModule], declarations: [TestComponent]})
+    fixture = TestBed.configureTestingModule({imports: [FormExtensionsModule], declarations: [TestComponent]})
       .createComponent(TestComponent);
     instance = fixture.componentInstance;
     hybridFormModel = instance.hybridFormModel;
@@ -90,12 +90,12 @@ describe('HybridFormModelDirective', () => {
         fixture.whenStable().then(() => expect(ngModelValidChange).toHaveBeenCalledWith(instance.value));
       }));
 
-      it(`should debounce for ${HybridForm.defaultValidValueChangeDebounce}ms before emitting (ngModelValidChange)`, fakeAsync(() => {
+      it(`should debounce for ${FxForm.defaultValidValueChangeDebounce}ms before emitting (ngModelValidChange)`, fakeAsync(() => {
         fixture.detectChanges();
-        tick(HybridForm.defaultValidValueChangeDebounce - 1);
+        tick(FxForm.defaultValidValueChangeDebounce - 1);
         instance.value = 'another valid change';
         fixture.detectChanges();
-        tick(HybridForm.defaultValidValueChangeDebounce - 1);
+        tick(FxForm.defaultValidValueChangeDebounce - 1);
         expect(ngModelValidChange).not.toHaveBeenCalledWith(instance.value);
         tick(1);
         expect(ngModelValidChange).toHaveBeenCalledWith(instance.value);
@@ -107,7 +107,7 @@ describe('HybridFormModelDirective', () => {
         fixture.detectChanges();
         tick(1);
         expect(ngModelValidValueDebounceStarted).toHaveBeenCalled();
-        tick(HybridForm.defaultValidValueChangeDebounce);
+        tick(FxForm.defaultValidValueChangeDebounce);
       }));
     });
 

@@ -1,34 +1,34 @@
 import {AfterContentInit, Component, ContentChild, Input} from '@angular/core';
 import {RequiredValidator} from '@angular/forms';
-import {HybridFormModelDirective} from '../directive/hybrid-form-model.directive';
-import {ErrorMessageService} from '../service/error-messages.service';
+import {FxModelDirective} from '../directive/fx-model.directive';
+import {FormValidationMessageService} from '../service/form-validation-message.service';
 
 @Component({
-  selector: 'hf-field',
+  selector: 'fx-field',
   template: `
-    <div class="hf-field"
-         [class.hf-field--required]="required" 
-         [class.hf-field--invalid]="!valid" 
-         [class.hf-field--valid-value-changes]="validValueChanges">
-      <label class="hf-field__label">{{label}}</label>
-      <span class="hf-field__control"><ng-content></ng-content></span>
-      <span *ngIf="!valid" class="hf-field__errors">
-        <label *ngFor="let error of errors" class="hf-field__error">{{error}}</label>
+    <div class="fx-field"
+         [class.fx-field--required]="required" 
+         [class.fx-field--invalid]="!valid" 
+         [class.fx-field--valid-value-changes]="validValueChanges">
+      <label class="fx-field__label">{{label}}</label>
+      <span class="fx-field__control"><ng-content></ng-content></span>
+      <span *ngIf="!valid" class="fx-field__errors">
+        <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
       </span>
     </div>`
 })
-export class HybridFormFieldComponent implements AfterContentInit {
+export class FieldComponent implements AfterContentInit {
   @Input() label: string;
 
   @ContentChild(RequiredValidator)
   requiredValidator: RequiredValidator;
 
-  @ContentChild(HybridFormModelDirective)
-  formModel: HybridFormModelDirective;
+  @ContentChild(FxModelDirective)
+  formModel: FxModelDirective;
 
   validValueChanges = false;
 
-  constructor(private messageService: ErrorMessageService) {
+  constructor(private messageService: FormValidationMessageService) {
   }
 
   ngAfterContentInit(): void {
@@ -54,6 +54,6 @@ export class HybridFormFieldComponent implements AfterContentInit {
 
   private assertNgModelExists() {
     if (!this.formModel)
-      throw new Error('NgModel is missing from an "hf-field". Did you forget to add [ngModel]');
+      throw new Error('NgModel is missing from an "fx-field". Did you forget to add [ngModel]');
   }
 }

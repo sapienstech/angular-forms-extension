@@ -11,19 +11,19 @@ import {
   SkipSelf
 } from '@angular/core';
 import {FormGroup, NgForm} from '@angular/forms';
-import {AbstractHybridFormDirective} from './abstract-hybrid-form.directive';
+import {AbstractFxDirective} from './abstract-fx-form.directive';
 
 @Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`})
-export class HybridForm extends AbstractHybridFormDirective implements OnInit {
+export class FxForm extends AbstractFxDirective implements OnInit {
 
-  @Input() ngModelValidChangeDebounce = AbstractHybridFormDirective.defaultValidValueChangeDebounce;
+  @Input() ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
 
   @Output('ngFormValidChange') ngModelValidChange = new EventEmitter();
 
   constructor(private el: ElementRef,
               private renderer: Renderer2,
               @Self() protected self: NgForm,
-              @Optional() @SkipSelf() protected parent: HybridForm) {
+              @Optional() @SkipSelf() protected parent: FxForm) {
     super();
     if(parent)
       parent.addFormGroup(self);

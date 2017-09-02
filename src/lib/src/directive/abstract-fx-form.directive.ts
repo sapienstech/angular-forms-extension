@@ -5,13 +5,13 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 
-export abstract class AbstractHybridFormDirective implements OnInit, OnDestroy {
+export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
   static readonly defaultValidValueChangeDebounce = 400;
 
   private readonly subscriptions: Subscription[] = [];
 
-  @Input() ngModelValidChangeDebounce = AbstractHybridFormDirective.defaultValidValueChangeDebounce;
+  @Input() ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
 
   @Output() ngModelValidChange = new EventEmitter();
 
