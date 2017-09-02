@@ -8,7 +8,7 @@
   "typings": "./angular-forms-extension.d.ts",
   "author": "",
   "license": "MIT",
-  "repository": {},
+  "repository": "github:sapienstech/angular-forms-extension"
   "engines": {
     "node": ">= 6.9.0",
     "npm": ">= 3.0.0"
