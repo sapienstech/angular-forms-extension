@@ -16,8 +16,8 @@
     "annotateForClosureCompiler": true,
     "strictMetadataEmit": true,
     "skipTemplateCodegen": true,
-    "flatModuleOutFile": "angular-hybrid-forms.js",
-    "flatModuleId": "angular-hybrid-forms",
+    "flatModuleOutFile": "angular-forms-extension.js",
+    "flatModuleId": "angular-forms-extension",
     "genDir": "../../out-tsc/lib-gen-dir/"
   }
 }
