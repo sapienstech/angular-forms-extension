@@ -1,11 +1,11 @@
-# Angular Form Extensions
+# Angular Forms Extension
 A form library extending Angular's template driven form capabilities.  
 
 ## Installation
-`npm install angular-form-extensions`
+`npm install angular-forms-extension`
 
-When using SystemJS don't forget to:
-`map: 'angular-hybrid-forms': 'angular-hybrid-forms/bundles/angular-hybrid-forms.umd.min.js'`
+When using SystemJS don't forget to:  
+`map: 'angular-forms-extension': 'angular-form-extension/bundles/angular-hybrid-forms.umd.min.js'`
 
 ## Features
 

@@ -1,6 +1,6 @@
 import {FxForm} from './fx-form.directive';
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-import {FormExtensionsModule} from '../form-extensions.module';
+import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ViewChild} from '@angular/core';
 import {FxModelDirective} from './fx-model.directive';
 import {NgForm, NgModel} from '@angular/forms';
@@ -32,7 +32,7 @@ describe('HybridFormModelDirective', () => {
   let hybridFormModel: FxModelDirective;
 
   beforeEach(() => {
-    fixture = TestBed.configureTestingModule({imports: [FormExtensionsModule], declarations: [TestComponent]})
+    fixture = TestBed.configureTestingModule({imports: [FormsExtensionModule], declarations: [TestComponent]})
       .createComponent(TestComponent);
     instance = fixture.componentInstance;
     hybridFormModel = instance.hybridFormModel;

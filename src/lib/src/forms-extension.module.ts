@@ -25,5 +25,5 @@ import {FormValidationMessageService} from './service/form-validation-message.se
     FieldComponent,
     FxForm]
 })
-export class FormExtensionsModule {
+export class FormsExtensionModule {
 }
