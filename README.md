@@ -1,6 +1,5 @@
-[![CircleCI](https://circleci.com/gh/sapienstech/angular-forms-extension.svg?style=svg)](https://circleci.com/gh/sapienstech/angular-forms-extension)
-
-# Angular Forms Extension
+[![CircleCI](https://circleci.com/gh/sapienstech/angular-forms-extension.svg?style=svg)](https://circleci.com/gh/sapienstech/angular-forms-extension) [![Greenkeeper badge](https://badges.greenkeeper.io/sapienstech/angular-forms-extension.svg)](https://greenkeeper.io/)  
+# Angular Forms Extension  
 A form library extending Angular's template driven form capabilities.  
 
 ## Installation
