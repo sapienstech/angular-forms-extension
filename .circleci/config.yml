@@ -36,7 +36,7 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               git config --global user.email "bot@sapiens.com"
-              git config --global user.name "DECISION bot
+              git config --global user.name "DECISIONbot"
               echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
               npm run release
             fi
