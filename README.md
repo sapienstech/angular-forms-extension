@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/sapienstech/angular-forms-extension.svg?style=svg)](https://circleci.com/gh/sapienstech/angular-forms-extension)
+
 # Angular Forms Extension
 A form library extending Angular's template driven form capabilities.  
 
