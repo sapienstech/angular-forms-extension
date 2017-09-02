@@ -77,7 +77,13 @@ module.exports = function (config) {
 
     exclude: [],
     preprocessors: {},
-    reporters: ['progress', 'kjhtml'],
+    reporters: process.env.CI ? ['junit'] : ['progress', 'kjhtml'],
+
+    junitReporter: {
+      outputDir: process.env.JUNIT_REPORT_PATH,
+      outputFile: process.env.JUNIT_REPORT_NAME,
+      useBrowserName: false
+    },
 
     port: 9876,
     colors: true,
