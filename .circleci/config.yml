@@ -14,6 +14,8 @@ jobs:
     steps:
       - checkout
 
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -30,6 +32,13 @@ jobs:
 
       # run tests!
       - run: npm test
+
+      - deploy:
+          name: Publish to NPM Registry
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              npm run release
+            fi
 
       - store_test_results:
           path: ./target/junit/
