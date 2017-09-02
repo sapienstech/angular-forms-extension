@@ -81,7 +81,7 @@ module.exports = function (config) {
     reporters: process.env.CI ? ['junit','dots'] : ['progress', 'kjhtml'],
 
     junitReporter: {
-      outputDir: process.env['$CIRCLE_TEST_REPORTS'].concat('/junit/`),
+      outputDir: `${process.env.$CIRCLE_TEST_REPORTS}/junit/`,
       outputFile: 'test-results.xml',
       useBrowserName: false
     },
