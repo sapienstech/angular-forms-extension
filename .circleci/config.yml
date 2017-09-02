@@ -31,16 +31,17 @@ jobs:
       # run tests!
       - run: npm test
 
-      - deploy:
-          name: Publish to NPM Registry
-          command: |
-            echo "export COMMIT_MESSAGE=\"$(git log --format=oneline -n 1 $CIRCLE_SHA1)\"" >> ~/.bashrc
-            if [[ "${CIRCLE_BRANCH}" == "master"] && [ "${COMMIT_MESSAGE}" ~= "^\(chore\)release(.)*" ]]; then
-              git config --global user.email "bot@sapiens.com"
-              git config --global user.name "DECISIONbot"
-              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
-              npm run release
-            fi
+      # disabled till i figure how to make the conditional command work
+      #- deploy:
+      #    name: Publish to NPM Registry
+      #    command: |
+      #      echo "export COMMIT_MESSAGE=\"$(git log --format=oneline -n 1 $CIRCLE_SHA1)\"" >> ~/.bashrc
+      #      if [[ "${CIRCLE_BRANCH}" == "master"] && [ "${COMMIT_MESSAGE}" ~= "^\(chore\)release(.)*" ]]; then
+      #        git config --global user.email "bot@sapiens.com"
+      #        git config --global user.name "DECISIONbot"
+      #        echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+      #        npm run release
+      #      fi
 
       - store_test_results:
           path: ./target/junit/
