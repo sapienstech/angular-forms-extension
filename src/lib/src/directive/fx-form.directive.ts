@@ -2,7 +2,7 @@ import {
   Directive, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Renderer2, Self,
   SkipSelf
 } from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {FormGroup, NgForm} from '@angular/forms';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 
 @Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`})
@@ -48,7 +48,7 @@ export class FxForm extends AbstractFxDirective implements OnInit {
     return !!(this.parent && this.parent.submitted || this.self.submitted);
   }
 
-  protected get control() {
+  protected get control(): FormGroup {
     return this.self.form;
   }
 
