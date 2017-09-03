@@ -1,8 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {NgForm, NgModel} from '@angular/forms';
-import {FxForm} from './fx-form.directive';
 import {ValidSubmitDirective} from './valid-submit.directive';
 
 describe('ValidSubmitDirective', () => {
@@ -15,19 +13,9 @@ describe('ValidSubmitDirective', () => {
       </form>`
   })
   class TestComponent {
-    @ViewChild(NgModel) ngModel: NgModel;
-
-    @ViewChild(NgForm) ngForm: NgForm;
-
-    @ViewChild(FxForm) fxForm: FxForm;
-
     @ViewChild('submit') button: ElementRef;
 
     @ViewChild(ValidSubmitDirective) validSubmitDirective: ValidSubmitDirective;
-
-    markAsDirty() {
-      this.ngForm.controls['input'].markAsDirty();
-    }
 
     value = 'some valid value';
   }
