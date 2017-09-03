@@ -1,9 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsExtensionModule} from '../forms-extension.module';
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
+import {FxForm} from './fx-form.directive';
 
 describe('FxFormDirective', () => {
 
+  // region components
   @Component({
     template: `
       <form>
@@ -13,6 +15,7 @@ describe('FxFormDirective', () => {
       </form>`
   })
   class TestComponent {
+    @ViewChild(FxForm) fxForm: FxForm;
   }
 
   @Component({
@@ -49,6 +52,8 @@ describe('FxFormDirective', () => {
     value;
   }
 
+  //endregion
+
   let fixture: ComponentFixture<TestComponent>;
   let instance: TestComponent;
 
@@ -60,4 +65,26 @@ describe('FxFormDirective', () => {
 
   beforeEach(async(() => fixture.detectChanges()));
 
+  describe('form building', () => {
+    it('should build a form from all the inner forms', () => {
+    });
+
+    it('should change the parent form validity when inner form changes', () => {
+    });
+
+    it('should emit (ngFormValidChange) when inner value changes value and valid', () => {
+    });
+
+    it('should change the parent form validity when a field in the parent form changes', () => {
+    });
+
+    it('should emit (ngFormValidChange) when a field in the parent value changes value and valid', () => {
+    });
+
+    it('should allow to reset the form', () => {
+    });
+
+    it('should mark inner form as submitted when parent is submitted', () => {
+    });
+  });
 });

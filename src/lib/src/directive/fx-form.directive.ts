@@ -16,7 +16,7 @@ import {AbstractFxDirective} from './abstract-fx-form.directive';
 @Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`})
 export class FxForm extends AbstractFxDirective implements OnInit {
 
-  @Input() ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
+  @Input('ngFormValidChangeDebounce') ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
 
   @Output('ngFormValidChange') ngModelValidChange = new EventEmitter();
 
