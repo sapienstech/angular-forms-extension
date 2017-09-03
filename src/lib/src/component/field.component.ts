@@ -21,12 +21,12 @@ export class FieldComponent implements AfterContentInit {
   @Input() label: string;
 
   @ContentChild(RequiredValidator)
-  requiredValidator: RequiredValidator;
+  private requiredValidator: RequiredValidator;
 
   @ContentChild(FxModelDirective)
-  formModel: FxModelDirective;
+  private formModel: FxModelDirective;
 
-  validValueChanges = false;
+  private validValueChanges = false;
 
   constructor(private messageService: FormValidationMessageService) {
   }
@@ -37,16 +37,17 @@ export class FieldComponent implements AfterContentInit {
     this.formModel.ngModelValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
     this.formModel.ngModelValidChange.subscribe(_ => this.validValueChanges = false);
   }
-  get required() {
+
+  private get required() {
     return this.requiredValidator && this.requiredValidator.required;
   }
 
-  get valid() {
+  private get valid() {
     return this.formModel &&
       (!this.formModel.groupSubmitted && this.formModel.pristine || this.formModel.valid);
   }
 
-  get errors() {
+  private get errors() {
     const errors = this.formModel.errors;
     return Object.keys(errors).map(error =>
       this.messageService.getErrorMessage(this.label, error, errors[error]));
