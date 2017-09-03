@@ -5,7 +5,7 @@ import {Component, ViewChild} from '@angular/core';
 import {FxModelDirective} from './fx-model.directive';
 import {NgForm, NgModel} from '@angular/forms';
 
-describe('HybridFormModelDirective', () => {
+describe('FxFormModelDirective', () => {
 
   @Component({
     template: `
