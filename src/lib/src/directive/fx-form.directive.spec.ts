@@ -15,6 +15,7 @@ describe('FxFormDirective', () => {
       </form>`
   })
   class NestedFormComponent {
+    @ViewChild(FxForm) fxForm: FxForm;
     value = 'nested-value';
   }
   @Component({
@@ -112,9 +113,14 @@ describe('FxFormDirective', () => {
     }));
 
     it('should allow to reset the form', async(() => {
+      const reset = spyOn(instance.ngForm.form, 'reset');
+      instance.fxForm.reset();
+      expect(reset).toHaveBeenCalledTimes(1);
     }));
 
     it('should mark inner form as submitted when parent is submitted', async(() => {
+      instance.ngForm.onSubmit(null);
+      expect(instance.inner1.nested.fxForm.submitted).toBeTruthy();
     }));
   });
 });
