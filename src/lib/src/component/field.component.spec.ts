@@ -57,20 +57,30 @@ describe('FieldComponent', () => {
     expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeFalsy();
   }));
 
-  it('should add an invalid style after submitting', async(() => {
-    instance.button.nativeElement.click();
-    fixture.detectChanges();
-    fixture.whenStable().then(() =>
-      expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeTruthy());
-  }));
+  describe('after submission', () => {
+    beforeEach(async(() => {
+      instance.button.nativeElement.click();
+      fixture.detectChanges();
+    }));
 
-  it('should add an invalid style when field is dirty', async(() => {
-    instance.markAsDirty();
-    fixture.detectChanges();
-    fixture.whenStable().then(() =>
-      expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeTruthy());
-  }));
-
-  describe('error messages', () => {
+    expectInvalidStyles();
   });
+
+  describe('when field is dirty', () => {
+    beforeEach(async(() => {
+      instance.markAsDirty();
+      fixture.detectChanges();
+    }));
+
+    expectInvalidStyles();
+  });
+
+  function expectInvalidStyles() {
+    it('should add an invalid style', async(() =>
+      expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeTruthy()));
+
+    it('should list the errors of the invalid fields', async(() =>
+      expect(fixture.debugElement.query(By.css('.fx-field__error')).nativeElement.innerHTML)
+        .toBe('User Name is required')));
+  }
 });
