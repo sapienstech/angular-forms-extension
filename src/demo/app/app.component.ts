@@ -51,6 +51,7 @@ export class AppComponent {
 
       <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec">
         <input [name]="'display'"
+               minlength="5"
                [(ngModel)]="userDisplayName"
                required>
       </fx-field>
