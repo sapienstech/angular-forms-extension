@@ -1,24 +1,9 @@
-import {
-  Directive,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Optional,
-  Output,
-  Renderer2,
-  Self,
-  SkipSelf
-} from '@angular/core';
-import {FormGroup, NgForm} from '@angular/forms';
+import {Directive, ElementRef, Input, OnInit, Optional, Output, Renderer2, Self, SkipSelf} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 
 @Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`})
 export class FxForm extends AbstractFxDirective implements OnInit {
-
-  @Input('ngFormValidChangeDebounce') ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
-
-  @Output('ngFormValidChange') ngModelValidChange = new EventEmitter();
 
   constructor(private el: ElementRef,
               private renderer: Renderer2,
@@ -27,6 +12,24 @@ export class FxForm extends AbstractFxDirective implements OnInit {
     super();
     if(parent)
       parent.addFormGroup(self);
+  }
+
+  @Input()
+  set ngFormValidChangeDebounce(value) {
+    this.ngModelValidChangeDebounce = value;
+  }
+
+  @Output()
+  get ngFormValidChange() {
+    return this.ngModelValidChange;
+  }
+
+  set ngFormValidChange(value) {
+    this.ngModelValidChange = value;
+  }
+
+  get ngFormValidChangeDebounce() {
+    return this.ngModelValidChangeDebounce;
   }
 
   ngOnInit() {
