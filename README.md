@@ -89,14 +89,7 @@ MyFormComponent extends FormCanDeactivate {
 
 export abstract class FormCanDeactivate {
 
-    @ViewChild(UnsavedDirective) unsavedDirective;
-
     private unsaved: boolean;
-
-    ngOnInit() {
-        if(!this.unsavedDirective)
-            throw new Error('A component implementing "FormCanDeactivate" has to have a child with (unsaved)="unsavedChanges($event)"')
-    }
 
     canDeactivate(): boolean {
         return !this.unsaved;
