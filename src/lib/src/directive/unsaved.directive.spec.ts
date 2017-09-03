@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {NgForm, NgModel} from '@angular/forms';
@@ -132,5 +132,55 @@ describe('ValidSubmitDirective', () => {
       unsaved() {
       }
     }
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        imports: [FormsExtensionModule],
+        declarations: [TestComponent]
+      }).createComponent(TestComponent);
+      instance = fixture.componentInstance;
+    });
+
+    beforeEach(async(() => fixture.detectChanges()));
+
+    describe('when form value changes', () => {
+
+      beforeEach(async(() => {
+        unsaved = spyOn(instance.unsavedDirective.unsavedChange, 'emit');
+      }));
+
+      describe('when the value is valid', () => {
+        beforeEach((() => {
+          instance.value = 'some other valid value';
+          instance.markAsDirty();
+        }));
+
+        it('should emit (unsaved)=true BEFORE ngModelValidValueChange debounce time is over', fakeAsync(() => {
+          fixture.detectChanges();
+          tick(FxForm.defaultValidValueChangeDebounce - 1);
+          expect(mostRecentUnsavedCallArgument()).toBeTruthy();
+          tick(FxForm.defaultValidValueChangeDebounce);
+        }));
+
+        it('should emit (unsaved)=false AFTER ngModelValidValueChange debounce time is over', fakeAsync(() => {
+          fixture.detectChanges();
+          tick(FxForm.defaultValidValueChangeDebounce + 1);
+          expect(mostRecentUnsavedCallArgument()).toBeFalsy();
+          tick(FxForm.defaultValidValueChangeDebounce);
+        }));
+      });
+
+      describe('when the value is INVALID', () => {
+        beforeEach(async(async(() => {
+          instance.value = '';
+          instance.markAsDirty();
+        })));
+
+        it('should NOT emit (unsaved)', async(() => {
+          fixture.detectChanges();
+          expect(unsaved).not.toHaveBeenCalled();
+        }));
+      })
+    });
   });
 });
