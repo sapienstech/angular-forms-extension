@@ -1,4 +1,7 @@
-import {Directive, ElementRef, Input, OnInit, Optional, Output, Renderer2, Self, SkipSelf} from '@angular/core';
+import {
+  Directive, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Renderer2, Self,
+  SkipSelf
+} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 
@@ -20,7 +23,7 @@ export class FxForm extends AbstractFxDirective implements OnInit {
   }
 
   @Output()
-  get ngFormValidChange() {
+  get ngFormValidChange(): EventEmitter<any> {
     return this.ngModelValidChange;
   }
 
@@ -42,7 +45,7 @@ export class FxForm extends AbstractFxDirective implements OnInit {
   }
 
   get submitted() {
-    return this.parent && this.parent.submitted || this.self.submitted;
+    return !!(this.parent && this.parent.submitted || this.self.submitted);
   }
 
   protected get control() {
