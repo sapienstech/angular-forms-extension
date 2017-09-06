@@ -137,7 +137,7 @@ describe('FxFormModelDirective', () => {
     beforeEach(async(() => fixture.destroy()));
 
     it('should clear the all form subscriptions when the component is destroyed', async(() => {
-      hybridFormModel['subscriptions'].forEach(s => expect(s.closed).toBeTruthy());
+      hybridFormModel['subscriber'].subscriptions.forEach(s => expect(s.closed).toBeTruthy());
     }))
   })
 });

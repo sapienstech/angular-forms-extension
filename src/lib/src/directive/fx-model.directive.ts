@@ -1,5 +1,5 @@
 import {Directive, OnDestroy, OnInit, Self} from '@angular/core';
-import {NgModel} from '@angular/forms';
+import {FormControl, NgModel} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {SubscriberService} from '../service/subscriber.service';
@@ -41,7 +41,7 @@ export class FxModelDirective extends AbstractFxDirective implements OnInit, OnD
     return this.self.name;
   }
 
-  protected get control() {
+  protected get control(): FormControl {
     return this.self.control;
   }
 }
