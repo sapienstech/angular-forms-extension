@@ -1,15 +1,12 @@
 import {AbstractControl} from '@angular/forms';
 import {EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
 import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
+import {SubscriberService} from '../service/subscriber.service';
 
 export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
   static readonly defaultValidValueChangeDebounce = 400;
-
-  private readonly subscriptions: Subscription[] = [];
 
   @Input() ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
 
@@ -17,22 +14,20 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
   ngModelValidValueDebounceStarted = new Subject();
 
+  constructor(protected subscriber: SubscriberService) {
+  }
+
   ngOnInit() {
-    this.subscribe(this.control.valueChanges,
+    this.subscriber.subscribe(this.control.valueChanges,
       v => this.control.valid ? this.ngModelValidValueDebounceStarted.next(v) : null);
 
-    this.subscribe(this.control.valueChanges.debounceTime(this.ngModelValidChangeDebounce),
+    this.subscriber.subscribe(this.control.valueChanges.debounceTime(this.ngModelValidChangeDebounce),
       v => this.control.valid ? this.ngModelValidChange.emit(v) : null);
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
+    this.subscriber.unsubscribe();
   }
 
   protected abstract get control(): AbstractControl;
-
-  private subscribe<T>(observable: Observable<T>, fn: (t: T) => void) {
-    const subscription = observable.subscribe(fn);
-    this.subscriptions.push(subscription);
-  }
 }

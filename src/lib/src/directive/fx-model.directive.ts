@@ -1,14 +1,24 @@
 import {Directive, OnDestroy, OnInit, Self} from '@angular/core';
-import {FormControl, NgModel} from '@angular/forms';
+import {NgModel} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
+import {SubscriberService} from '../service/subscriber.service';
 
-@Directive({selector: `[ngModel]`})
+@Directive({selector: `[ngModel]`, providers: [SubscriberService]})
 export class FxModelDirective extends AbstractFxDirective implements OnInit, OnDestroy {
 
-  constructor(@Self() protected self: NgModel,
+  constructor(protected subscriber: SubscriberService,
+              @Self() protected self: NgModel,
               protected parent: FxForm) {
-    super();
+    super(subscriber);
+  }
+
+  ngOnInit() {
+    super.ngOnInit();
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
   }
 
   get valid() {

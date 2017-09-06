@@ -1,18 +1,28 @@
 import {
-  Directive, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Renderer2, Self,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  Renderer2,
+  Self,
   SkipSelf
 } from '@angular/core';
 import {FormGroup, NgForm} from '@angular/forms';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
+import {SubscriberService} from '../service/subscriber.service';
 
-@Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`})
+@Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`, providers: [SubscriberService]})
 export class FxForm extends AbstractFxDirective implements OnInit {
 
-  constructor(private el: ElementRef,
+  constructor(protected subscriber: SubscriberService,
+              private el: ElementRef,
               private renderer: Renderer2,
               @Self() protected self: NgForm,
               @Optional() @SkipSelf() protected parent: FxForm) {
-    super();
+    super(subscriber);
     if(parent)
       parent.addFormGroup(self);
   }
@@ -35,17 +45,21 @@ export class FxForm extends AbstractFxDirective implements OnInit {
     return this.ngModelValidChangeDebounce;
   }
 
+  get submitted() {
+    return !!(this.parent && this.parent.submitted || this.self.submitted);
+  }
+
   ngOnInit() {
     super.ngOnInit();
     this.renderer.setAttribute(this.el.nativeElement, 'novalidate', 'novalidate');
   }
 
-  reset(onlySelf?: boolean) {
-    this.control.reset(null, {onlySelf: onlySelf});
+  ngOnDestroy() {
+    super.ngOnDestroy();
   }
 
-  get submitted() {
-    return !!(this.parent && this.parent.submitted || this.self.submitted);
+  reset(onlySelf?: boolean) {
+    this.control.reset(null, {onlySelf: onlySelf});
   }
 
   protected get control(): FormGroup {

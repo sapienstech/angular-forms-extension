@@ -1,12 +1,14 @@
-import {Directive, EventEmitter, HostListener, OnInit, Optional, Output, Self} from '@angular/core';
+import {Directive, EventEmitter, HostListener, OnDestroy, OnInit, Optional, Output, Self} from '@angular/core';
 import {ValidSubmitDirective} from './valid-submit.directive';
 import {NgForm} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
+import {SubscriberService} from '../service/subscriber.service';
 
 @Directive({
-  selector: '[unsaved]'
+  selector: '[unsaved]',
+  providers: [SubscriberService]
 })
-export class UnsavedDirective implements OnInit {
+export class UnsavedDirective implements OnInit, OnDestroy {
 
   @Output('unsaved') unsavedChange = new EventEmitter();
 
@@ -14,22 +16,28 @@ export class UnsavedDirective implements OnInit {
 
   submitted: boolean;
 
-  constructor(@Self() private ngForm: NgForm,
+  constructor(private subscriber: SubscriberService,
+              @Self() private ngForm: NgForm,
               @Self() hybridForm: FxForm,
               @Self() @Optional() private hasSubmitButton: ValidSubmitDirective) {
     if(!hasSubmitButton) {
-      hybridForm.ngModelValidChange.subscribe(c => {
+      this.subscriber.subscribe(hybridForm.ngModelValidChange, () => {
         this.submitted = true;
         this.unsavedParameterChange();});
     }
   }
 
   ngOnInit(): void {
-    this.form.valueChanges.subscribe(() => {
+    this.subscriber.subscribe(this.form.valueChanges, () => {
       this.submitted = false;
       this.unsavedParameterChange();
     });
-    this.form.statusChanges.subscribe(() => this.unsavedParameterChange());
+
+    this.subscriber.subscribe(this.form.statusChanges, () => this.unsavedParameterChange());
+  }
+
+  ngOnDestroy() {
+    this.subscriber.unsubscribe();
   }
 
   @HostListener('submit', ['$event'])
