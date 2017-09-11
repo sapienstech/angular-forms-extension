@@ -13,10 +13,10 @@ import {
 import {FormGroup, NgForm} from '@angular/forms';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {SubscriberService} from '../service/subscriber.service';
+import {Observable} from 'rxjs/Observable';
 
 @Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`, providers: [SubscriberService]})
 export class FxForm extends AbstractFxDirective implements OnInit {
-
   constructor(protected subscriber: SubscriberService,
               private el: ElementRef,
               private renderer: Renderer2,
@@ -75,4 +75,8 @@ export class FxForm extends AbstractFxDirective implements OnInit {
   }
 
   private unique = 0;
+
+  protected get observable(): Observable<any> {
+    return this.control.valueChanges;
+  }
 }

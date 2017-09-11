@@ -2,7 +2,9 @@ import {AbstractControl} from '@angular/forms';
 import {EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/do';
 import {SubscriberService} from '../service/subscriber.service';
+import {Observable} from 'rxjs/Observable';
 
 export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
@@ -18,10 +20,10 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscriber.subscribe(this.control.valueChanges,
+    this.subscriber.subscribe(this.observable,
       v => this.control.valid ? this.ngModelValidValueDebounceStarted.next(v) : null);
 
-    this.subscriber.subscribe(this.control.valueChanges.debounceTime(this.ngModelValidChangeDebounce),
+    this.subscriber.subscribe(this.observable.debounceTime(this.ngModelValidChangeDebounce),
       v => this.control.valid ? this.ngModelValidChange.emit(v) : null);
   }
 
@@ -30,4 +32,6 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
   }
 
   protected abstract get control(): AbstractControl;
+
+  protected abstract get observable(): Observable<any>;
 }

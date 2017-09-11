@@ -85,30 +85,56 @@ describe('FxFormModelDirective', () => {
         instance.value = 'a valid change';
       });
 
-      it('should emit that the model has changed and is valid (ngModelValidChange)', async(() => {
-        fixture.detectChanges();
-        fixture.whenStable().then(() => expect(ngModelValidChange).toHaveBeenCalledWith(instance.value));
-      }));
+      describe('when the change was made programmatically (model->view)', () => {
 
-      it(`should debounce for ${FxForm.defaultValidValueChangeDebounce}ms before emitting (ngModelValidChange)`, fakeAsync(() => {
-        fixture.detectChanges();
-        tick(FxForm.defaultValidValueChangeDebounce - 1);
-        instance.value = 'another valid change';
-        fixture.detectChanges();
-        tick(FxForm.defaultValidValueChangeDebounce - 1);
-        expect(ngModelValidChange).not.toHaveBeenCalledWith(instance.value);
-        tick(1);
-        expect(ngModelValidChange).toHaveBeenCalledWith(instance.value);
-        expect(ngModelValidChange).toHaveBeenCalledTimes(1);
-      }));
+        it('should NOT emit that the model has changed and is valid (ngModelValidChange)', async(() => {
+          fixture.detectChanges();
+          fixture.whenStable().then(() => expect(ngModelValidChange).not.toHaveBeenCalled());
+        }));
 
-      it('should emit that that debounce time for a valid model change has started (formControlValidValueDebounceStarted)', fakeAsync(() => {
-        const ngModelValidValueDebounceStarted = spyOn(hybridFormModel.ngModelValidValueDebounceStarted, 'next');
-        fixture.detectChanges();
-        tick(1);
-        expect(ngModelValidValueDebounceStarted).toHaveBeenCalled();
-        tick(FxForm.defaultValidValueChangeDebounce);
-      }));
+        it('should NOT emit that that debounce time for a valid model change has started (formControlValidValueDebounceStarted)', fakeAsync(() => {
+          const ngModelValidValueDebounceStarted = spyOn(hybridFormModel.ngModelValidValueDebounceStarted, 'next');
+          fixture.detectChanges();
+          tick(1);
+          expect(ngModelValidValueDebounceStarted).not.toHaveBeenCalled();
+          tick(FxForm.defaultValidValueChangeDebounce);
+        }));
+
+      });
+
+      describe('when the change was made view->model', () => {
+
+        it('should emit that the model has changed and is valid (ngModelValidChange)', async(() => {
+          instance.ngModel.update.emit('a valid change');
+          fixture.detectChanges();
+          fixture.whenStable().then(() => expect(ngModelValidChange).toHaveBeenCalledWith(instance.value));
+        }));
+
+        it('should emit that that debounce time for a valid model change has started (formControlValidValueDebounceStarted)', fakeAsync(() => {
+          const ngModelValidValueDebounceStarted = spyOn(hybridFormModel.ngModelValidValueDebounceStarted, 'next');
+          fixture.detectChanges();
+          tick(1);
+          instance.ngModel.update.emit('a valid change');
+          fixture.detectChanges();
+          tick(1);
+          expect(ngModelValidValueDebounceStarted).toHaveBeenCalled();
+          tick(FxForm.defaultValidValueChangeDebounce);
+        }));
+
+        it(`should debounce for ${FxForm.defaultValidValueChangeDebounce}ms before emitting (ngModelValidChange)`, fakeAsync(() => {
+          instance.ngModel.update.emit('a valid change');
+          fixture.detectChanges();
+          tick(FxForm.defaultValidValueChangeDebounce - 1);
+          instance.value = 'another valid change';
+          instance.ngModel.update.emit('a valid change');
+          fixture.detectChanges();
+          tick(FxForm.defaultValidValueChangeDebounce - 1);
+          expect(ngModelValidChange).not.toHaveBeenCalledWith(instance.value);
+          tick(1);
+          expect(ngModelValidChange).toHaveBeenCalledWith(instance.value);
+          expect(ngModelValidChange).toHaveBeenCalledTimes(1);
+        }));
+      });
     });
 
     describe('when the changed model is invalid', () => {

@@ -3,6 +3,7 @@ import {FormControl, NgModel} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {SubscriberService} from '../service/subscriber.service';
+import {Observable} from 'rxjs/Observable';
 
 @Directive({selector: `[ngModel]`, providers: [SubscriberService]})
 export class FxModelDirective extends AbstractFxDirective implements OnInit, OnDestroy {
@@ -43,5 +44,9 @@ export class FxModelDirective extends AbstractFxDirective implements OnInit, OnD
 
   protected get control(): FormControl {
     return this.self.control;
+  }
+
+  protected get observable(): Observable<any> {
+    return this.self.update;
   }
 }
