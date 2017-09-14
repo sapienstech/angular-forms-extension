@@ -1,4 +1,4 @@
-import {Directive, OnDestroy, OnInit, Self} from '@angular/core';
+import {Directive, OnDestroy, OnInit, Optional, Self} from '@angular/core';
 import {FormControl, NgModel} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
@@ -10,7 +10,7 @@ export class FxModelDirective extends AbstractFxDirective implements OnInit, OnD
 
   constructor(protected subscriber: SubscriberService,
               @Self() protected self: NgModel,
-              protected parent: FxForm) {
+              @Optional() protected parent: FxForm) {
     super(subscriber);
   }
 
@@ -31,7 +31,7 @@ export class FxModelDirective extends AbstractFxDirective implements OnInit, OnD
   }
 
   get groupSubmitted() {
-    return this.parent.submitted;
+    return this.parent && this.parent.submitted;
   }
 
   get errors() {
