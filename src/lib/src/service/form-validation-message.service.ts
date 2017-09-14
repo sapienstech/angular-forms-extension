@@ -27,6 +27,6 @@ export class FormValidationMessageService {
       Object.keys(params).forEach(param =>
         errorMessage = errorMessage.replace('{{' + param + '}}', params[param]));
 
-    return `${fieldName} ${errorMessage}`;
+    return fieldName ? `${fieldName} ${errorMessage}` : errorMessage;
   }
 }
