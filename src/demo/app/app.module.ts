@@ -6,7 +6,7 @@ import {AppComponent, InnerAppComponent} from './app.component';
 import {FormsModule} from '@angular/forms';
 
 @NgModule({
-  imports: [BrowserModule, FormsExtensionModule, FormsModule,],
+  imports: [BrowserModule, FormsExtensionModule.forRoot(), FormsModule,],
   declarations: [AppComponent, InnerAppComponent],
   bootstrap: [AppComponent]
 })
