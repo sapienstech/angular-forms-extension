@@ -10,7 +10,7 @@ When using SystemJS don't forget to:
 
 ##Initial setup
 In the root app module provide `FormsExtensionModule` and use static method `forRoot` in order to initialize the `FormValidationMessageService`.
-  
+this is to make sure there is a singleton service.   
 ```typescript
 @NgModule({
   imports: [FormsExtensionModule.forRoot()],
