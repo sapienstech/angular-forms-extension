@@ -8,6 +8,28 @@ A form library extending Angular's template driven form capabilities.
 When using SystemJS don't forget to:  
 `map: 'angular-forms-extension': 'angular-form-extension/bundles/angular-hybrid-forms.umd.min.js'`
 
+##Initial setup
+In the root app module provide `FormsExtensionModule` and use static method `forRoot` in order to initialize the `FormValidationMessageService`.
+  
+```typescript
+@NgModule({
+  imports: [FormsExtensionModule.forRoot()],
+  bootstrap: [AppComponent]
+})
+export class AppModule {
+}
+ ```
+ 
+ In others modules that use the `FormsExtensionModule` just import it, without `forRoot` method:
+ ```typescript
+ @NgModule({
+   imports: [FormsExtensionModule, FormsModule],
+   bootstrap: [UserComponent]
+ })
+ export class UserModule {
+ }
+  ```
+  
 ## Features
 
 ### Form to parent form discovery
@@ -114,10 +136,13 @@ email: '[Label] must be valid',
 
 #### Customizing the error messages
 ```typescript
+@NgModule({
+  imports: [BrowserModule, 
+  FormsExtensionModule.forRoot({myCustomValidation: '...', minlength: 'hi it`s too long!'})],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
+})
 export class AppModule {
-  constructor(formValidationMessageService: FormValidationMessageService) {
-    formValidationMessageService.setErrorMessages({myCustomValidation: '...', minlength: 'hi it`s too long!'});    
-  }
 }
 ```
 
