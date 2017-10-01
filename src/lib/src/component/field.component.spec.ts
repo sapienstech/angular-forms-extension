@@ -34,7 +34,7 @@ describe('FieldComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed
-      .configureTestingModule({imports: [FormsExtensionModule.forRoot()], declarations: [TestComponent]})
+      .configureTestingModule({imports: [FormsExtensionModule.forRoot(undefined, true)], declarations: [TestComponent]})
       .createComponent(TestComponent);
     instance = fixture.componentInstance;
   });

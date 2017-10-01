@@ -26,10 +26,11 @@ import {FormValidationMessageService} from "./service/form-validation-message.se
 })
 export class FormsExtensionModule {
 
-  static forRoot(errorMessages?: { [key: string]: string }): ModuleWithProviders {
+  static forRoot(errorMessages?: { [key: string]: string }, appendFieldNameToMessage?: boolean): ModuleWithProviders {
 
     let formValidationMessageService = new FormValidationMessageService();
-    formValidationMessageService.setErrorMessages(errorMessages);
+    errorMessages ? formValidationMessageService.setErrorMessages(errorMessages) : undefined;
+    formValidationMessageService.appendFieldNameToMessage=appendFieldNameToMessage;
 
     return {
       ngModule: FormsExtensionModule,
