@@ -13,6 +13,12 @@ export class FormValidationMessageService {
   private fieldsNames: { [key: string]: string };
 
   /**
+   * if true then field name will be appended to the error message.
+   * default is false, means no field name in the message.
+   */
+  appendFieldNameToMessage:boolean;
+
+  /**
    * Set custom error messages that override the default ones
    * @param errorMessages An object {key: message}
    */
@@ -27,6 +33,6 @@ export class FormValidationMessageService {
       Object.keys(params).forEach(param =>
         errorMessage = errorMessage.replace('{{' + param + '}}', params[param]));
 
-    return fieldName ? `${fieldName} ${errorMessage}` : errorMessage;
+    return fieldName && this.appendFieldNameToMessage ? `${fieldName} ${errorMessage}` : errorMessage;
   }
 }
