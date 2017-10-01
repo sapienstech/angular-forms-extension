@@ -13,7 +13,7 @@ describe('FormValidationMessageService', () => {
 
       beforeEach(() => {
         service.appendFieldNameToMessage = appendFieldNameToMessage;
-        appendFieldNameToMessage ? fieldInMessage = '${field} ' : fieldInMessage = "";
+        appendFieldNameToMessage ? fieldInMessage = `${field} ` : fieldInMessage = "";
       });
 
       describe('default messages', () => {
