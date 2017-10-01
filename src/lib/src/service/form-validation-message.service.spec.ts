@@ -28,7 +28,7 @@ describe('FormValidationMessageService', () => {
   });
 
   describe('adding messages', () => {
-    beforeEach(() => service.setErrorMessages({startsWith: 'has to start with {{beginning}}'}));
+    beforeEach(() => service.setErrorMessages({startsWith: '{{fieldName}} has to start with {{beginning}}'}));
 
     it('should show "Email has to start with somethingood"', () =>
       expect(service.getErrorMessage(field, 'startsWith', {beginning: 'somethinggood'}))
@@ -40,7 +40,7 @@ describe('FormValidationMessageService', () => {
   });
 
   describe('overriding messages', () => {
-    beforeEach(() => service.setErrorMessages({required: "can't be blank"}));
+    beforeEach(() => service.setErrorMessages({required: "{{fieldName}} can't be blank"}));
 
     it('should should override the message for required', () =>
       expect(service.getErrorMessage(field, 'required', {required: true}))
