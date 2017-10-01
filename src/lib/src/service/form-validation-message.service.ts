@@ -4,10 +4,10 @@ import {Injectable} from '@angular/core';
 export class FormValidationMessageService {
 
   private errorMessages: { [key: string]: string } = {
-    required: 'is required',
-    minlength: 'must be at least {{requiredLength}} characters long',
-    maxlength: 'must be no more than {{requiredLength}} characters long',
-    email: 'must be valid',
+    required: '{{fieldName}} is required',
+    minlength: '{{fieldName}} must be at least {{requiredLength}} characters long',
+    maxlength: '{{fieldName}} must be no more than {{requiredLength}} characters long',
+    email: '{{fieldName}} must be valid',
   };
 
   private fieldsNames: { [key: string]: string };
@@ -27,6 +27,6 @@ export class FormValidationMessageService {
       Object.keys(params).forEach(param =>
         errorMessage = errorMessage.replace('{{' + param + '}}', params[param]));
 
-    return fieldName ? `${fieldName} ${errorMessage}` : errorMessage;
+    return fieldName ? errorMessage.replace('{{fieldName}}', fieldName) : errorMessage;
   }
 }
