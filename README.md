@@ -146,6 +146,18 @@ export class AppModule {
 }
 ```
 
+In case you want to append the field name in messages, set the property `appendFieldNameToMessage` to true.
+```typescript
+@NgModule({
+  imports: [BrowserModule, 
+  FormsExtensionModule.forRoot(undefined,true)],
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
+})
+export class AppModule {
+}
+```
+
 #### Applied CSS Classes
 `fx-field` - The entire form field, including its label and its control.  
 `fx-field--required` - A modifier applied to the form field when it is required.   
