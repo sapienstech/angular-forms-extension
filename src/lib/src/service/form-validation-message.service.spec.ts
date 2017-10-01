@@ -11,8 +11,8 @@ describe('FormValidationMessageService', () => {
       let field: string;
 
       beforeEach(() => {
-        service.appendFieldNameToMessage = appendFieldNameToMessage
-        appendFieldNameToMessage ? field = 'Email ' : "";
+        service.appendFieldNameToMessage = appendFieldNameToMessage;
+        appendFieldNameToMessage ? field = 'Email ' : field = "";
       });
 
       describe('default messages', () => {
