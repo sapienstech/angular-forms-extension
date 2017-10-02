@@ -38,6 +38,10 @@ export class FieldComponent implements AfterContentInit {
     this.formModel.ngModelValidChange.subscribe(_ => this.validValueChanges = false);
   }
 
+  get value() {
+    return this.formModel && this.formModel.value;
+  }
+
   private get required() {
     return this.requiredValidator && this.requiredValidator.required;
   }

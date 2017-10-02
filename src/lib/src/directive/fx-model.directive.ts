@@ -22,6 +22,10 @@ export class FxModelDirective extends AbstractFxDirective implements OnInit, OnD
     super.ngOnDestroy();
   }
 
+  get value() {
+    return this.control.value;
+  }
+
   get valid() {
     return this.control.valid;
   }
