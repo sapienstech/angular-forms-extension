@@ -146,6 +146,9 @@ export class AppModule {
 }
 ```
 
+In case you want the error message to include also the field name, you can put it in your message as placeholder.
+for example: `{{fieldName}} must be at least 5 characters`
+
 #### Applied CSS Classes
 `fx-field` - The entire form field, including its label and its control.  
 `fx-field--required` - A modifier applied to the form field when it is required.   
