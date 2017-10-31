@@ -1,6 +1,6 @@
 {
   "name": "angular-forms-extension",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "A form library empowering Angular's template driven forms",
   "main": "./bundles/quickstart-lib.umd.js",
   "module": "./angular-forms-extension.es5.js",
