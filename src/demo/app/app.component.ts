@@ -62,6 +62,7 @@ export class AppComponent {
                [(ngModel)]="userMailAddress"
                email="">
       </fx-field>
+      <fx-field [label]="'Email'"><label>HELLO WORLD!</label></fx-field>
     </form>
   `
 })
