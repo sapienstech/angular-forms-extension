@@ -54,7 +54,7 @@ export class FieldComponent implements AfterContentInit {
   private get errors() {
     if(this.formModel) {
       const errors = this.formModel.errors;
-      return Object.keys(errors).map(error =>
+      return errors && Object.keys(errors).map(error =>
         this.messageService.getErrorMessage(this.label, error, errors[error]));
     }
   }
