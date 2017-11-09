@@ -39,6 +39,7 @@ export class FieldComponent implements AfterContentInit {
   }
 
   get value() {
+
     return this.formModel && this.formModel.value;
   }
 
