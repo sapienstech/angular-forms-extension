@@ -11,10 +11,12 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [class.fx-field--invalid]="!valid" 
          [class.fx-field--valid-value-changes]="validValueChanges">
       <label class="fx-field__label">{{label}}</label>
-      <span class="fx-field__control"><ng-content></ng-content></span>
-      <span *ngIf="!valid" class="fx-field__errors">
-        <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
-      </span>
+      <div class="fx-field--inputAndError">
+        <span class="fx-field__control"><ng-content></ng-content></span>
+        <span *ngIf="!valid" class="fx-field__errors">
+          <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
+        </span>
+      </div>
     </div>`
 })
 export class FieldComponent implements AfterContentInit {
