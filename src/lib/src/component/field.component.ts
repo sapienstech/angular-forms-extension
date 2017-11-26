@@ -10,6 +10,7 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [class.fx-field--required]="required" 
          [class.fx-field--invalid]="!valid" 
          [class.fx-field--valid-value-changes]="validValueChanges">
+
       <label class="fx-field__label">{{label}}</label>
       <div class="fx-field--inputAndError">
         <span class="fx-field__control"><ng-content></ng-content></span>
