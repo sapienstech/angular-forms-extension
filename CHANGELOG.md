@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.36"></a>
+## [0.1.36](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.35...v0.1.36) (2018-03-15)
+
+
+
 <a name="0.1.35"></a>
 ## [0.1.35](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.34...v0.1.35) (2018-03-15)
 
