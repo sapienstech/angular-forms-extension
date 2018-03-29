@@ -51,6 +51,7 @@ describe('FxFormModelDirective', () => {
   [true, false].forEach(valid =>
     it(`should ${valid ? '' : 'NOT'} be valid when [ngModel] is ${valid ? '' : 'NOT'}`, async(() => {
       instance.value = valid ? 'filling in a required field' : '';
+      instance.markAsDirty();
       fixture.detectChanges();
       fixture.whenStable().then(() => expect(hybridFormModel.valid).toBe(valid));
     })));
@@ -106,6 +107,7 @@ describe('FxFormModelDirective', () => {
 
         it('should emit that the model has changed and is valid (ngModelValidChange)', async(() => {
           instance.ngModel.update.emit('a valid change');
+          instance.markAsDirty();
           fixture.detectChanges();
           fixture.whenStable().then(() => expect(ngModelValidChange).toHaveBeenCalledWith(instance.value));
         }));
@@ -123,10 +125,10 @@ describe('FxFormModelDirective', () => {
 
         it(`should debounce for ${FxForm.defaultValidValueChangeDebounce}ms before emitting (ngModelValidChange)`, fakeAsync(() => {
           instance.ngModel.update.emit('a valid change');
+          instance.markAsDirty();
           fixture.detectChanges();
           tick(FxForm.defaultValidValueChangeDebounce - 1);
-          instance.value = 'another valid change';
-          instance.ngModel.update.emit('a valid change');
+          instance.ngModel.update.emit('another valid change');
           fixture.detectChanges();
           tick(FxForm.defaultValidValueChangeDebounce - 1);
           expect(ngModelValidChange).not.toHaveBeenCalledWith(instance.value);
@@ -145,6 +147,7 @@ describe('FxFormModelDirective', () => {
         ngModelValidValueDebounceStarted = spyOn(hybridFormModel.ngModelValidValueDebounceStarted, 'next');
         ngModelValidChange = spyOn(hybridFormModel.ngModelValidChange, 'emit');
         instance.value = 'sh'; // invalid - it's too short as [minLength]=3
+        instance.markAsDirty();
         fixture.detectChanges();
       }));
 

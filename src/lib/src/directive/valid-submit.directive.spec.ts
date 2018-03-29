@@ -44,7 +44,7 @@ describe('ValidSubmitDirective', () => {
     });
   }));
 
-  it('should not emit (validSubmit) when form is valid', async(() => {
+  it('should emit (validSubmit) when form is valid', async(() => {
     instance.value = 'some new valid value';
     fixture.detectChanges();
     fixture.whenStable().then(() => {

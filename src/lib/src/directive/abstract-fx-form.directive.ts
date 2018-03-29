@@ -23,8 +23,8 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
     this.subscriber.subscribe(this.observable,
       v => this.control.valid ? this.ngModelValidValueDebounceStarted.next(v) : null);
 
-    this.subscriber.subscribe(this.observable.debounceTime(this.ngModelValidChangeDebounce),
-      v => this.control.valid ? this.ngModelValidChange.emit(v) : null);
+    this.subscriber.subscribe(this.control.statusChanges.debounceTime(this.ngModelValidChangeDebounce),
+      v => this.control.valid && !this.control.pristine ? this.ngModelValidChange.emit(this.control.value) : null);
   }
 
   ngOnDestroy() {

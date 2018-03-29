@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {NgControl, NgForm} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
 
 describe('FxFormDirective', () => {
@@ -16,8 +16,10 @@ describe('FxFormDirective', () => {
   })
   class NestedFormComponent {
     @ViewChild(FxForm) fxForm: FxForm;
+    @ViewChild(NgControl) nestedInput: NgControl;
     value = 'nested-value';
   }
+
   @Component({
     selector: 'inner1',
     template: `
@@ -52,6 +54,7 @@ describe('FxFormDirective', () => {
   })
   class TestComponent {
     @ViewChild(NgForm) ngForm: NgForm;
+    @ViewChild(NgControl) input: NgControl;
     @ViewChild(FxForm) fxForm: FxForm;
     @ViewChild(InnerForm1Component) inner1: InnerForm1Component;
     @ViewChild(InnerForm2Component) inner2: InnerForm2Component;
@@ -101,6 +104,7 @@ describe('FxFormDirective', () => {
     it('should emit (ngFormValidChange) when inner value changes value and valid', async(() => {
       const formValidChange = spyOn(instance.fxForm.ngFormValidChange, 'emit');
       instance.inner1.nested.value = 'a valid value'; // valid as it's longer than min 3
+      instance.inner1.nested.nestedInput.control.markAsDirty();
       fixture.detectChanges();
       fixture.whenStable().then(() => expect(formValidChange).toHaveBeenCalledTimes(1));
     }));
@@ -108,6 +112,7 @@ describe('FxFormDirective', () => {
     it('should emit (ngFormValidChange) when a field in the parent value changes value and valid', async(() => {
       const formValidChange = spyOn(instance.fxForm.ngFormValidChange, 'emit');
       instance.value = 'a valid value'; // valid as it's longer than min 3
+      instance.input.control.markAsDirty();
       fixture.detectChanges();
       fixture.whenStable().then(() => expect(formValidChange).toHaveBeenCalledTimes(1));
     }));
