@@ -29,7 +29,7 @@ export class FieldComponent implements AfterContentInit {
   @ContentChild(FxModelDirective)
   private formModel: FxModelDirective;
 
-  private validValueChanges = false;
+  validValueChanges = false;
 
   constructor(private messageService: FormValidationMessageService) {
   }
@@ -46,11 +46,11 @@ export class FieldComponent implements AfterContentInit {
     return this.formModel && this.formModel.value;
   }
 
-  private get required() {
+  get required() {
     return this.requiredValidator && this.requiredValidator.required;
   }
 
-  private get valid() {
+  get valid() {
     return this.formModel &&
       (!this.formModel.groupSubmitted && this.formModel.pristine || this.formModel.valid);
   }
