@@ -3,10 +3,15 @@ import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ViewChild} from '@angular/core';
 import {NgControl, NgForm} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/switch';
+import {AsyncValidatorFormComponent, TestAsyncValidator} from "./fx-form.test.helper";
 
 describe('FxFormDirective', () => {
 
   // region components
+
   @Component({
     selector: 'nested',
     template: `
@@ -63,21 +68,59 @@ describe('FxFormDirective', () => {
 
   //endregion
 
-  let fixture: ComponentFixture<TestComponent>;
-  let instance: TestComponent;
+  describe('async validator', () => {
+    let fixture: ComponentFixture<AsyncValidatorFormComponent>;
+    let instance: AsyncValidatorFormComponent;
 
-  beforeEach(() => {
-    fixture = TestBed.configureTestingModule({
-      imports: [FormsExtensionModule],
-      declarations: [TestComponent, InnerForm1Component, InnerForm2Component, NestedFormComponent]
-    })
-      .createComponent(TestComponent);
-    instance = fixture.componentInstance;
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        imports: [FormsExtensionModule],
+        declarations: [AsyncValidatorFormComponent, TestAsyncValidator]
+      })
+        .createComponent(AsyncValidatorFormComponent);
+      instance = fixture.componentInstance;
+    });
+
+    beforeEach(async(() => fixture.detectChanges()));
+
+
+    describe('value was changed to valid value', () => {
+      it('async validator should emit valid value change', async(() => {
+        const formValidChange = spyOn(instance.fxForm.ngFormValidChange, 'emit');
+        instance.value = instance.validValue;
+        instance.input.control.markAsDirty();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => expect(formValidChange).toHaveBeenCalledTimes(1));
+      }));
+    });
+
+    describe('value was changed to NOT valid value', () => {
+      it('async validator should NOT emit valid value change', async(() => {
+        const formValidChange = spyOn(instance.fxForm.ngFormValidChange, 'emit');
+        instance.value = "blabla";
+        instance.input.control.markAsDirty();
+        fixture.detectChanges();
+        fixture.whenStable().then(() => expect(formValidChange).not.toHaveBeenCalled());
+      }));
+    });
+
   });
 
-  beforeEach(async(() => fixture.detectChanges()));
-
   describe('form building', () => {
+    let fixture: ComponentFixture<TestComponent>;
+    let instance: TestComponent;
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        imports: [FormsExtensionModule],
+        declarations: [TestComponent, InnerForm1Component, InnerForm2Component, NestedFormComponent]
+      })
+        .createComponent(TestComponent);
+      instance = fixture.componentInstance;
+    });
+
+    beforeEach(async(() => fixture.detectChanges()));
+
     it('should build a form from all the inner forms', async(() => {
       expect(JSON.stringify(instance.ngForm.form.value)).toBe(`
         {

@@ -75,8 +75,4 @@ export class FxForm extends AbstractFxDirective implements OnInit {
   }
 
   private unique = 0;
-
-  protected get observable(): Observable<any> {
-    return this.control.valueChanges;
-  }
 }
