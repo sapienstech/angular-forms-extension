@@ -66,8 +66,10 @@ describe('FxFormModelDirective', () => {
         fixture.detectChanges();
         tick(initialDelay);
 
-        fixture.detectChanges();
-        tick( AbstractFxDirective.defaultValidValueChangeDebounce);
+        for (let i = 0; i < AbstractFxDirective.defaultValidValueChangeDebounce; i++) {
+          fixture.detectChanges();
+          tick(1);
+        }
         expect(modelValidChange).not.toHaveBeenCalled();
       }));
     });
