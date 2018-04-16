@@ -28,7 +28,7 @@ export class TestAsyncValidator implements Validator {
   validate(control: AbstractControl): ValidationErrors | any {
     let returnValue = null;
     if(!control.value || control.value !== this.validValue) {
-      returnValue = {"testAsyncValidator": {value: "true"}};
+      returnValue = {"required": {value: "true"}};
     }
     return Observable.of(returnValue).delay(this.delay);
   }
@@ -43,6 +43,24 @@ export class TestAsyncValidator implements Validator {
       </form>`
 })
 export class AsyncValidatorFormComponent {
+  @ViewChild(FxForm) fxForm: FxForm;
+  @ViewChild(NgModel) ngModel: NgModel;
+  @ViewChild(FxModelDirective) fxModel: FxModelDirective;
+  value = 'value';
+  delay = AbstractFxDirective.defaultValidValueChangeDebounce - 1;
+  validValue = "someValidValue"
+}
+
+@Component({
+  selector: 'asyncValidatorFxFieldTestComponent',
+  template: `
+    <form>
+      <fx-field label="User Name"><input [(ngModel)]="value" [name]="'input'" testAsyncValidator
+                                         [delay]="delay"
+                                         [validValue]="validValue"></fx-field>
+    </form>`
+})
+export class AsyncValidatorFxFieldTestComponent {
   @ViewChild(FxForm) fxForm: FxForm;
   @ViewChild(NgModel) ngModel: NgModel;
   @ViewChild(FxModelDirective) fxModel: FxModelDirective;

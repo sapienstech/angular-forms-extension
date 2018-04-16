@@ -26,11 +26,15 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
     this.subscriber.subscribe(this.observable.switchMap(v => {
         return this.control.statusChanges.filter(status => status === "VALID").map(() => v);
       }).debounceTime(this.ngModelValidChangeDebounce),
-      v => v === this.control.value ? this.ngModelValidChange.emit(v) : null);
+      v => this.isEventValueEqualsControlValue(v) ? this.ngModelValidChange.emit(v) : null);
   }
 
   ngOnDestroy() {
     this.subscriber.unsubscribe();
+  }
+
+  private isEventValueEqualsControlValue(eventValue: any){
+    return eventValue === this.control.value;
   }
 
   protected abstract get control(): AbstractControl;
