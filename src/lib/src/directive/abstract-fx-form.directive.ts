@@ -1,10 +1,14 @@
 import {AbstractControl} from '@angular/forms';
 import {EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/do';
 import {SubscriberService} from '../service/subscriber.service';
 import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
+import "rxjs/add/operator/filter";
+import "rxjs/add/observable/of";
+import "rxjs/add/operator/map";
+//import {VALID} from "@angular/forms/src/model";
 
 export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
@@ -14,17 +18,15 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
   @Output() ngModelValidChange = new EventEmitter();
 
-  ngModelValidValueDebounceStarted = new Subject();
-
   constructor(protected subscriber: SubscriberService) {
   }
 
   ngOnInit() {
-    this.subscriber.subscribe(this.observable,
-      v => this.control.valid ? this.ngModelValidValueDebounceStarted.next(v) : null);
 
-    this.subscriber.subscribe(this.observable.debounceTime(this.ngModelValidChangeDebounce),
-      v => this.control.valid ? this.ngModelValidChange.emit(v) : null);
+    this.subscriber.subscribe(this.observable.switchMap(v => {
+        return this.control.statusChanges.filter(status => status === "VALID").map(() => v);
+      }).debounceTime(this.ngModelValidChangeDebounce),
+      v => v === this.control.value ? this.ngModelValidChange.emit(v) : null);
   }
 
   ngOnDestroy() {

@@ -8,8 +8,7 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
   template: `
     <div class="fx-field"
          [class.fx-field--required]="required" 
-         [class.fx-field--invalid]="!valid" 
-         [class.fx-field--valid-value-changes]="validValueChanges">
+         [class.fx-field--invalid]="!valid">
 
       <label class="fx-field__label">{{label}}</label>
       <div class="fx-field--inputAndError">
@@ -20,7 +19,7 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
       </div>
     </div>`
 })
-export class FieldComponent implements AfterContentInit {
+export class FieldComponent {
   @Input() label: string;
 
   @ContentChild(RequiredValidator)
@@ -29,16 +28,7 @@ export class FieldComponent implements AfterContentInit {
   @ContentChild(FxModelDirective)
   private formModel: FxModelDirective;
 
-  private validValueChanges = false;
-
   constructor(private messageService: FormValidationMessageService) {
-  }
-
-  ngAfterContentInit(): void {
-    if (this.formModel) {
-      this.formModel.ngModelValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
-      this.formModel.ngModelValidChange.subscribe(_ => this.validValueChanges = false);
-    }
   }
 
   get value() {

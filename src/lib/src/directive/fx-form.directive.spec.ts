@@ -3,6 +3,7 @@ import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
+import {AsyncValidatorFormComponent, TestAsyncValidator} from "./fx-form.test.helper";
 
 describe('FxFormDirective', () => {
 
@@ -60,6 +61,43 @@ describe('FxFormDirective', () => {
 
   //endregion
 
+  describe('async validator', () => {
+    let fixture: ComponentFixture<AsyncValidatorFormComponent>;
+    let instance: AsyncValidatorFormComponent;
+
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        imports: [FormsExtensionModule],
+        declarations: [AsyncValidatorFormComponent, TestAsyncValidator]
+      })
+        .createComponent(AsyncValidatorFormComponent);
+      instance = fixture.componentInstance;
+    });
+
+    beforeEach(async(() => fixture.detectChanges()));
+
+
+    describe('value was changed to valid value', () => {
+      it('async validator should emit valid value change', async(() => {
+        const formValidChange = spyOn(instance.fxForm.ngFormValidChange, 'emit');
+        instance.ngModel.update.emit(instance.validValue);
+        fixture.detectChanges();
+        fixture.whenStable().then(() => expect(formValidChange).toHaveBeenCalledTimes(1));
+      }));
+    });
+
+    describe('value was changed to NOT valid value', () => {
+      it('async validator should NOT emit valid value change', async(() => {
+        const formValidChange = spyOn(instance.fxForm.ngFormValidChange, 'emit');
+        instance.ngModel.update.emit("blabla");
+        fixture.detectChanges();
+        fixture.whenStable().then(() => expect(formValidChange).not.toHaveBeenCalled());
+      }));
+    });
+
+  });
+
+  describe('form building', () => {
   let fixture: ComponentFixture<TestComponent>;
   let instance: TestComponent;
 
@@ -74,7 +112,6 @@ describe('FxFormDirective', () => {
 
   beforeEach(async(() => fixture.detectChanges()));
 
-  describe('form building', () => {
     it('should build a form from all the inner forms', async(() => {
       expect(JSON.stringify(instance.ngForm.form.value)).toBe(`
         {
