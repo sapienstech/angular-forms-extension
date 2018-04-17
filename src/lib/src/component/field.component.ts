@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ContentChild, Input} from '@angular/core';
+import {Component, ContentChild, Input} from '@angular/core';
 import {RequiredValidator} from '@angular/forms';
 import {FxModelDirective} from '../directive/fx-model.directive';
 import {FormValidationMessageService} from '../service/form-validation-message.service';

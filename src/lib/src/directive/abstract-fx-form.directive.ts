@@ -8,11 +8,12 @@ import 'rxjs/add/operator/switchMap';
 import "rxjs/add/operator/filter";
 import "rxjs/add/observable/of";
 import "rxjs/add/operator/map";
-//import {VALID} from "@angular/forms/src/model";
 
 export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
   static readonly defaultValidValueChangeDebounce = 400;
+
+  static readonly VALID = "VALID";
 
   @Input() ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
 
@@ -24,16 +25,16 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.subscriber.subscribe(this.observable.switchMap(v => {
-        return this.control.statusChanges.filter(status => status === "VALID").map(() => v);
+        return this.control.statusChanges.filter(status => status === AbstractFxDirective.VALID).map(() => v);
       }).debounceTime(this.ngModelValidChangeDebounce),
-      v => this.isEventValueEqualsControlValue(v) ? this.ngModelValidChange.emit(v) : null);
+      v => this.isViewToModelChange(v) ? this.ngModelValidChange.emit(v) : null);
   }
 
   ngOnDestroy() {
     this.subscriber.unsubscribe();
   }
 
-  private isEventValueEqualsControlValue(eventValue: any){
+  private isViewToModelChange(eventValue){
     return eventValue === this.control.value;
   }
 
