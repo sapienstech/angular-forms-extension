@@ -8,6 +8,7 @@ import {AbstractFxDirective} from "./abstract-fx-form.directive";
 import {FxForm} from "./fx-form.directive";
 import {FxModelDirective} from "./fx-model.directive";
 import "rxjs/add/operator/delay";
+import {AsyncValidator} from "@angular/forms/src/directives/validators";
 
 @Directive({
   selector: '[testAsyncValidator]',
@@ -15,7 +16,7 @@ import "rxjs/add/operator/delay";
     {provide: NG_ASYNC_VALIDATORS, useExisting: forwardRef(() => TestAsyncValidator), multi: true}
   ]
 })
-export class TestAsyncValidator implements Validator {
+export class TestAsyncValidator implements AsyncValidator {
 
   @Input()
   delay: number;
@@ -25,7 +26,7 @@ export class TestAsyncValidator implements Validator {
   constructor() {
   }
 
-  validate(control: AbstractControl): ValidationErrors | any {
+  validate(control: AbstractControl): Promise<ValidationErrors> | Observable<ValidationErrors> {
     let returnValue = null;
     if(!control.value || control.value !== this.validValue) {
       returnValue = {"required": {value: "true"}};

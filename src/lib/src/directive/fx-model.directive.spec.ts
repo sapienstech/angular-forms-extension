@@ -12,7 +12,7 @@ describe('FxFormModelDirective', () => {
   describe('async validators', () => {
     let fixture: ComponentFixture<AsyncValidatorFormComponent>;
     let instance: AsyncValidatorFormComponent;
-
+    let modelValidChange: jasmine.Spy;
     beforeEach(() => {
       fixture = TestBed.configureTestingModule({
         imports: [FormsExtensionModule],
@@ -22,11 +22,13 @@ describe('FxFormModelDirective', () => {
       instance = fixture.componentInstance;
     });
 
-    beforeEach(async(() => fixture.detectChanges()));
+    beforeEach(async(() => {
+      fixture.detectChanges()
+      modelValidChange = spyOn(instance.fxModel.ngModelValidChange, 'emit');
+    }));
 
     describe('value was changed to valid value', () => {
       it('async validator should emit valid value change', async(() => {
-        const modelValidChange = spyOn(instance.fxModel.ngModelValidChange, 'emit');
         instance.ngModel.update.emit(instance.validValue);
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(modelValidChange).toHaveBeenCalledTimes(1));
@@ -35,7 +37,6 @@ describe('FxFormModelDirective', () => {
 
     describe('value was changed to NOT valid value', () => {
       it('async validator should NOT emit valid value change', async(() => {
-        const modelValidChange = spyOn(instance.fxModel.ngModelValidChange, 'emit');
         instance.ngModel.update.emit("blabla");
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(modelValidChange).not.toHaveBeenCalled());
@@ -44,19 +45,27 @@ describe('FxFormModelDirective', () => {
 
     describe('value was changed to NOT valid value from UI and and while validating changed programmatically to valid value', () => {
       it('async validator should NOT emit valid value change', fakeAsync(() => {
-        const modelValidChange = spyOn(instance.fxModel.ngModelValidChange, 'emit');
-        let notValidChange = "notValid"
         let initialDelay = 10;
 
         instance.delay = initialDelay;
-        fixture.detectChanges();
-        tick(1);
 
-        instance.ngModel.update.emit(notValidChange);
+        changeToInvalidValueFromUI();
 
-        fixture.detectChanges();
-        tick(1);
+        changeToValidValueProgrammatically(initialDelay);
 
+        waitForDebounceToEnd();
+
+        expect(modelValidChange).not.toHaveBeenCalled();
+      }));
+
+      function waitForDebounceToEnd(){
+        for (let i = 0; i < AbstractFxDirective.defaultValidValueChangeDebounce; i++) {
+          fixture.detectChanges();
+          tick(1);
+        }
+      }
+
+      function changeToValidValueProgrammatically(timeToWaitAfterChange) {
         instance.delay = 1;
         fixture.detectChanges();
         tick(1);
@@ -64,14 +73,18 @@ describe('FxFormModelDirective', () => {
         instance.value = instance.validValue;
 
         fixture.detectChanges();
-        tick(initialDelay);
+        tick(timeToWaitAfterChange);
+      }
 
-        for (let i = 0; i < AbstractFxDirective.defaultValidValueChangeDebounce; i++) {
-          fixture.detectChanges();
-          tick(1);
-        }
-        expect(modelValidChange).not.toHaveBeenCalled();
-      }));
+      function changeToInvalidValueFromUI(){
+        fixture.detectChanges();
+        tick(1);
+
+        instance.ngModel.update.emit("notValid");
+
+        fixture.detectChanges();
+        tick(1);
+      }
     });
   });
 
