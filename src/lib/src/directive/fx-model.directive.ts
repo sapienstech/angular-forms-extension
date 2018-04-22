@@ -34,6 +34,10 @@ export class FxModelDirective extends AbstractFxDirective implements OnInit, OnD
     return this.control.pristine;
   }
 
+  get pending() {
+    return this.control.pending;
+  }
+
   get groupSubmitted() {
     return this.parent && this.parent.submitted;
   }

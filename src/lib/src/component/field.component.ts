@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, ContentChild, Input} from '@angular/core';
+import {Component, ContentChild, Input} from '@angular/core';
 import {RequiredValidator} from '@angular/forms';
 import {FxModelDirective} from '../directive/fx-model.directive';
 import {FormValidationMessageService} from '../service/form-validation-message.service';
@@ -8,19 +8,19 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
   template: `
     <div class="fx-field"
          [class.fx-field--required]="required" 
-         [class.fx-field--invalid]="!valid" 
-         [class.fx-field--valid-value-changes]="validValueChanges">
+         [class.fx-field--invalid]="invalid" 
+         [class.fx-field--pending-validation]="pending">
 
       <label class="fx-field__label">{{label}}</label>
       <div class="fx-field--inputAndError">
         <span class="fx-field__control"><ng-content></ng-content></span>
-        <span *ngIf="!valid" class="fx-field__errors">
+        <span *ngIf="invalid" class="fx-field__errors">
           <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
         </span>
       </div>
     </div>`
 })
-export class FieldComponent implements AfterContentInit {
+export class FieldComponent {
   @Input() label: string;
 
   @ContentChild(RequiredValidator)
@@ -29,16 +29,7 @@ export class FieldComponent implements AfterContentInit {
   @ContentChild(FxModelDirective)
   private formModel: FxModelDirective;
 
-  private validValueChanges = false;
-
   constructor(private messageService: FormValidationMessageService) {
-  }
-
-  ngAfterContentInit(): void {
-    if (this.formModel) {
-      this.formModel.ngModelValidValueDebounceStarted.subscribe(_ => this.validValueChanges = true);
-      this.formModel.ngModelValidChange.subscribe(_ => this.validValueChanges = false);
-    }
   }
 
   get value() {
@@ -53,6 +44,14 @@ export class FieldComponent implements AfterContentInit {
   private get valid() {
     return this.formModel &&
       (!this.formModel.groupSubmitted && this.formModel.pristine || this.formModel.valid);
+  }
+
+  private get invalid() {
+    return !this.valid && !this.pending;
+  }
+
+  private get pending() {
+    return this.formModel && this.formModel.pending;
   }
 
   private get errors() {
