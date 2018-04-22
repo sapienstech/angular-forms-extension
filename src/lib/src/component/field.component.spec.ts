@@ -105,55 +105,35 @@ describe('FieldComponent', () => {
         instance = fixture.componentInstance;
       }));
 
+      it('style should be pending validation while status is PENDING', fakeAsync(() => {
+        let notValidChange = "notValid"
+        let initialDelay = 10;
 
-      describe('when the user just started typing', () => {
-        beforeEach(fakeAsync(() => {
-          let notValidChange = "notValid";
-          let initialDelay = 10;
+        instance.delay = initialDelay;
+        fixture.detectChanges();
+        tick(1);
 
-          instance.delay = initialDelay;
+        instance.ngModel.update.emit(notValidChange);
+        instance.ngModel.control.markAsDirty();
+        fixture.detectChanges();
+        tick(1);
+
+        expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeFalsy();
+        expect(fixture.debugElement.query(By.css('.fx-field--pending-validation'))).toBeTruthy();
+        expect(fixture.debugElement.query(By.css('.fx-field__error'))).toBeFalsy();
+
+        for (let i = 0; i < AbstractFxDirective.defaultValidValueChangeDebounce; i++) {
           fixture.detectChanges();
           tick(1);
+        }
+        expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeTruthy();
 
-          instance.ngModel.update.emit(notValidChange);
-          instance.ngModel.control.markAsDirty();
-          fixture.detectChanges();
-          tick(1);
+        expect(fixture.debugElement.query(By.css('.fx-field__error')).nativeElement.innerHTML)
+          .toBe('User Name is required');
 
-        }));
-        it('should show invalid status', () => {
-          expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeFalsy();
-        });
-        it('should show pending validation', () => {
-          expect(fixture.debugElement.query(By.css('.fx-field--pending-validation'))).toBeTruthy();
-        });
-        it('should NOT show errors since the validation was not ended', () => {
-          expect(fixture.debugElement.query(By.css('.fx-field__error'))).toBeFalsy();
-        });
-        describe('when validatiaon was ended', () => {
-          beforeEach(fakeAsync(() => {
-            for (let i = 0; i < AbstractFxDirective.defaultValidValueChangeDebounce; i++) {
-              fixture.detectChanges();
-              tick(1);
-            }
-          }));
-          it('should show invalid status', () => {
-            expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeTruthy();
-          });
-          it('should NOT show pending validation', () => {
-            expect(fixture.debugElement.query(By.css('.fx-field--pending-validation'))).toBeFalsy();
-          });
-          it('should show errors', () => {
-            expect(fixture.debugElement.query(By.css('.fx-field__error')).nativeElement.innerHTML)
-              .toBe('User Name is required');
-          });
-
-        })
-      });
-
+        expect(fixture.debugElement.query(By.css('.fx-field--pending-validation'))).toBeFalsy();
+      }));
     });
   });
-
-
 });
 
