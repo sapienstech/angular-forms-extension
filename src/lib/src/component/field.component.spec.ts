@@ -105,7 +105,7 @@ describe('FieldComponent', () => {
         instance = fixture.componentInstance;
       }));
 
-      it('style should be pending validation while status is PENDING', fakeAsync(() => {
+      it('styles should be pending validation while status is PENDING and with no invalid style', fakeAsync(() => {
         let notValidChange = "notValid"
         let initialDelay = 10;
 
