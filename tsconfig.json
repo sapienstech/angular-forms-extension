@@ -10,10 +10,12 @@
     "suppressImplicitAnyIndexErrors": true,
     "skipLibCheck": true,
     "stripInternal": true,
-    "preserveWhitespaces": false,
     "lib": [
       "es2015",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "preserveWhitespaces": "off"
   }
 }

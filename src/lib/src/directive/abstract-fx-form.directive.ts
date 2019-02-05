@@ -1,13 +1,15 @@
+
+import {map, filter, debounceTime, switchMap} from 'rxjs/operators';
 import {AbstractControl} from '@angular/forms';
 import {EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/do';
+
+
 import {SubscriberService} from '../service/subscriber.service';
-import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/switchMap';
-import "rxjs/add/operator/filter";
-import "rxjs/add/observable/of";
-import "rxjs/add/operator/map";
+import {Observable} from 'rxjs';
+
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
 
 export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
@@ -24,9 +26,9 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.subscriber.subscribe(this.observable.switchMap(v => {
-        return this.control.statusChanges.filter(status => status === AbstractFxDirective.VALID).map(() => v);
-      }).debounceTime(this.ngModelValidChangeDebounce),
+    this.subscriber.subscribe(this.observable.pipe(switchMap(v => {
+        return this.control.statusChanges.pipe(filter(status => status === AbstractFxDirective.VALID),map(() => v),);
+      }), debounceTime(this.ngModelValidChangeDebounce),),
       v => this.isViewToModelChange(v) ? this.ngModelValidChange.emit(v) : null);
   }
 

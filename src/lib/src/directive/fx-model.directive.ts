@@ -3,7 +3,7 @@ import {FormControl, NgModel} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {SubscriberService} from '../service/subscriber.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Directive({selector: `[ngModel]`, providers: [SubscriberService]})
 export class FxModelDirective extends AbstractFxDirective implements OnInit, OnDestroy {

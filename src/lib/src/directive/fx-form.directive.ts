@@ -13,7 +13,7 @@ import {
 import {FormGroup, NgForm} from '@angular/forms';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {SubscriberService} from '../service/subscriber.service';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 @Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`, providers: [SubscriberService]})
 export class FxForm extends AbstractFxDirective implements OnInit {
