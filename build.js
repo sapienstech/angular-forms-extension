@@ -51,7 +51,7 @@ const rollupOutputBase = {
 };
 
 return Promise.resolve()
-// Copy library to temporary folder and inline html/css.
+// Copy library to temporary folder and inline html/css
   .then(() => _relativeCopy(`**/*`, srcFolder, tempLibFolder)
   .then(() => inlineResources(tempLibFolder))
 .then(() => console.log('Inlining succeeded.'))
