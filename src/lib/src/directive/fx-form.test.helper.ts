@@ -1,13 +1,16 @@
+
+import {of as observableOf, Observable} from 'rxjs';
+
+import {delay} from 'rxjs/operators';
 import {
   AbstractControl, NG_ASYNC_VALIDATORS, NgControl, NgModel, ValidationErrors,
   Validator
 } from "@angular/forms";
-import {Observable} from "rxjs/Observable";
 import {Component, Directive, forwardRef, Input, ViewChild} from "@angular/core";
 import {AbstractFxDirective} from "./abstract-fx-form.directive";
 import {FxForm} from "./fx-form.directive";
 import {FxModelDirective} from "./fx-model.directive";
-import "rxjs/add/operator/delay";
+
 import {AsyncValidator} from "@angular/forms/src/directives/validators";
 
 @Directive({
@@ -31,7 +34,7 @@ export class TestAsyncValidator implements AsyncValidator {
     if(!control.value || control.value !== this.validValue) {
       returnValue = {"required": {value: "true"}};
     }
-    return Observable.of(returnValue).delay(this.delay);
+    return observableOf(returnValue).pipe(delay(this.delay));
   }
 }
 

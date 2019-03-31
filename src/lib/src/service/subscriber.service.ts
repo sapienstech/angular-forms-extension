@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Subscription} from 'rxjs/Subscription';
-import {Observable} from 'rxjs/Observable';
+import {Subscription, Observable} from 'rxjs';
 
 @Injectable()
 export class SubscriberService {
