@@ -10,7 +10,7 @@ import {Component, Directive, forwardRef, Input, ViewChild} from "@angular/core"
 import {AbstractFxDirective} from "./abstract-fx-form.directive";
 import {FxForm} from "./fx-form.directive";
 import {FxModelDirective} from "./fx-model.directive";
-import "rxjs/add/operator/delay";
+
 import {AsyncValidator} from "@angular/forms/src/directives/validators";
 
 @Directive({

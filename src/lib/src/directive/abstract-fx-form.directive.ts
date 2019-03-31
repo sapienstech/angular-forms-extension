@@ -7,9 +7,6 @@ import {EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {SubscriberService} from '../service/subscriber.service';
 import {Observable} from 'rxjs';
 
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/map';
 
 export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
