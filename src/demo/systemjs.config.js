@@ -25,6 +25,7 @@
 
       // other libraries
       'rxjs': 'npm:rxjs',
+      'rxjs/operators': '/node_modules/rxjs/operators/index.js',
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -36,7 +37,8 @@
           }
         }
       },
-      rxjs: {
+      'rxjs': {
+        main: 'bundles/rxjs.umd.js',
         defaultExtension: 'js'
       },
       'quickstart-lib': {

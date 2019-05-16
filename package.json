@@ -1,6 +1,6 @@
 {
   "name": "angular-forms-extension",
-  "version": "0.1.72",
+  "version": "0.1.75",
   "description": "A form library empowering Angular's template driven forms",
   "main": "./bundles/quickstart-lib.umd.js",
   "module": "./angular-forms-extension.es5.js",
@@ -69,6 +69,6 @@
   },
   "dependencies": {
     "@angular/cli": "^7.3.0",
-    "rxjs-compat": "^6.0.0-rc.0"
+    "rxjs": "6.4.0"
   }
 }

@@ -4,8 +4,8 @@ import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ViewChild} from '@angular/core';
 import {FxModelDirective} from './fx-model.directive';
 import {NgForm, NgModel} from '@angular/forms';
-import {AsyncValidatorFormComponent, TestAsyncValidator} from "./fx-form.test.helper";
-import {AbstractFxDirective} from "./abstract-fx-form.directive";
+import {AsyncValidatorFormComponent, TestAsyncValidator} from './fx-form.test.helper';
+import {AbstractFxDirective} from './abstract-fx-form.directive';
 
 describe('FxFormModelDirective', () => {
 
@@ -37,7 +37,7 @@ describe('FxFormModelDirective', () => {
 
     describe('value was changed to NOT valid value', () => {
       it('async validator should NOT emit valid value change', async(() => {
-        instance.ngModel.update.emit("blabla");
+        instance.ngModel.update.emit('blabla');
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(modelValidChange).not.toHaveBeenCalled());
       }));
@@ -58,7 +58,7 @@ describe('FxFormModelDirective', () => {
         expect(modelValidChange).not.toHaveBeenCalled();
       }));
 
-      function waitForDebounceToEnd(){
+      function waitForDebounceToEnd() {
         for (let i = 0; i < AbstractFxDirective.defaultValidValueChangeDebounce; i++) {
           fixture.detectChanges();
           tick(1);
@@ -76,11 +76,11 @@ describe('FxFormModelDirective', () => {
         tick(timeToWaitAfterChange);
       }
 
-      function changeToInvalidValueFromUI(){
+      function changeToInvalidValueFromUI() {
         fixture.detectChanges();
         tick(1);
 
-        instance.ngModel.update.emit("notValid");
+        instance.ngModel.update.emit('notValid');
 
         fixture.detectChanges();
         tick(1);
@@ -142,7 +142,7 @@ describe('FxFormModelDirective', () => {
 
     [true, false].forEach(pristine =>
       it(`should ${pristine ? '' : 'NOT'} be pristine when [ngModel] is ${pristine ? '' : 'NOT'}`, async(() => {
-        if (!pristine) instance.markAsDirty();
+        if (!pristine) { instance.markAsDirty(); }
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(hybridFormModel.pristine).toBe(pristine));
       })));
@@ -155,7 +155,7 @@ describe('FxFormModelDirective', () => {
 
     [true, false].forEach(submitted =>
       it(`should ${submitted ? '' : 'NOT'} be submitted when parent [ngForm] is ${submitted ? '' : 'NOT'}`, async(() => {
-        if (submitted) instance.ngForm.onSubmit(new Event('click'));
+        if (submitted) { instance.ngForm.onSubmit(new Event('click')); }
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(hybridFormModel.groupSubmitted).toBe(submitted));
       })));
