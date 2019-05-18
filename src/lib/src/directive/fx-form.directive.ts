@@ -1,29 +1,30 @@
-import {Directive, ElementRef, EventEmitter, Input, OnInit, Optional, Output, Renderer2, Self, SkipSelf} from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  Renderer2,
+  Self,
+  SkipSelf
+} from '@angular/core';
 import {FormGroup, NgForm} from '@angular/forms';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {SubscriberService} from '../service/subscriber.service';
 import {Observable} from 'rxjs';
 
-@Directive({
-    selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`,
-    providers: [SubscriberService],
-    inputs: AbstractFxDirective.INPUTS,
-    outputs: AbstractFxDirective.OUTPUTS
-  }
-)
+@Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`, providers: [SubscriberService]})
 export class FxForm extends AbstractFxDirective implements OnInit {
-
-  private unique = 0;
-
   constructor(protected subscriber: SubscriberService,
               private el: ElementRef,
               private renderer: Renderer2,
               @Self() protected self: NgForm,
               @Optional() @SkipSelf() protected parent: FxForm) {
     super(subscriber);
-    if (parent) {
+    if(parent)
       parent.addFormGroup(self);
-    }
   }
 
   @Input()
@@ -72,6 +73,8 @@ export class FxForm extends AbstractFxDirective implements OnInit {
   private addFormGroup(formGroup: NgForm) {
     this.self.form.addControl(formGroup.name || this.sequence, formGroup.form);
   }
+
+  private unique = 0;
 
   protected get observable(): Observable<any> {
     return this.control.valueChanges;

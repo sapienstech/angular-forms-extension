@@ -5,12 +5,7 @@ import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {SubscriberService} from '../service/subscriber.service';
 import {Observable} from 'rxjs';
 
-@Directive({
-  selector: `[ngModel]`,
-  providers: [SubscriberService],
-  inputs: AbstractFxDirective.INPUTS,
-  outputs: AbstractFxDirective.OUTPUTS
-})
+@Directive({selector: `[ngModel]`, providers: [SubscriberService]})
 export class FxModelDirective extends AbstractFxDirective implements OnInit, OnDestroy {
 
   constructor(protected subscriber: SubscriberService,

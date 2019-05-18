@@ -1,4 +1,5 @@
-import {debounceTime, filter, map, switchMap} from 'rxjs/operators';
+
+import {map, filter, debounceTime, switchMap} from 'rxjs/operators';
 import {AbstractControl} from '@angular/forms';
 import {EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
@@ -11,9 +12,7 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
   static readonly defaultValidValueChangeDebounce = 400;
 
-  static readonly VALID = 'VALID';
-  static readonly INPUTS = ['ngModelValidChangeDebounce'];
-  static readonly OUTPUTS = ['ngModelValidChange'];
+  static readonly VALID = "VALID";
 
   @Input() ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
 
@@ -25,8 +24,8 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.subscriber.subscribe(this.observable.pipe(switchMap(v => {
-        return this.control.statusChanges.pipe(filter(status => status === AbstractFxDirective.VALID), map(() => v),);
-      }), debounceTime(this.ngModelValidChangeDebounce)),
+        return this.control.statusChanges.pipe(filter(status => status === AbstractFxDirective.VALID),map(() => v),);
+      }), debounceTime(this.ngModelValidChangeDebounce),),
       v => this.isViewToModelChange(v) ? this.ngModelValidChange.emit(v) : null);
   }
 
@@ -34,7 +33,7 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
     this.subscriber.unsubscribe();
   }
 
-  private isViewToModelChange(eventValue) {
+  private isViewToModelChange(eventValue){
     return eventValue === this.control.value;
   }
 
