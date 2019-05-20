@@ -3,10 +3,12 @@ import {FormGroup, NgForm} from '@angular/forms';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {SubscriberService} from '../service/subscriber.service';
 import {Observable} from 'rxjs';
-import {debounceTime, filter, map, switchMap} from 'rxjs/operators';
 
 @Directive({selector: `form:not([ngNoForm]):not([formGroup]),ngForm,[ngForm]`, providers: [SubscriberService]})
 export class FxForm extends AbstractFxDirective implements OnInit, OnDestroy {
+
+  private unique = 0;
+
   constructor(protected subscriber: SubscriberService,
               private el: ElementRef,
               private renderer: Renderer2,
@@ -53,7 +55,7 @@ export class FxForm extends AbstractFxDirective implements OnInit, OnDestroy {
     return this.control.valueChanges;
   }
 
-  private unique = 0;
+
 
   ngOnInit() {
     super.operateWithAsyncValidator();

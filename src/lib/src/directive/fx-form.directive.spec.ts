@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
@@ -20,7 +20,6 @@ describe('FxFormDirective', () => {
     @ViewChild(FxForm) fxForm: FxForm;
     value = 'nested-value';
   }
-
   @Component({
     selector: 'inner1',
     template: `
@@ -77,6 +76,7 @@ describe('FxFormDirective', () => {
     });
 
     beforeEach(async(() => fixture.detectChanges()));
+
 
     describe('value was changed to valid value', () => {
       it('async validator should emit valid value change', async(() => {

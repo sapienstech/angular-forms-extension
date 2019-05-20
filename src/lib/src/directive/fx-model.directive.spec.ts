@@ -7,7 +7,6 @@ import {NgForm, NgModel} from '@angular/forms';
 import {AsyncValidatorFormComponent, TestAsyncValidator} from './fx-form.test.helper';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {By} from '@angular/platform-browser';
-// import {detectChanges} from '@angular/core/src/render3';
 
 describe('fx-model-directive', () => {
 
@@ -53,7 +52,6 @@ describe('fx-model-directive', () => {
     });
     describe('value was changed to valid value', () => {
       it('async validator should emit valid value change', async(() => {
-        // instance.ngModel.update.emit(instance.validValue);
         sendInputValue(fixture, 'input', instance.validValue);
 
         fixture.detectChanges();
@@ -63,7 +61,6 @@ describe('fx-model-directive', () => {
 
     describe('value was changed to NOT valid value', () => {
       it('async validator should NOT emit valid value change', async(() => {
-        // instance.ngModel.update.emit('blabla');
         sendInputValue(fixture, 'input', 'blabla');
 
         fixture.detectChanges();
@@ -108,15 +105,12 @@ describe('fx-model-directive', () => {
         fixture.detectChanges();
         tick(1);
 
-        // instance.ngModel.update.emit('notValid');
         sendInputValue(fixture, 'input', 'notValid');
 
         fixture.detectChanges();
         tick(1);
       }
     });
-
-
   });
 
   describe('sync validators', () => {
@@ -225,7 +219,6 @@ describe('fx-model-directive', () => {
 
           it(`should debounce for ${FxForm.defaultValidValueChangeDebounce}ms before emitting (ngModelValidChange)`, fakeAsync(() => {
             const valueChangeToEmit = 'another valid change 2';
-            // instance.ngModel.update.emit('another valid change');
             sendInputValue(fixture, 'input', 'another valid change');
 
             fixture.detectChanges();
@@ -255,7 +248,6 @@ describe('fx-model-directive', () => {
           expect(ngModelValidChange).not.toHaveBeenCalledWith(instance.value);
         }));
       });
-
     });
 
     describe('clearing out the subscriptions', () => {

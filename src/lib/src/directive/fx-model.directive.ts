@@ -21,10 +21,6 @@ export class FxModelDirective extends AbstractFxDirective implements OnInit, OnD
     super.ngOnInit();
   }
 
-  ngAfterViewInit(): void {
-    // super.ngOnInit();
-  }
-
   ngOnDestroy() {
     super.ngOnDestroy();
   }

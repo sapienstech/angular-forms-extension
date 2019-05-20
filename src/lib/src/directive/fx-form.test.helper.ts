@@ -27,7 +27,6 @@ export class TestAsyncValidator implements AsyncValidator {
 
   validate(control: AbstractControl): Promise<ValidationErrors> | Observable<ValidationErrors> {
     let returnValue = null;
-    // if (!control.value || !control.value.startsWith(this.validValue)) {
     if (!control.value || control.value !== this.validValue) {
       returnValue = {required: {value: 'true'}};
     }

@@ -9,14 +9,11 @@ import {Observable} from 'rxjs';
 
 export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
-
   static readonly defaultValidValueChangeDebounce = 400;
 
   static readonly VALID = 'VALID';
 
   @Input() ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
-
-  @Input() viewToModel: boolean;
 
   @Output() ngModelValidChange = new EventEmitter();
 
