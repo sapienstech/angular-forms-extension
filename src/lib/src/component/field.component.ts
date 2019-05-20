@@ -7,8 +7,8 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
   selector: 'fx-field',
   template: `
     <div class="fx-field"
-         [class.fx-field--required]="required" 
-         [class.fx-field--invalid]="invalid" 
+         [class.fx-field--required]="required"
+         [class.fx-field--invalid]="invalid"
          [class.fx-field--pending-validation]="pending">
 
       <label class="fx-field__label">{{label}}</label>
@@ -55,7 +55,7 @@ export class FieldComponent {
   }
 
   private get errors() {
-    if(this.formModel) {
+    if (this.formModel) {
       const errors = this.formModel.errors;
       return errors && Object.keys(errors).map(error =>
         this.messageService.getErrorMessage(this.label, error, errors[error]));

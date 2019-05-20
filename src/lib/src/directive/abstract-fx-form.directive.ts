@@ -1,5 +1,4 @@
-
-import {map, filter, debounceTime, switchMap} from 'rxjs/operators';
+import {debounceTime, filter, map, switchMap, take} from 'rxjs/operators';
 import {AbstractControl} from '@angular/forms';
 import {EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 
@@ -10,11 +9,14 @@ import {Observable} from 'rxjs';
 
 export abstract class AbstractFxDirective implements OnInit, OnDestroy {
 
+
   static readonly defaultValidValueChangeDebounce = 400;
 
-  static readonly VALID = "VALID";
+  static readonly VALID = 'VALID';
 
   @Input() ngModelValidChangeDebounce = AbstractFxDirective.defaultValidValueChangeDebounce;
+
+  @Input() viewToModel: boolean;
 
   @Output() ngModelValidChange = new EventEmitter();
 
@@ -22,18 +24,45 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.control.valueChanges
+      .pipe(take(1))
+      .subscribe(() => {
+        if (this.control.asyncValidator) {
+          this.operateWithAsyncValidator();
+        } else {
+          this.operateWithSyncValidator();
+        }
+      });
+  }
 
-    this.subscriber.subscribe(this.observable.pipe(switchMap(v => {
-        return this.control.statusChanges.pipe(filter(status => status === AbstractFxDirective.VALID),map(() => v),);
-      }), debounceTime(this.ngModelValidChangeDebounce),),
-      v => this.isViewToModelChange(v) ? this.ngModelValidChange.emit(v) : null);
+  private operateWithSyncValidator() {
+    this.observable
+      .pipe(
+        debounceTime(this.ngModelValidChangeDebounce),
+        filter(() => this.control.valid),
+      ).subscribe(() => this.ngModelValidChange.emit(this.control.value));
+  }
+
+
+  protected operateWithAsyncValidator() {
+    this.subscriber.subscribe(
+      this.observable.pipe(
+        switchMap(v => {
+          return this.control.statusChanges.pipe(
+            filter(status => status === AbstractFxDirective.VALID),
+            map(() => v)
+          );
+        }),
+        debounceTime(this.ngModelValidChangeDebounce),
+        filter((v) => this.isViewToModelChange(v))),
+      v => this.ngModelValidChange.emit(v));
   }
 
   ngOnDestroy() {
     this.subscriber.unsubscribe();
   }
 
-  private isViewToModelChange(eventValue){
+  private isViewToModelChange(eventValue) {
     return eventValue === this.control.value;
   }
 

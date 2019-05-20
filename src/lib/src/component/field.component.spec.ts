@@ -3,8 +3,8 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormsExtensionModule} from '../forms-extension.module';
 import {By} from '@angular/platform-browser';
 import {NgForm} from '@angular/forms';
-import {AsyncValidatorFxFieldTestComponent, TestAsyncValidator} from "../directive/fx-form.test.helper";
-import {AbstractFxDirective} from "../directive/abstract-fx-form.directive";
+import {AsyncValidatorFxFieldTestComponent, TestAsyncValidator} from '../directive/fx-form.test.helper';
+import {AbstractFxDirective} from '../directive/abstract-fx-form.directive';
 
 describe('FieldComponent', () => {
 
@@ -106,8 +106,8 @@ describe('FieldComponent', () => {
       }));
 
       it('styles should be pending validation while status is PENDING and with no invalid style', fakeAsync(() => {
-        let notValidChange = "notValid"
-        let initialDelay = 10;
+        const notValidChange = 'notValid';
+        const initialDelay = 10;
 
         instance.delay = initialDelay;
         fixture.detectChanges();
