@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
   selector: `[ngModel]`,
   providers: [SubscriberService],
 })
-export class FxModelDirective extends AbstractFxDirective implements OnInit, OnDestroy, AfterViewInit {
+export class FxModelDirective extends AbstractFxDirective implements OnInit, OnDestroy {
 
   constructor(protected subscriber: SubscriberService,
               @Self() protected self: NgModel,
