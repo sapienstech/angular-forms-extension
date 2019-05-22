@@ -21,8 +21,8 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.control.valueChanges
-      .pipe(take(1))
+    this.control.valueChanges //before ngOnInit and all of the other init lifecycles, asyncValidator is not populated in the control
+      .pipe(take(1))          //we need to register only once in order to know if there is an asyncValidator
       .subscribe(() => {
         if (this.control.asyncValidator) {
           this.operateWithAsyncValidator();
@@ -32,6 +32,8 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
       });
   }
 
+  //for sync validator
+  //valueChange --> statusChange --> update
   private operateWithSyncValidator() {
     this.observable
       .pipe(
@@ -41,6 +43,8 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
   }
 
 
+  //for async validator
+  //valueChange --> statusChange(pending) --> update --> statusChange
   protected operateWithAsyncValidator() {
     this.subscriber.subscribe(
       this.observable.pipe(
