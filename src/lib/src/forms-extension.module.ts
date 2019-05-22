@@ -6,7 +6,7 @@ import {FxForm} from './directive/fx-form.directive';
 import {FormsModule} from '@angular/forms';
 import {ValidSubmitDirective} from './directive/valid-submit.directive';
 import {UnsavedDirective} from './directive/unsaved.directive';
-import {FormValidationMessageService} from "./service/form-validation-message.service";
+import {FormValidationMessageService} from './service/form-validation-message.service';
 
 @NgModule({
   imports: [CommonModule, FormsModule],
@@ -28,7 +28,7 @@ export class FormsExtensionModule {
 
   static forRoot(errorMessages?: { [key: string]: string }): ModuleWithProviders {
 
-    let formValidationMessageService = new FormValidationMessageService();
+    const formValidationMessageService = new FormValidationMessageService();
     formValidationMessageService.setErrorMessages(errorMessages);
 
     return {

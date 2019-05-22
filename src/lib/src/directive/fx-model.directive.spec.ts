@@ -4,10 +4,11 @@ import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ViewChild} from '@angular/core';
 import {FxModelDirective} from './fx-model.directive';
 import {NgForm, NgModel} from '@angular/forms';
-import {AsyncValidatorFormComponent, TestAsyncValidator} from "./fx-form.test.helper";
-import {AbstractFxDirective} from "./abstract-fx-form.directive";
+import {AsyncValidatorFormComponent, TestAsyncValidator} from './fx-form.test.helper';
+import {AbstractFxDirective} from './abstract-fx-form.directive';
+import {By} from '@angular/platform-browser';
 
-describe('FxFormModelDirective', () => {
+describe('fx-model-directive', () => {
 
   describe('async validators', () => {
     let fixture: ComponentFixture<AsyncValidatorFormComponent>;
@@ -23,13 +24,36 @@ describe('FxFormModelDirective', () => {
     });
 
     beforeEach(async(() => {
-      fixture.detectChanges()
+      fixture.detectChanges();
       modelValidChange = spyOn(instance.fxModel.ngModelValidChange, 'emit');
     }));
 
+    describe('value is not valid', () => {
+      beforeEach(async(() => {
+        instance.value = '!' + instance.validValue;
+        fixture.detectChanges();
+      }));
+      describe('programmatically change value to invalid', () => {
+        beforeEach(async(() => {
+          instance.value = 'Really Not Valid' + instance.validValue;
+          fixture.detectChanges();
+        }));
+        describe('programmatically change value to valid', () => {
+          beforeEach(async(() => {
+            instance.value = instance.validValue;
+            fixture.detectChanges();
+          }));
+          it('should NOT emit valid value change', () => {
+            fixture.detectChanges();
+            fixture.whenStable().then(() => expect(modelValidChange).not.toHaveBeenCalled());
+          });
+        });
+      });
+    });
     describe('value was changed to valid value', () => {
       it('async validator should emit valid value change', async(() => {
-        instance.ngModel.update.emit(instance.validValue);
+        sendInputValue(fixture, 'input', instance.validValue);
+
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(modelValidChange).toHaveBeenCalledTimes(1));
       }));
@@ -37,7 +61,8 @@ describe('FxFormModelDirective', () => {
 
     describe('value was changed to NOT valid value', () => {
       it('async validator should NOT emit valid value change', async(() => {
-        instance.ngModel.update.emit("blabla");
+        sendInputValue(fixture, 'input', 'blabla');
+
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(modelValidChange).not.toHaveBeenCalled());
       }));
@@ -45,7 +70,7 @@ describe('FxFormModelDirective', () => {
 
     describe('value was changed to NOT valid value from UI and and while validating changed programmatically to valid value', () => {
       it('async validator should NOT emit valid value change', fakeAsync(() => {
-        let initialDelay = 10;
+        const initialDelay = 10;
 
         instance.delay = initialDelay;
 
@@ -58,7 +83,7 @@ describe('FxFormModelDirective', () => {
         expect(modelValidChange).not.toHaveBeenCalled();
       }));
 
-      function waitForDebounceToEnd(){
+      function waitForDebounceToEnd() {
         for (let i = 0; i < AbstractFxDirective.defaultValidValueChangeDebounce; i++) {
           fixture.detectChanges();
           tick(1);
@@ -76,11 +101,11 @@ describe('FxFormModelDirective', () => {
         tick(timeToWaitAfterChange);
       }
 
-      function changeToInvalidValueFromUI(){
+      function changeToInvalidValueFromUI() {
         fixture.detectChanges();
         tick(1);
 
-        instance.ngModel.update.emit("notValid");
+        sendInputValue(fixture, 'input', 'notValid');
 
         fixture.detectChanges();
         tick(1);
@@ -102,11 +127,11 @@ describe('FxFormModelDirective', () => {
 
       @ViewChild(NgForm) ngForm: NgForm;
 
-      markAsDirty() {
-        this.ngForm.controls['input'].markAsDirty();
-      }
-
       value;
+
+      markAsDirty() {
+        this.ngForm.controls.input.markAsDirty();
+      }
     }
 
     let fixture: ComponentFixture<TestComponent>;
@@ -142,7 +167,9 @@ describe('FxFormModelDirective', () => {
 
     [true, false].forEach(pristine =>
       it(`should ${pristine ? '' : 'NOT'} be pristine when [ngModel] is ${pristine ? '' : 'NOT'}`, async(() => {
-        if (!pristine) instance.markAsDirty();
+        if (!pristine) {
+          instance.markAsDirty();
+        }
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(hybridFormModel.pristine).toBe(pristine));
       })));
@@ -155,7 +182,9 @@ describe('FxFormModelDirective', () => {
 
     [true, false].forEach(submitted =>
       it(`should ${submitted ? '' : 'NOT'} be submitted when parent [ngForm] is ${submitted ? '' : 'NOT'}`, async(() => {
-        if (submitted) instance.ngForm.onSubmit(new Event('click'));
+        if (submitted) {
+          instance.ngForm.onSubmit(new Event('click'));
+        }
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(hybridFormModel.groupSubmitted).toBe(submitted));
       })));
@@ -181,18 +210,21 @@ describe('FxFormModelDirective', () => {
         describe('when the change was made view->model', () => {
 
           it('should emit that the model has changed and is valid (ngModelValidChange)', async(() => {
-            instance.ngModel.update.emit('a valid change');
+
+            const change = 'a new valid change';
+            sendInputValue(fixture, 'input', change);
             fixture.detectChanges();
             fixture.whenStable().then(() => expect(ngModelValidChange).toHaveBeenCalledWith(instance.value));
           }));
 
           it(`should debounce for ${FxForm.defaultValidValueChangeDebounce}ms before emitting (ngModelValidChange)`, fakeAsync(() => {
-            let valueChangeToEmit = 'another valid change 2';
-            instance.ngModel.update.emit('another valid change');
+            const valueChangeToEmit = 'another valid change 2';
+            sendInputValue(fixture, 'input', 'another valid change');
+
             fixture.detectChanges();
             tick(FxForm.defaultValidValueChangeDebounce - 1);
             instance.value = 'another valid change 1';
-            instance.ngModel.update.emit(valueChangeToEmit);
+            sendInputValue(fixture, 'input', valueChangeToEmit);
             fixture.detectChanges();
             tick(FxForm.defaultValidValueChangeDebounce - 1);
             expect(ngModelValidChange).not.toHaveBeenCalled();
@@ -223,8 +255,16 @@ describe('FxFormModelDirective', () => {
       beforeEach(async(() => fixture.destroy()));
 
       it('should clear the all form subscriptions when the component is destroyed', async(() => {
-        hybridFormModel['subscriber'].subscriptions.forEach(s => expect(s.closed).toBeTruthy());
-      }))
-    })
+        (hybridFormModel as any).subscriber['subscriptions'].forEach(s => expect(s.closed).toBeTruthy());
+      }));
+    });
   });
+
 });
+
+function sendInputValue(fixture, cssElement, change) {
+  const inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
+  inputElement.value = change;
+  inputElement.dispatchEvent(new Event('input'));
+}
+
