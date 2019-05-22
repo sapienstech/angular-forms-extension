@@ -3,7 +3,8 @@ import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
-import {AsyncValidatorFormComponent, TestAsyncValidator} from "./fx-form.test.helper";
+import {AsyncValidatorFormComponent, TestAsyncValidator} from './fx-form.test.helper';
+import {By} from '@angular/platform-browser';
 
 describe('FxFormDirective', () => {
 
@@ -59,7 +60,7 @@ describe('FxFormDirective', () => {
     value = 'value';
   }
 
-  //endregion
+  // endregion
 
   describe('async validator', () => {
     let fixture: ComponentFixture<AsyncValidatorFormComponent>;
@@ -80,16 +81,20 @@ describe('FxFormDirective', () => {
     describe('value was changed to valid value', () => {
       it('async validator should emit valid value change', async(() => {
         const formValidChange = spyOn(instance.fxForm.ngFormValidChange, 'emit');
-        instance.ngModel.update.emit(instance.validValue);
+        const inputElement = fixture.debugElement.query(By.css('input')).nativeElement as HTMLInputElement;
+        inputElement.value = instance.validValue;
+        inputElement.dispatchEvent(new Event('input'));
         fixture.detectChanges();
-        fixture.whenStable().then(() => expect(formValidChange).toHaveBeenCalledTimes(1));
+        fixture.whenStable().then(() => {
+          expect(formValidChange).toHaveBeenCalledTimes(1);
+        });
       }));
     });
 
     describe('value was changed to NOT valid value', () => {
       it('async validator should NOT emit valid value change', async(() => {
         const formValidChange = spyOn(instance.fxForm.ngFormValidChange, 'emit');
-        instance.ngModel.update.emit("blabla");
+        instance.ngModel.update.emit('blabla');
         fixture.detectChanges();
         fixture.whenStable().then(() => expect(formValidChange).not.toHaveBeenCalled());
       }));
@@ -98,24 +103,24 @@ describe('FxFormDirective', () => {
   });
 
   describe('form building', () => {
-  let fixture: ComponentFixture<TestComponent>;
-  let instance: TestComponent;
+    let fixture: ComponentFixture<TestComponent>;
+    let instance: TestComponent;
 
-  beforeEach(() => {
-    fixture = TestBed.configureTestingModule({
-      imports: [FormsExtensionModule],
-      declarations: [TestComponent, InnerForm1Component, InnerForm2Component, NestedFormComponent]
-    })
-      .createComponent(TestComponent);
-    instance = fixture.componentInstance;
-  });
+    beforeEach(() => {
+      fixture = TestBed.configureTestingModule({
+        imports: [FormsExtensionModule],
+        declarations: [TestComponent, InnerForm1Component, InnerForm2Component, NestedFormComponent]
+      })
+        .createComponent(TestComponent);
+      instance = fixture.componentInstance;
+    });
 
-  beforeEach(async(() => fixture.detectChanges()));
+    beforeEach(async(() => fixture.detectChanges()));
 
     it('should build a form from all the inner forms', async(() => {
-      expect(JSON.stringify(instance.ngForm.form.value)).toBe(`
-        {
-          "0": {
+      expect(JSON.stringify(instance.ngForm.form.value)).toBe(
+        `{
+      "0": {
             "0": {
               "nested-input": "nested-value"
             },
