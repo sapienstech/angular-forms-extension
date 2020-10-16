@@ -9,25 +9,29 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
     <div class="fx-field"
          [class.fx-field--required]="required"
          [class.fx-field--invalid]="invalid"
-         [class.fx-field--pending-validation]="pending">
+         [class.fx-field--pending-validation]="pending"
+         [ngClass]="(this.displayType === 'block')?'fx-field--block':'fx-field--flex'">
 
-      <label class="fx-field__label">{{label}}
-        <span *ngIf="isIcon"><i class="fx-field__icon">{{icon}}</i></span>
-      </label>
-      <div class="fx-field--inputAndError">
+    <label class="fx-field__label" [style.width.%]="labelRatio">{{label}}
+        <span *ngIf="icon"><i class="fx-field__icon">{{icon}}</i></span>
+    </label>
+      <div class="fx-field--inputAndError" [style.width.%]="inputRatio">
         <span class="fx-field__control"><ng-content></ng-content></span>
         <span *ngIf="invalid" class="fx-field__errors">
           <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
         </span>
       </div>
-    </div>`
+    </div>
+  `
 })
 export class FieldComponent {
   @Input() label: string;
 
   @Input() icon: string;
 
-  @Input() ratio: string;
+  @Input() display: string;
+
+  @Input() labelInputWidthPercentage: number;
 
   @ContentChild(RequiredValidator)
   private requiredValidator: RequiredValidator;
@@ -39,16 +43,11 @@ export class FieldComponent {
   }
 
   get value() {
-
     return this.formModel && this.formModel.value;
   }
 
   private get required() {
     return this.requiredValidator && this.requiredValidator.required;
-  }
-
-  private get isIcon() {
-    return this.icon && this.icon.length > 0;
   }
 
   private get valid() {
@@ -71,4 +70,36 @@ export class FieldComponent {
         this.messageService.getErrorMessage(this.label, error, errors[error]));
     }
   }
+
+  private get displayType() {
+    switch(this.display) {
+      case 'block' : return DisplayType.BLOCK.toString();
+      case 'flex' : return DisplayType.FLEX.toString();
+      default: return '';
+    }
+  }
+
+  private get labelRatio() {
+    if(this.displayType === 'block') {
+      return 100;
+    }
+    if(this.labelInputWidthPercentage && Number(this.labelInputWidthPercentage) <= 100) {
+      return this.labelInputWidthPercentage;
+    }
+  }
+
+  private get inputRatio() {
+    if(this.displayType === 'block') {
+      return 100;
+    }
+    if(this.labelInputWidthPercentage && Number(this.labelInputWidthPercentage) <= 100) {
+      return 100 - Number(this.labelInputWidthPercentage);
+    }
+  }
+
+}
+
+enum DisplayType {
+  BLOCK = <any> 'block',
+  FLEX = <any> 'flex',
 }
