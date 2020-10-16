@@ -4,16 +4,11 @@ import {NgForm} from '@angular/forms';
 @Component({
   selector: 'demo-app',
   template: `
-    <form ngForm
-      (validSubmit)="onSubmit($event)"
-          (unsaved)="onUnsavedChange($event)"
-    >
+    <form ngForm (validSubmit)="onSubmit($event)" (unsaved)="onUnsavedChange($event)">
       <inner></inner>
-
       {{ngForm.form.value | json}}
       <button>submit</button>
     </form>
-    
     <br>
     {{unsaved}}
   `

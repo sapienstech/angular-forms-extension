@@ -11,7 +11,9 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [class.fx-field--invalid]="invalid"
          [class.fx-field--pending-validation]="pending">
 
-      <label class="fx-field__label">{{label}}</label>
+      <label class="fx-field__label">{{label}}
+        <span *ngIf="isIcon"><i class="fx-field__icon">{{icon}}</i></span>
+      </label>
       <div class="fx-field--inputAndError">
         <span class="fx-field__control"><ng-content></ng-content></span>
         <span *ngIf="invalid" class="fx-field__errors">
@@ -22,6 +24,10 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
 })
 export class FieldComponent {
   @Input() label: string;
+
+  @Input() icon: string;
+
+  @Input() ratio: string;
 
   @ContentChild(RequiredValidator)
   private requiredValidator: RequiredValidator;
@@ -39,6 +45,10 @@ export class FieldComponent {
 
   private get required() {
     return this.requiredValidator && this.requiredValidator.required;
+  }
+
+  private get isIcon() {
+    return this.icon && this.icon.length > 0;
   }
 
   private get valid() {
