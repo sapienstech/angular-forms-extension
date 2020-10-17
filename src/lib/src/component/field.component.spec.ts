@@ -13,7 +13,7 @@ describe('FieldComponent', () => {
     @Component({
       template: `
         <form (validSubmit)="save()">
-          <fx-field label="User Name"><input [(ngModel)]="username" name="username" required/></fx-field>
+          <fx-field label="User Name" icon="*" display="block" labelInputWidthPercentage="30"><input [(ngModel)]="username" name="username" required/></fx-field>
           <button #submit>Submit</button>
         </form>
       `
@@ -47,6 +47,14 @@ describe('FieldComponent', () => {
 
     it('should render a label for the control', async(() => {
       expect(fixture.debugElement.query(By.css('.fx-field__label')).nativeElement.innerHTML).toBe('User Name');
+    }));
+
+    it('should render display block for the control', async(() => {
+      expect(fixture.debugElement.query(By.css('.fx-field--block')).nativeElement.innerHTML).toBe('User Name');
+    }));
+
+    it('should render a icon for the control', async(() => {
+      expect(fixture.debugElement.query(By.css('.fx-field__icon')).nativeElement.innerHTML).toBe('User Name');
     }));
 
     it('should render the form control', async(() => {
