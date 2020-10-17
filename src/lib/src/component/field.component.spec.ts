@@ -49,6 +49,14 @@ describe('FieldComponent', () => {
       expect(fixture.debugElement.query(By.css('.fx-field__label')).nativeElement.innerHTML).toBe('User Name');
     }));
 
+    it('should render a label with width', async(() => {
+      expect(fixture.debugElement.query(By.css('.fx-field__label')).nativeElement.width).toBe('30%');
+    }));
+
+    it('should render a input with width', async(() => {
+      expect(fixture.debugElement.query(By.css('.fx-field--inputAndError')).nativeElement.width).toBe('70%');
+    }));
+
     it('should render display block for the control', async(() => {
       expect(fixture.debugElement.query(By.css('.fx-field--block')).nativeElement.innerHTML).toBe('User Name');
     }));
