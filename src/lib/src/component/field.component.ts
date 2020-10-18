@@ -12,8 +12,9 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [class.fx-field--pending-validation]="pending"
          [ngClass]="(this.displayType === 'block')?'fx-field--block':'fx-field--flex'">
 
-    <label class="fx-field__label" [style.width.%]="labelRatio">{{label}}
-        <span *ngIf="icon"><i class="fx-field__icon">{{icon}}</i></span>
+    <label class="fx-field__label" [style.width.%]="labelRatio">{{label}}<span *ngIf="icon">
+      <i class="fx-field__icon {{icon}}"></i>
+    </span>
     </label>
       <div class="fx-field--inputAndError" [style.width.%]="inputRatio">
         <span class="fx-field__control"><ng-content></ng-content></span>

@@ -13,13 +13,15 @@ describe('FieldComponent', () => {
     @Component({
       template: `
         <form (validSubmit)="save()">
-          <fx-field label="User Name" icon="*" display="block" labelInputWidthPercentage="30"><input [(ngModel)]="username" name="username" required/></fx-field>
+          <fx-field [label]="usernameLabel" [icon]="iconClassName" display="flex" labelInputWidthPercentage="30"><input [(ngModel)]="username" name="username" required/></fx-field>
           <button #submit>Submit</button>
         </form>
       `
     })
     class TestComponent {
       username = '';
+      usernameLabel = 'User Name';
+      iconClassName = 'icon-class';
 
       @ViewChild('submit') button: ElementRef;
 
@@ -33,8 +35,9 @@ describe('FieldComponent', () => {
       }
     }
 
-    let fixture: ComponentFixture<TestComponent>;
-    let instance: TestComponent;
+    let fixture: ComponentFixture<TestComponent>,
+        instance: TestComponent,
+        iconClassName = 'icon-class';
 
     beforeEach(() => {
       fixture = TestBed
@@ -45,24 +48,20 @@ describe('FieldComponent', () => {
 
     beforeEach(async(() => fixture.detectChanges()));
 
-    it('should render a label for the control', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field__label')).nativeElement.innerHTML).toBe('User Name');
-    }));
-
     it('should render a label with width', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field__label')).nativeElement.width).toBe('30%');
+      expect(fixture.debugElement.query(By.css('.fx-field__label')).styles['width']).toBe('30%');
     }));
 
     it('should render a input with width', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field--inputAndError')).nativeElement.width).toBe('70%');
+      expect(fixture.debugElement.query(By.css('.fx-field--inputAndError')).styles['width']).toBe('70%');
     }));
 
-    it('should render display block for the control', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field--block')).nativeElement.innerHTML).toBe('User Name');
+    it('should render display as flex for the control', async(() => {
+      expect(fixture.debugElement.query(By.css('.fx-field')).classes['fx-field--flex']).toBe(true);
     }));
 
     it('should render a icon for the control', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field__icon')).nativeElement.innerHTML).toBe('User Name');
+      expect(fixture.debugElement.query(By.css('.' + iconClassName))[0]).not.toBeNull();
     }));
 
     it('should render the form control', async(() => {
@@ -94,6 +93,7 @@ describe('FieldComponent', () => {
 
       expectInvalidStyles();
     });
+
     function expectInvalidStyles() {
       it('should add an invalid style', async(() =>
         expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeTruthy()));
@@ -105,51 +105,50 @@ describe('FieldComponent', () => {
       it('should not add pending validation style', async(() =>
         expect(fixture.debugElement.query(By.css('.fx-field--pending-validation'))).toBeFalsy()));
     }
+
   });
 
-  describe('async validation', () => {
-    describe('when pending validation', () => {
-      let fixture: ComponentFixture<AsyncValidatorFxFieldTestComponent>;
-      let instance: AsyncValidatorFxFieldTestComponent;
-      beforeEach(async(() => {
-        fixture = TestBed
-          .configureTestingModule({
-            imports: [FormsExtensionModule.forRoot()],
-            declarations: [AsyncValidatorFxFieldTestComponent, TestAsyncValidator]
-          })
-          .createComponent(AsyncValidatorFxFieldTestComponent);
-        instance = fixture.componentInstance;
-      }));
+  describe('async validation when pending validation', () => {
+    let fixture: ComponentFixture<AsyncValidatorFxFieldTestComponent>;
+    let instance: AsyncValidatorFxFieldTestComponent;
+    beforeEach(async(() => {
+      fixture = TestBed
+        .configureTestingModule({
+          imports: [FormsExtensionModule.forRoot()],
+          declarations: [AsyncValidatorFxFieldTestComponent, TestAsyncValidator]
+        })
+        .createComponent(AsyncValidatorFxFieldTestComponent);
+      instance = fixture.componentInstance;
+    }));
 
-      it('styles should be pending validation while status is PENDING and with no invalid style', fakeAsync(() => {
-        const notValidChange = 'notValid';
-        const initialDelay = 10;
+    it('styles should be pending validation while status is PENDING and with no invalid style', fakeAsync(() => {
+      const notValidChange = 'notValid';
+      const initialDelay = 10;
 
-        instance.delay = initialDelay;
+      instance.delay = initialDelay;
+      fixture.detectChanges();
+      tick(1);
+
+      instance.ngModel.update.emit(notValidChange);
+      instance.ngModel.control.markAsDirty();
+      fixture.detectChanges();
+      tick(1);
+
+      expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeFalsy();
+      expect(fixture.debugElement.query(By.css('.fx-field--pending-validation'))).toBeTruthy();
+      expect(fixture.debugElement.query(By.css('.fx-field__error'))).toBeFalsy();
+
+      for (let i = 0; i < AbstractFxDirective.defaultValidValueChangeDebounce; i++) {
         fixture.detectChanges();
         tick(1);
+      }
+      expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeTruthy();
 
-        instance.ngModel.update.emit(notValidChange);
-        instance.ngModel.control.markAsDirty();
-        fixture.detectChanges();
-        tick(1);
+      expect(fixture.debugElement.query(By.css('.fx-field__error')).nativeElement.innerHTML)
+        .toBe('User Name is required');
 
-        expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeFalsy();
-        expect(fixture.debugElement.query(By.css('.fx-field--pending-validation'))).toBeTruthy();
-        expect(fixture.debugElement.query(By.css('.fx-field__error'))).toBeFalsy();
-
-        for (let i = 0; i < AbstractFxDirective.defaultValidValueChangeDebounce; i++) {
-          fixture.detectChanges();
-          tick(1);
-        }
-        expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeTruthy();
-
-        expect(fixture.debugElement.query(By.css('.fx-field__error')).nativeElement.innerHTML)
-          .toBe('User Name is required');
-
-        expect(fixture.debugElement.query(By.css('.fx-field--pending-validation'))).toBeFalsy();
-      }));
-    });
+      expect(fixture.debugElement.query(By.css('.fx-field--pending-validation'))).toBeFalsy();
+    }));
   });
 });
 
