@@ -37,21 +37,21 @@ export class AppComponent {
   selector: 'inner',
   template: `
     <form>
-      <fx-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec" icon="*" display="flex" labelInputWidthPercentage="30">
+      <fx-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec" icon="icon-class" display="flex" labelInputWidthPercentage="30">
         <input class="user-display-name-input-spec"
                [name]="'username'"
                [(ngModel)]="userName"
                required>
       </fx-field>
 
-      <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec" icon="*" display="flex" labelInputWidthPercentage="30">
+      <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec" icon="icon-class" display="flex" labelInputWidthPercentage="30">
         <input [name]="'display'"
                minlength="5"
                [(ngModel)]="userDisplayName"
                required>
       </fx-field>
 
-      <fx-field [label]="'Email'" class="form-group flex-container align-items-center" icon="*" display="flex" labelInputWidthPercentage="30">
+      <fx-field [label]="'Email'" class="form-group flex-container align-items-center" icon="icon-class" display="flex" labelInputWidthPercentage="30">
         <input type="email"
                [name]="'email'"
                [(ngModel)]="userMailAddress"
