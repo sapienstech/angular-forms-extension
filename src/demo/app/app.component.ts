@@ -14,7 +14,6 @@ import {NgForm} from '@angular/forms';
   `
 })
 export class AppComponent {
-  baboo;
   unsaved = false;
   value = 'roni';
   @ViewChild(NgForm) ngForm: NgForm;
@@ -37,21 +36,30 @@ export class AppComponent {
   selector: 'inner',
   template: `
     <form>
-      <fx-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec" icon="icon-class" display="flex" labelInputWidthPercentage="30">
+      <fx-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec" 
+                [icon]="'icon-class'"
+                [labelRelativePos]=labelPos
+                [labelWidthPercentage]="'30'">
         <input class="user-display-name-input-spec"
                [name]="'username'"
                [(ngModel)]="userName"
                required>
       </fx-field>
 
-      <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec" icon="icon-class" display="flex" labelInputWidthPercentage="30">
+      <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec" 
+                [icon]="'icon-class'"
+                [labelRelativePos]=labelPos
+                [labelWidthPercentage]="'30'">
         <input [name]="'display'"
                minlength="5"
                [(ngModel)]="userDisplayName"
                required>
       </fx-field>
 
-      <fx-field [label]="'Email'" class="form-group flex-container align-items-center" icon="icon-class" display="flex" labelInputWidthPercentage="30">
+      <fx-field [label]="'Email'" class="form-group flex-container align-items-center" 
+                [icon]="'icon-class'"
+                [labelRelativePos]=labelPos
+                [labelWidthPercentage]="'30'">
         <input type="email"
                [name]="'email'"
                [(ngModel)]="userMailAddress"
@@ -67,9 +75,13 @@ export class InnerAppComponent {
       this.userName = 'ff';
       this.userDisplayName = 'userDisplayName';
       this.userMailAddress = 'fsdjkl@';
+      this.labelPos = 'label_on_right';
+
     }, 5);
   }
   userName;
   userDisplayName;
   userMailAddress;
+  labelPos;
+
 }

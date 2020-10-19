@@ -5,6 +5,7 @@ import {By} from '@angular/platform-browser';
 import {NgForm} from '@angular/forms';
 import {AsyncValidatorFxFieldTestComponent, TestAsyncValidator} from '../directive/fx-form.test.helper';
 import {AbstractFxDirective} from '../directive/abstract-fx-form.directive';
+import {LabelnputRelativeDisplayType} from './field.component';
 
 describe('FieldComponent', () => {
 
@@ -13,7 +14,12 @@ describe('FieldComponent', () => {
     @Component({
       template: `
         <form (validSubmit)="save()">
-          <fx-field [label]="usernameLabel" [icon]="iconClassName" display="flex" labelInputWidthPercentage="30"><input [(ngModel)]="username" name="username" required/></fx-field>
+          <fx-field [label]="usernameLabel" 
+                    [icon]="iconClassName" 
+                    [labelRelativePos]="labelPos" 
+                    [labelWidthPercentage]="'30'">
+            <input [(ngModel)]="username" name="username" required/>
+          </fx-field>
           <button #submit>Submit</button>
         </form>
       `
@@ -22,6 +28,7 @@ describe('FieldComponent', () => {
       username = '';
       usernameLabel = 'User Name';
       iconClassName = 'icon-class';
+      labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT.toString();
 
       @ViewChild('submit') button: ElementRef;
 
@@ -37,7 +44,8 @@ describe('FieldComponent', () => {
 
     let fixture: ComponentFixture<TestComponent>,
         instance: TestComponent,
-        iconClassName = 'icon-class';
+        iconClassName = 'icon-class',
+        labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT.toString();
 
     beforeEach(() => {
       fixture = TestBed
@@ -57,7 +65,8 @@ describe('FieldComponent', () => {
     }));
 
     it('should render display as flex for the control', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field')).classes['fx-field--flex']).toBe(true);
+      expect(fixture.debugElement.query(By.css('.fx-field'))
+        .classes[labelPos]).toBe(true);
     }));
 
     it('should render a icon for the control', async(() => {

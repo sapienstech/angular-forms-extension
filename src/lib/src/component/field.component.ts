@@ -10,13 +10,13 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [class.fx-field--required]="required"
          [class.fx-field--invalid]="invalid"
          [class.fx-field--pending-validation]="pending"
-         [ngClass]="(this.displayType === 'block')?'fx-field--block':'fx-field--flex'">
+         [ngClass]="this.labelInputRelativeDisplay">
 
-    <label class="fx-field__label" [style.width.%]="labelRatio">{{label}}<span *ngIf="icon">
+    <label class="fx-field__label" [style.width.%]="labelWidth">{{label}}<span *ngIf="icon">
       <i class="fx-field__icon {{icon}}"></i>
     </span>
     </label>
-      <div class="fx-field--inputAndError" [style.width.%]="inputRatio">
+      <div class="fx-field--inputAndError" [style.width.%]="inputWidth">
         <span class="fx-field__control"><ng-content></ng-content></span>
         <span *ngIf="invalid" class="fx-field__errors">
           <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
@@ -30,9 +30,9 @@ export class FieldComponent {
 
   @Input() icon: string;
 
-  @Input() display: string;
+  @Input() labelRelativePos: "label_on_top" | "label_on_right" | "label_on_bottom" | "label_on_left" = "label_on_left";
 
-  @Input() labelInputWidthPercentage: number;
+  @Input() labelWidthPercentage: number;
 
   @ContentChild(RequiredValidator)
   private requiredValidator: RequiredValidator;
@@ -72,35 +72,40 @@ export class FieldComponent {
     }
   }
 
-  private get displayType() {
-    switch(this.display) {
-      case 'block' : return DisplayType.BLOCK.toString();
-      case 'flex' : return DisplayType.FLEX.toString();
-      default: return '';
+  private get labelInputRelativeDisplay(): LabelnputRelativeDisplayType {
+    switch (this.labelRelativePos) {
+      case 'label_on_top':
+        return LabelnputRelativeDisplayType.LABEL_ON_TOP;
+      case 'label_on_bottom':
+        return LabelnputRelativeDisplayType.LABEL_ON_BOTTOM;
+      case 'label_on_left':
+        return LabelnputRelativeDisplayType.LABEL_ON_LEFT;
+      case 'label_on_right':
+        return LabelnputRelativeDisplayType.LABEL_ON_RIGHT;
+      default:
+        return LabelnputRelativeDisplayType.LABEL_ON_LEFT;
     }
   }
 
-  private get labelRatio() {
-    if(this.displayType === 'block') {
-      return 100;
-    }
-    if(this.labelInputWidthPercentage && Number(this.labelInputWidthPercentage) <= 100) {
-      return this.labelInputWidthPercentage;
+  private get labelWidth() {
+    if(this.labelWidthPercentage
+      && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
+      return this.labelWidthPercentage;
     }
   }
 
-  private get inputRatio() {
-    if(this.displayType === 'block') {
-      return 100;
-    }
-    if(this.labelInputWidthPercentage && Number(this.labelInputWidthPercentage) <= 100) {
-      return 100 - Number(this.labelInputWidthPercentage);
+  private get inputWidth() {
+    if(this.labelWidthPercentage
+      && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
+      return 100 - Number(this.labelWidthPercentage);
     }
   }
 
 }
 
-enum DisplayType {
-  BLOCK = <any> 'block',
-  FLEX = <any> 'flex',
+export enum LabelnputRelativeDisplayType {
+  LABEL_ON_TOP = 'fx-field-label_on_top',
+  LABEL_ON_BOTTOM = 'fx-field-label_on_bottom',
+  LABEL_ON_LEFT = 'fx-field-label_on_left',
+  LABEL_ON_RIGHT = 'fx-field-label_on_right'
 }
