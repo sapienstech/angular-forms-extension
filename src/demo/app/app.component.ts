@@ -1,5 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {LabelnputRelativeDisplayType} from 'quickstart-lib';
 
 @Component({
   selector: 'demo-app',
@@ -75,7 +76,7 @@ export class InnerAppComponent {
       this.userName = 'ff';
       this.userDisplayName = 'userDisplayName';
       this.userMailAddress = 'fsdjkl@';
-      this.labelPos = 'label_on_right';
+      this.labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT;
 
     }, 5);
   }

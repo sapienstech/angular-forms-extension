@@ -10,7 +10,7 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [class.fx-field--required]="required"
          [class.fx-field--invalid]="invalid"
          [class.fx-field--pending-validation]="pending"
-         [ngClass]="this.labelInputRelativeDisplay">
+         [ngClass]="this.labelRelativePos">
 
     <label class="fx-field__label" [style.width.%]="labelWidth">{{label}}<span *ngIf="icon">
       <i class="fx-field__icon {{icon}}"></i>
@@ -30,7 +30,7 @@ export class FieldComponent {
 
   @Input() icon: string;
 
-  @Input() labelRelativePos: "label_on_top" | "label_on_right" | "label_on_bottom" | "label_on_left" = "label_on_left";
+  @Input() labelRelativePos: LabelnputRelativeDisplayType;
 
   @Input() labelWidthPercentage: number;
 
@@ -72,21 +72,6 @@ export class FieldComponent {
     }
   }
 
-  private get labelInputRelativeDisplay(): LabelnputRelativeDisplayType {
-    switch (this.labelRelativePos) {
-      case 'label_on_top':
-        return LabelnputRelativeDisplayType.LABEL_ON_TOP;
-      case 'label_on_bottom':
-        return LabelnputRelativeDisplayType.LABEL_ON_BOTTOM;
-      case 'label_on_left':
-        return LabelnputRelativeDisplayType.LABEL_ON_LEFT;
-      case 'label_on_right':
-        return LabelnputRelativeDisplayType.LABEL_ON_RIGHT;
-      default:
-        return LabelnputRelativeDisplayType.LABEL_ON_LEFT;
-    }
-  }
-
   private get labelWidth() {
     if(this.labelWidthPercentage
       && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
@@ -104,8 +89,8 @@ export class FieldComponent {
 }
 
 export enum LabelnputRelativeDisplayType {
-  LABEL_ON_TOP = 'fx-field-label_on_top',
-  LABEL_ON_BOTTOM = 'fx-field-label_on_bottom',
-  LABEL_ON_LEFT = 'fx-field-label_on_left',
-  LABEL_ON_RIGHT = 'fx-field-label_on_right'
+  LABEL_ON_TOP = 'label_on_top',
+  LABEL_ON_BOTTOM = 'label_on_bottom',
+  LABEL_ON_LEFT = 'label_on_left',
+  LABEL_ON_RIGHT = 'label_on_right'
 }

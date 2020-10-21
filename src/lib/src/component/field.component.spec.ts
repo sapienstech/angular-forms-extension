@@ -28,7 +28,7 @@ describe('FieldComponent', () => {
       username = '';
       usernameLabel = 'User Name';
       iconClassName = 'icon-class';
-      labelPos = 'label_on_right';
+      labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT;
 
       @ViewChild('submit') button: ElementRef;
 
