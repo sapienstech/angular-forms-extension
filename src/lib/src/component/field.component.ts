@@ -9,19 +9,30 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
     <div class="fx-field"
          [class.fx-field--required]="required"
          [class.fx-field--invalid]="invalid"
-         [class.fx-field--pending-validation]="pending">
+         [class.fx-field--pending-validation]="pending"
+         [ngClass]="this.labelRelativePos">
 
-      <label class="fx-field__label">{{label}}</label>
-      <div class="fx-field--inputAndError">
+    <label class="fx-field__label" [style.width.%]="labelWidth">{{label}}<span *ngIf="icon">
+      <i class="fx-field__icon {{icon}}"></i>
+    </span>
+    </label>
+      <div class="fx-field--inputAndError" [style.width.%]="inputWidth">
         <span class="fx-field__control"><ng-content></ng-content></span>
         <span *ngIf="invalid" class="fx-field__errors">
           <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
         </span>
       </div>
-    </div>`
+    </div>
+  `
 })
 export class FieldComponent {
   @Input() label: string;
+
+  @Input() icon: string;
+
+  @Input() labelRelativePos: LabelnputRelativeDisplayType;
+
+  @Input() labelWidthPercentage: number;
 
   @ContentChild(RequiredValidator)
   private requiredValidator: RequiredValidator;
@@ -33,7 +44,6 @@ export class FieldComponent {
   }
 
   get value() {
-
     return this.formModel && this.formModel.value;
   }
 
@@ -61,4 +71,26 @@ export class FieldComponent {
         this.messageService.getErrorMessage(this.label, error, errors[error]));
     }
   }
+
+  private get labelWidth() {
+    if(this.labelWidthPercentage
+      && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
+      return this.labelWidthPercentage;
+    }
+  }
+
+  private get inputWidth() {
+    if(this.labelWidthPercentage
+      && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
+      return 100 - Number(this.labelWidthPercentage);
+    }
+  }
+
+}
+
+export enum LabelnputRelativeDisplayType {
+  LABEL_ON_TOP = 'label_on_top',
+  LABEL_ON_BOTTOM = 'label_on_bottom',
+  LABEL_ON_LEFT = 'label_on_left',
+  LABEL_ON_RIGHT = 'label_on_right'
 }
