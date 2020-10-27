@@ -6,7 +6,7 @@ const glob = require('glob');
 const camelCase = require('camelcase');
 const ngc = require('@angular/compiler-cli/src/main').main;
 const rollup = require('rollup');
-const uglify = require('rollup-plugin-uglify');
+const { uglify } = require('rollup-plugin-uglify');
 const sourcemaps = require('rollup-plugin-sourcemaps');
 
 const inlineResources = require('./inline-resources');
