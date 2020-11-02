@@ -12,9 +12,12 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [class.fx-field--pending-validation]="pending"
          [ngClass]="this.labelRelativePos">
 
-    <label class="fx-field__label" [style.width.%]="labelWidth">{{label}}<span *ngIf="icon">
-      <i class="fx-field__icon {{icon}}"></i>
-    </span>
+    <label class="fx-field__label" [style.width.%]="labelWidth">
+        {{label}}
+      <span *ngIf="icon" class="fx-field__label__icon-container">
+        <i class="fx-field__label__icon-container--icon {{icon}}"></i>
+        <span *ngIf="tooltip" class="fx-field__label__icon-container--tooltip">{{tooltip}}</span>
+      </span>
     </label>
       <div class="fx-field--inputAndError" [style.width.%]="inputWidth">
         <span class="fx-field__control"><ng-content></ng-content></span>
@@ -29,6 +32,8 @@ export class FieldComponent {
   @Input() label: string;
 
   @Input() icon: string;
+
+  @Input() tooltip: string;
 
   @Input() labelRelativePos: LabelnputRelativeDisplayType;
 

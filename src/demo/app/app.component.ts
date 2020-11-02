@@ -50,7 +50,8 @@ export class AppComponent {
       <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec" 
                 [icon]="'icon-class'"
                 [labelRelativePos]=labelPos
-                [labelWidthPercentage]="'30'">
+                [labelWidthPercentage]="'30'"
+      [tooltip]="'tooltip text'">
         <input [name]="'display'"
                minlength="5"
                [(ngModel)]="userDisplayName"
