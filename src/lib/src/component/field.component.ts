@@ -13,11 +13,11 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [ngClass]="this.labelRelativePos">
 
     <label class="fx-field__label" [style.width.%]="labelWidth">
-    {{label}}
-    <span *ngIf="icon" class="fx-field__label__icon-container">
-      <i class="fx-field__label__icon-container--icon {{icon}}"></i>
-      <span *ngIf="tooltip" class="fx-field__label__icon-container--tooltip">{{tooltip}}</span>
-    </span>
+        {{label}}
+      <span *ngIf="icon" class="fx-field__label__icon-container">
+        <i class="fx-field__label__icon-container--icon {{icon}}"></i>
+        <span *ngIf="tooltip" class="fx-field__label__icon-container--tooltip">{{tooltip}}</span>
+      </span>
     </label>
       <div class="fx-field--inputAndError" [style.width.%]="inputWidth">
         <span class="fx-field__control"><ng-content></ng-content></span>
