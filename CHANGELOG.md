@@ -1,6 +1,8 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.1.80](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.84...v0.1.80) (2020-11-02)
 
 <a name="0.1.87"></a>
 ## [0.1.87](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.86...v0.1.87) (2020-10-26)
