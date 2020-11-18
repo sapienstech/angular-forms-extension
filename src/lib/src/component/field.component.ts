@@ -12,7 +12,7 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [class.fx-field--pending-validation]="pending"
          [ngClass]="this.labelRelativePos">
 
-    <label class="fx-field__label" [style.width.%]="labelWidth">
+    <label *ngIf="label" class="fx-field__label" [style.width.%]="labelWidth">
         {{label}}
       <span *ngIf="icon" class="fx-field__label__icon-container">
         <i class="fx-field__label__icon-container--icon {{icon}}"></i>
