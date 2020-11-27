@@ -85,9 +85,13 @@ export class FieldComponent {
   }
 
   private get inputWidth() {
-    if(this.labelWidthPercentage
-      && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
-      return 100 - Number(this.labelWidthPercentage);
+    if (this.label !== undefined) {
+      if (this.labelWidthPercentage
+        && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
+        return 100 - Number(this.labelWidthPercentage);
+      }
+    } else {
+      return 100;
     }
   }
 
