@@ -51,7 +51,8 @@ export class AppComponent {
                 [icon]="'icon-class'"
                 [labelRelativePos]=labelPos
                 [labelWidthPercentage]="'30'"
-      [tooltip]="'tooltip text'">
+                [tooltip]="'tooltip text'" [fontSize]="14" [fontWeight]="300" 
+                [inputColor]="'green'" [labelColor]="'red'">
         <input [name]="'display'"
                minlength="5"
                [(ngModel)]="userDisplayName"
@@ -68,6 +69,9 @@ export class AppComponent {
                email="">
       </fx-field>
       <fx-field [label]="'Email'"><label>HELLO WORLD!</label></fx-field>
+      <fx-field [setInputWidthOnly]="20">
+          <input type="text" [name]="'Phone'" [(ngModel)]="phoneNumber">
+      </fx-field>
     </form>
   `
 })
@@ -78,6 +82,7 @@ export class InnerAppComponent {
       this.userDisplayName = 'userDisplayName';
       this.userMailAddress = 'fsdjkl@';
       this.labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT;
+      this.phoneNumber = 987456321;
 
     }, 5);
   }
@@ -85,5 +90,6 @@ export class InnerAppComponent {
   userDisplayName;
   userMailAddress;
   labelPos;
+  phoneNumber;
 
 }
