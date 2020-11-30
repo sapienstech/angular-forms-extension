@@ -40,7 +40,8 @@ export class AppComponent {
       <fx-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec" 
                 [icon]="'icon-class'"
                 [labelRelativePos]=labelPos
-                [labelWidthPercentage]="'30'">
+                [labelWidthPercentage]="30" [labelStyles]="{'font-size': '16px', color: 'blue', 'font-weight': '600'}"
+                [inputStyles]="{'font-size': '16px', color: 'red', 'font-weight': '300'}">
         <input class="user-display-name-input-spec"
                [name]="'username'"
                [(ngModel)]="userName"
@@ -50,9 +51,8 @@ export class AppComponent {
       <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec" 
                 [icon]="'icon-class'"
                 [labelRelativePos]=labelPos
-                [labelWidthPercentage]="'30'"
-                [tooltip]="'tooltip text'" [fontSize]="14" [fontWeight]="300" 
-                [inputColor]="'green'" [labelColor]="'red'">
+                [labelWidthPercentage]="30"
+                [tooltip]="'tooltip text'">
         <input [name]="'display'"
                minlength="5"
                [(ngModel)]="userDisplayName"
@@ -62,20 +62,25 @@ export class AppComponent {
       <fx-field [label]="'Email'" class="form-group flex-container align-items-center" 
                 [icon]="'icon-class'"
                 [labelRelativePos]=labelPos
-                [labelWidthPercentage]="'30'">
+                [labelWidthPercentage]="30">
         <input type="email"
                [name]="'email'"
                [(ngModel)]="userMailAddress"
                email="">
       </fx-field>
       <fx-field [label]="'Email'"><label>HELLO WORLD!</label></fx-field>
-      <fx-field [setInputWidthOnly]="20">
+      <fx-field [labelWidthPercentage]="0">
           <input type="text" [name]="'Phone'" [(ngModel)]="phoneNumber">
       </fx-field>
     </form>
   `
 })
 export class InnerAppComponent {
+  userName;
+  userDisplayName;
+  userMailAddress;
+  labelPos;
+  phoneNumber;
   ngOnInit() {
     setTimeout(() => {
       this.userName = 'ff';
@@ -86,10 +91,5 @@ export class InnerAppComponent {
 
     }, 5);
   }
-  userName;
-  userDisplayName;
-  userMailAddress;
-  labelPos;
-  phoneNumber;
 
 }

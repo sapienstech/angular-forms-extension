@@ -14,15 +14,14 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
 
     <label *ngIf="label"
            class="fx-field__label"
-           [style.width.%]="labelWidth" [style.font-size.px]="fontSize" 
-           [style.font-weight]="fontWeight" [style.color]="labelColor">
+           [style.width.%]="labelWidth" [ngStyle]="labelStyles">
         {{label}}
       <span *ngIf="icon" class="fx-field__label__icon-container">
         <i class="fx-field__label__icon-container--icon {{icon}}"></i>
         <span *ngIf="tooltip" class="fx-field__label__icon-container--tooltip">{{tooltip}}</span>
       </span>
     </label>
-      <div class="fx-field--inputAndError" [style.width.%]="inputWidth" [style.color]="inputColor">
+      <div class="fx-field--inputAndError" [style.width.%]="inputWidth" [ngStyle]="inputStyles">
         <span class="fx-field__control"><ng-content></ng-content></span>
         <span *ngIf="invalid" class="fx-field__errors">
           <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
@@ -42,15 +41,8 @@ export class FieldComponent {
 
   @Input() labelWidthPercentage: number;
 
-  @Input() setInputWidthOnly: number;
-
-  @Input() fontSize: number;
-
-  @Input() fontWeight: number;
-
-  @Input() labelColor: string;
-
-  @Input() inputColor = 'rgba(0, 0, 0, 0.9)';
+  @Input() labelStyles = {};
+  @Input() inputStyles = {};
 
   @ContentChild(RequiredValidator)
   private requiredValidator: RequiredValidator;
@@ -91,21 +83,11 @@ export class FieldComponent {
   }
 
   private get labelWidth() {
-    if (this.labelWidthPercentage
-      && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
-      return this.labelWidthPercentage;
-    }
+    return this.labelWidthPercentage ? this.labelWidthPercentage : 0;
   }
 
   private get inputWidth() {
-    if (this.label !== undefined) {
-      if (this.labelWidthPercentage
-        && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
-        return 100 - Number(this.labelWidthPercentage);
-      }
-    } else {
-      return this.setInputWidthOnly;
-    }
+    return 100 - this.labelWidth;
   }
 
 }
