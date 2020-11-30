@@ -42,7 +42,7 @@ export class FieldComponent {
   @Input() labelWidthPercentage: number;
 
   @Input() labelStyles = {};
-  @Input() inputStyles = {};
+  @Input() inputStyles = {'color': 'rgba(0, 0, 0, 0.9)'};
 
   @ContentChild(RequiredValidator)
   private requiredValidator: RequiredValidator;
