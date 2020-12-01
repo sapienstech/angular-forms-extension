@@ -69,7 +69,7 @@ export class AppComponent {
                email="">
       </fx-field>
       <fx-field [label]="'Email'"><label>HELLO WORLD!</label></fx-field>
-      <fx-field [labelWidthPercentage]="0">
+      <fx-field [labelWidthPercentage]="100">
           <input type="text" [name]="'Phone'" [(ngModel)]="phoneNumber">
       </fx-field>
     </form>
