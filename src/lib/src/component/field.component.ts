@@ -42,7 +42,7 @@ export class FieldComponent {
   @Input() labelWidthPercentage: number;
 
   @Input() labelStyles = {};
-  @Input() inputStyles = {'color': 'rgba(0, 0, 0, 0.9)', 'height': '36px'};
+  @Input() inputStyles = {};
 
   @ContentChild(RequiredValidator)
   private requiredValidator: RequiredValidator;
@@ -86,17 +86,12 @@ export class FieldComponent {
     if (this.labelWidthPercentage
       && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
       return this.labelWidthPercentage;
-    } else {
-      return 0;
     }
   }
 
   private get inputWidth() {
-    if (this.labelWidthPercentage
-      && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
+    if (Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
       return 100 - this.labelWidthPercentage;
-    } else {
-      return 100;
     }
   }
 

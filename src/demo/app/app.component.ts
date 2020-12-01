@@ -37,7 +37,7 @@ export class AppComponent {
   selector: 'inner',
   template: `
     <form>
-      <fx-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec" 
+      <fx-field [label]="'Name'" class="flex-container align-items-center user-display-name-div-spec"
                 [icon]="'icon-class'"
                 [labelRelativePos]=labelPos
                 [labelWidthPercentage]="30" [labelStyles]="{'font-size': '16px', color: 'blue', 'font-weight': '600'}"
@@ -48,7 +48,7 @@ export class AppComponent {
                required>
       </fx-field>
 
-      <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec" 
+      <fx-field [label]="'Display Name'" class="flex-container align-items-center user-name-div-spec"
                 [icon]="'icon-class'"
                 [labelRelativePos]=labelPos
                 [labelWidthPercentage]="30"
@@ -59,7 +59,7 @@ export class AppComponent {
                required>
       </fx-field>
 
-      <fx-field [label]="'Email'" class="form-group flex-container align-items-center" 
+      <fx-field [label]="'Email'" class="form-group flex-container align-items-center"
                 [icon]="'icon-class'"
                 [labelRelativePos]=labelPos
                 [labelWidthPercentage]="30">
@@ -69,7 +69,7 @@ export class AppComponent {
                email="">
       </fx-field>
       <fx-field [label]="'Email'"><label>HELLO WORLD!</label></fx-field>
-      <fx-field [labelWidthPercentage]="100">
+      <fx-field [label]="'Phone'" [inputStyles]="{'color': 'red'}" [labelWidthPercentage]="">
           <input type="text" [name]="'Phone'" [(ngModel)]="phoneNumber">
       </fx-field>
     </form>
