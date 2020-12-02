@@ -17,7 +17,9 @@ describe('FieldComponent', () => {
           <fx-field [label]="usernameLabel" 
                     [icon]="iconClassName" 
                     [labelRelativePos]="labelPos" 
-                    [labelWidthPercentage]="'30'">
+                    [labelWidthPercentage]="30"
+                    [labelStyles]="styleObj"
+                    [inputStyles]="styleObj">
             <input [(ngModel)]="username" name="username" required/>
           </fx-field>
           <button #submit>Submit</button>
@@ -29,6 +31,7 @@ describe('FieldComponent', () => {
       usernameLabel = 'User Name';
       iconClassName = 'icon-class';
       labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT;
+      styleObj = {'color': 'black'};
 
       @ViewChild('submit') button: ElementRef;
 
@@ -83,6 +86,14 @@ describe('FieldComponent', () => {
 
     it('should NOT an invalid style when control even though the field is invalid when pristine', async(() => {
       expect(fixture.debugElement.query(By.css('.fx-field--invalid'))).toBeFalsy();
+    }));
+
+    it('should add a label style', async(() => {
+      expect(fixture.debugElement.query(By.css('.fx-field__label')).properties['color']).toBe(this.styleObj);
+    }));
+
+    it('should add a input style', async(() => {
+      expect(fixture.debugElement.query(By.css('.fx-field--inputAndError')).properties['color']).toBe(this.styleObj);
     }));
 
     describe('after submission', () => {
