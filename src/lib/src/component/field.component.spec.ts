@@ -19,7 +19,8 @@ describe('FieldComponent', () => {
                     [labelRelativePos]="labelPos" 
                     [labelWidthPercentage]="30"
                     [labelStyles]="styleObj"
-                    [inputStyles]="styleObj">
+                    [inputStyles]="styleObj"
+                    [errorMsgStyles]="errMsgStyleObj">
             <input [(ngModel)]="username" name="username" required/>
           </fx-field>
           <button #submit>Submit</button>
@@ -32,6 +33,7 @@ describe('FieldComponent', () => {
       iconClassName = 'icon-class';
       labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT;
       styleObj = {'color': 'black'};
+      errMsgStyleObj = {'color': 'red'};
 
       @ViewChild('submit') button: ElementRef;
 
@@ -94,6 +96,10 @@ describe('FieldComponent', () => {
 
     it('should add a input style', async(() => {
       expect(fixture.debugElement.query(By.css('.fx-field--inputAndError')).properties['color']).toBe(this.styleObj);
+    }));
+
+    it('should add a error message style', async(() => {
+      expect(fixture.debugElement.query(By.css('.fx-field__label')).properties['color']).toBe(this.errMsgStyleObj);
     }));
 
     describe('after submission', () => {

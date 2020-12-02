@@ -24,7 +24,7 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
       <div class="fx-field--inputAndError" [style.width.%]="inputWidth" [ngStyle]="inputStyles">
         <span class="fx-field__control"><ng-content></ng-content></span>
         <span *ngIf="invalid" class="fx-field__errors">
-          <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
+          <label *ngFor="let error of errors" class="fx-field__error" [ngStyle]="errorMsgStyles">{{error}}</label>
         </span>
       </div>
     </div>
@@ -41,8 +41,9 @@ export class FieldComponent {
 
   @Input() labelWidthPercentage: number;
 
-  @Input() labelStyles = {};
-  @Input() inputStyles = {};
+  @Input() labelStyles;
+  @Input() inputStyles;
+  @Input() errorMsgStyles;
 
   @ContentChild(RequiredValidator)
   private requiredValidator: RequiredValidator;

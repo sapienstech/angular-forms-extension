@@ -52,7 +52,7 @@ export class AppComponent {
                 [icon]="'icon-class'"
                 [labelRelativePos]=labelPos
                 [labelWidthPercentage]="30"
-                [tooltip]="'tooltip text'">
+                [tooltip]="'tooltip text'" [errorMsgStyles]="styleObj">
         <input [name]="'display'"
                minlength="5"
                [(ngModel)]="userDisplayName"
@@ -81,6 +81,7 @@ export class InnerAppComponent {
   userMailAddress;
   labelPos;
   phoneNumber;
+  styleObj;
   ngOnInit() {
     setTimeout(() => {
       this.userName = 'ff';
@@ -88,6 +89,9 @@ export class InnerAppComponent {
       this.userMailAddress = 'fsdjkl@';
       this.labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT;
       this.phoneNumber = 987456321;
+      this.styleObj = {
+        'color': 'red'
+      }
 
     }, 5);
   }
