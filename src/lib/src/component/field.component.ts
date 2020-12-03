@@ -12,17 +12,19 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
          [class.fx-field--pending-validation]="pending"
          [ngClass]="this.labelRelativePos">
 
-    <label *ngIf="label" class="fx-field__label" [style.width.%]="labelWidth">
+    <label *ngIf="label"
+           class="fx-field__label"
+           [style.width.%]="labelWidth" [ngStyle]="labelStyles">
         {{label}}
       <span *ngIf="icon" class="fx-field__label__icon-container">
         <i class="fx-field__label__icon-container--icon {{icon}}"></i>
         <span *ngIf="tooltip" class="fx-field__label__icon-container--tooltip">{{tooltip}}</span>
       </span>
     </label>
-      <div class="fx-field--inputAndError" [style.width.%]="inputWidth">
+      <div class="fx-field--inputAndError" [style.width.%]="inputWidth" [ngStyle]="inputStyles">
         <span class="fx-field__control"><ng-content></ng-content></span>
         <span *ngIf="invalid" class="fx-field__errors">
-          <label *ngFor="let error of errors" class="fx-field__error">{{error}}</label>
+          <label *ngFor="let error of errors" class="fx-field__error" [ngStyle]="errorMsgStyles">{{error}}</label>
         </span>
       </div>
     </div>
@@ -38,6 +40,10 @@ export class FieldComponent {
   @Input() labelRelativePos: LabelnputRelativeDisplayType;
 
   @Input() labelWidthPercentage: number;
+
+  @Input() labelStyles;
+  @Input() inputStyles;
+  @Input() errorMsgStyles;
 
   @ContentChild(RequiredValidator)
   private requiredValidator: RequiredValidator;
@@ -78,16 +84,15 @@ export class FieldComponent {
   }
 
   private get labelWidth() {
-    if(this.labelWidthPercentage
+    if (this.labelWidthPercentage
       && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
       return this.labelWidthPercentage;
     }
   }
 
   private get inputWidth() {
-    if(this.labelWidthPercentage
-      && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
-      return 100 - Number(this.labelWidthPercentage);
+    if (Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
+      return 100 - this.labelWidthPercentage;
     }
   }
 
