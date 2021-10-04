@@ -40,7 +40,7 @@ describe('FormValidationMessageService', () => {
   });
 
   describe('overriding messages', () => {
-    beforeEach(() => service.setErrorMessages({required: "{{fieldName}} can't be blank"}));
+    beforeEach(() => service.setErrorMessages({required: '{{fieldName}} can\'t be blank'}));
 
     it('should should override the message for required', () =>
       expect(service.getErrorMessage(field, 'required', {required: true}))
