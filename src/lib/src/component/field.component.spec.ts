@@ -34,7 +34,6 @@ describe('FieldComponent', () => {
       labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT;
       styleObj = {'color': 'black'};
       errMsgStyleObj = {'color': 'red'};
-      labelColor = 'black';
 
       @ViewChild('submit') button: ElementRef;
 
@@ -92,15 +91,15 @@ describe('FieldComponent', () => {
     }));
 
     it('should add a label style', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field__label')).styles['color']).toBe(instance.labelColor);
+      expect(fixture.debugElement.query(By.css('.fx-field__label')).styles['color']).toBe(instance.styleObj.color);
     }));
 
     it('should add a input style', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field--inputAndError')).styles['color']).toBe(instance.labelColor);
+      expect(fixture.debugElement.query(By.css('.fx-field--inputAndError')).styles['color']).toBe(instance.styleObj.color);
     }));
 
     it('should add a error message style', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field__label')).styles['color']).toBe(instance.labelColor);
+     expect(fixture.debugElement.query(By.css('.fx-field__label')).styles['color']).toBe(instance.styleObj.color);
     }));
 
     describe('after submission', () => {
