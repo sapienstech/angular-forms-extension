@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ValidSubmitDirective} from './valid-submit.directive';
@@ -36,9 +36,9 @@ describe('ValidSubmitDirective', () => {
     instance = fixture.componentInstance;
   });
 
-  beforeEach(waitForAsync(() => fixture.detectChanges()));
+  beforeEach(async(() => fixture.detectChanges()));
 
-  it('should not emit (validSubmit) when form is invalid', waitForAsync(() => {
+  it('should not emit (validSubmit) when form is invalid', async(() => {
     validSubmit = spyOn(instance.validSubmitDirective.validSubmit, 'emit');
     instance.value = ''; // required field -> no longer valid
     fixture.detectChanges();
@@ -48,7 +48,7 @@ describe('ValidSubmitDirective', () => {
     });
   }));
 
-  it('should not emit (validSubmit) when form is valid', waitForAsync(() => {
+  it('should not emit (validSubmit) when form is valid', async(() => {
     validSubmit = spyOn(instance.validSubmitDirective.validSubmit, 'emit');
     instance.value = 'some new valid value';
     fixture.detectChanges();
