@@ -29,7 +29,7 @@
     "test:watch": "concurrently \"npm run build-test:watch\" \"karma start karma.conf.js\"",
     "pretest:once": "npm run build-test",
     "lint": "tslint ./src/**/*.ts -t verbose",
-    "release": "standard-version && npm run build && npm publish ./dist"
+    "release": "standard-version && npm run build && git push --follow-tags origin master && npm publish ./dist"
   },
   "peerDependencies": {},
   "devDependencies": {
