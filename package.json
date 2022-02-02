@@ -1,6 +1,6 @@
 {
   "name": "angular-forms-extension",
-  "version": "0.1.96",
+  "version": "0.1.97",
   "description": "A form library empowering Angular's template driven forms",
   "main": "./bundles/quickstart-lib.umd.js",
   "module": "./angular-forms-extension.es5.js",
@@ -29,7 +29,7 @@
     "test:watch": "concurrently \"npm run build-test:watch\" \"karma start karma.conf.js\"",
     "pretest:once": "npm run build-test",
     "lint": "tslint ./src/**/*.ts -t verbose",
-    "release": "standard-version && npm run build && git push --follow-tags origin master && npm publish ./dist"
+    "release": "standard-version && npm run build && npm publish ./dist"
   },
   "peerDependencies": {},
   "devDependencies": {
