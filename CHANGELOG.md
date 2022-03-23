@@ -1,20 +1,36 @@
-# Changelog
+# Change Log
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.1.94](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.93...v0.1.94) (2020-12-04)
+<a name="0.1.97"></a>
+## [0.1.97](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.96...v0.1.97) (2022-02-02)
 
-### [0.1.93](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.92...v0.1.93) (2020-12-03)
 
-### [0.1.92](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.90...v0.1.92) (2020-11-23)
 
-### [0.1.90](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.84...v0.1.90) (2020-11-02)
+<a name="0.1.96"></a>
+## [0.1.96](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.95...v0.1.96) (2022-01-21)
 
-### [0.1.82](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.84...v0.1.82) (2020-11-02)
 
-### [0.1.81](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.84...v0.1.81) (2020-11-02)
 
-### [0.1.80](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.84...v0.1.80) (2020-11-02)
+<a name="0.1.95"></a>
+## [0.1.95](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.94...v0.1.95) (2022-01-20)
+
+
+
+<a name="0.1.96"></a>
+## [0.1.96](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.95...v0.1.96) (2022-01-20)
+
+
+
+<a name="0.1.95"></a>
+## [0.1.95](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.96...v0.1.95) (2022-01-19)
+
+
+
+<a name="0.1.96"></a>
+## [0.1.96](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.94...v0.1.96) (2022-01-19)
+
+
 
 <a name="0.1.87"></a>
 ## [0.1.87](https://github.com/sapienstech/angular-forms-extension/compare/v0.1.86...v0.1.87) (2020-10-26)

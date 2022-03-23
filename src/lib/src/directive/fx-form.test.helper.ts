@@ -7,7 +7,7 @@ import {AbstractFxDirective} from './abstract-fx-form.directive';
 import {FxForm} from './fx-form.directive';
 import {FxModelDirective} from './fx-model.directive';
 
-import {AsyncValidator} from '@angular/forms/src/directives/validators';
+import {AsyncValidator} from '@angular/forms';
 
 @Directive({
   selector: '[testAsyncValidator]',

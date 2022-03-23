@@ -151,18 +151,18 @@ describe('fx-model-directive', () => {
     beforeEach(async(() => fixture.detectChanges()));
 
     it('should target the host [ngModel]', async(() =>
-      expect(hybridFormModel).toBeTruthy()
+      expect(instance.hybridFormModel).toBeTruthy()
     ));
 
     it('should allow access to the host [ngModel] name', async(() =>
-      expect(hybridFormModel.name).toBe('input')
+      expect(instance.hybridFormModel.name).toBe('input')
     ));
 
     [true, false].forEach(valid =>
       it(`should ${valid ? '' : 'NOT'} be valid when [ngModel] is ${valid ? '' : 'NOT'}`, async(() => {
         instance.value = valid ? 'filling in a required field' : '';
         fixture.detectChanges();
-        fixture.whenStable().then(() => expect(hybridFormModel.valid).toBe(valid));
+        fixture.whenStable().then(() => expect(instance.hybridFormModel.valid).toBe(valid));
       })));
 
     [true, false].forEach(pristine =>
@@ -171,13 +171,13 @@ describe('fx-model-directive', () => {
           instance.markAsDirty();
         }
         fixture.detectChanges();
-        fixture.whenStable().then(() => expect(hybridFormModel.pristine).toBe(pristine));
+        fixture.whenStable().then(() => expect(instance.hybridFormModel.pristine).toBe(pristine));
       })));
 
     it('should allow access to the host [ngModel] errors', async(() => {
       fixture.detectChanges();
       fixture.whenStable().then(() =>
-        expect(hybridFormModel.errors).toBe(instance.ngModel.control.errors));
+        expect(instance.hybridFormModel.errors).toBe(instance.ngModel.control.errors));
     }));
 
     [true, false].forEach(submitted =>
@@ -186,7 +186,7 @@ describe('fx-model-directive', () => {
           instance.ngForm.onSubmit(new Event('click'));
         }
         fixture.detectChanges();
-        fixture.whenStable().then(() => expect(hybridFormModel.groupSubmitted).toBe(submitted));
+        fixture.whenStable().then(() => expect(instance.hybridFormModel.groupSubmitted).toBe(submitted));
       })));
 
     describe('when the model has changed', () => {
@@ -195,7 +195,7 @@ describe('fx-model-directive', () => {
         let ngModelValidChange: jasmine.Spy;
 
         beforeEach(() => {
-          ngModelValidChange = spyOn(hybridFormModel.ngModelValidChange, 'emit');
+          ngModelValidChange = spyOn(instance.hybridFormModel.ngModelValidChange, 'emit');
           instance.value = 'a valid change';
         });
 
@@ -239,7 +239,7 @@ describe('fx-model-directive', () => {
         let ngModelValidChange: jasmine.Spy;
 
         beforeEach(async(() => {
-          ngModelValidChange = spyOn(hybridFormModel.ngModelValidChange, 'emit');
+          ngModelValidChange = spyOn(instance.hybridFormModel.ngModelValidChange, 'emit');
           instance.value = 'sh'; // invalid - it's too short as [minLength]=3
           fixture.detectChanges();
         }));
@@ -255,7 +255,7 @@ describe('fx-model-directive', () => {
       beforeEach(async(() => fixture.destroy()));
 
       it('should clear the all form subscriptions when the component is destroyed', async(() => {
-        (hybridFormModel as any).subscriber['subscriptions'].forEach(s => expect(s.closed).toBeTruthy());
+        (instance.hybridFormModel as any).subscriber['subscriptions'].forEach(s => expect(s.closed).toBeTruthy());
       }));
     });
   });

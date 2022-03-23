@@ -26,7 +26,7 @@ import {FormValidationMessageService} from './service/form-validation-message.se
 })
 export class FormsExtensionModule {
 
-  static forRoot(errorMessages?: { [key: string]: string }): ModuleWithProviders {
+  static forRoot(errorMessages?: { [key: string]: string }): ModuleWithProviders<FormsExtensionModule> {
 
     const formValidationMessageService = new FormValidationMessageService();
     formValidationMessageService.setErrorMessages(errorMessages);

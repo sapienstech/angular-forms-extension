@@ -58,7 +58,7 @@ export class FieldComponent {
     return this.formModel && this.formModel.value;
   }
 
-  private get required() {
+  get required() {
     return this.requiredValidator && this.requiredValidator.required;
   }
 
@@ -67,11 +67,11 @@ export class FieldComponent {
       (!this.formModel.groupSubmitted && this.formModel.pristine || this.formModel.valid);
   }
 
-  private get invalid() {
+  get invalid() {
     return !this.valid && !this.pending;
   }
 
-  private get pending() {
+  get pending() {
     return this.formModel && this.formModel.pending;
   }
 
@@ -90,7 +90,7 @@ export class FieldComponent {
     }
   }
 
-  private get inputWidth() {
+  get inputWidth() {
     if (Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
       return 100 - this.labelWidthPercentage;
     }

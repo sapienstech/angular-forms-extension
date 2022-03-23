@@ -14,9 +14,9 @@ describe('FieldComponent', () => {
     @Component({
       template: `
         <form (validSubmit)="save()">
-          <fx-field [label]="usernameLabel" 
-                    [icon]="iconClassName" 
-                    [labelRelativePos]="labelPos" 
+          <fx-field [label]="usernameLabel"
+                    [icon]="iconClassName"
+                    [labelRelativePos]="labelPos"
                     [labelWidthPercentage]="30"
                     [labelStyles]="styleObj"
                     [inputStyles]="styleObj"
@@ -91,15 +91,15 @@ describe('FieldComponent', () => {
     }));
 
     it('should add a label style', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field__label')).properties['color']).toBe(this.styleObj);
+      expect(fixture.debugElement.query(By.css('.fx-field__label')).styles['color']).toBe(instance.styleObj.color);
     }));
 
     it('should add a input style', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field--inputAndError')).properties['color']).toBe(this.styleObj);
+      expect(fixture.debugElement.query(By.css('.fx-field--inputAndError')).styles['color']).toBe(instance.styleObj.color);
     }));
 
     it('should add a error message style', async(() => {
-      expect(fixture.debugElement.query(By.css('.fx-field__label')).properties['color']).toBe(this.errMsgStyleObj);
+     expect(fixture.debugElement.query(By.css('.fx-field__label')).styles['color']).toBe(instance.styleObj.color);
     }));
 
     describe('after submission', () => {

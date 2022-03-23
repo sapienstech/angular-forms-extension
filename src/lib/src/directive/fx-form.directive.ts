@@ -71,6 +71,6 @@ export class FxForm extends AbstractFxDirective implements OnInit, OnDestroy {
   }
 
   private addFormGroup(formGroup: NgForm) {
-    this.self.form.addControl(formGroup.name || this.sequence, formGroup.form);
+    this.self.form.addControl(<string>formGroup.name || this.sequence, formGroup.form);
   }
 }

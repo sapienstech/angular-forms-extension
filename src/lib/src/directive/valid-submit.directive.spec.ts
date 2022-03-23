@@ -18,6 +18,10 @@ describe('ValidSubmitDirective', () => {
     @ViewChild(ValidSubmitDirective) validSubmitDirective: ValidSubmitDirective;
 
     value = 'some valid value';
+
+    save() {
+    }
+
   }
 
   let fixture: ComponentFixture<TestComponent>;
@@ -30,12 +34,12 @@ describe('ValidSubmitDirective', () => {
       declarations: [TestComponent]
     }).createComponent(TestComponent);
     instance = fixture.componentInstance;
-    validSubmit = spyOn(instance.validSubmitDirective.validSubmit, 'emit');
   });
 
   beforeEach(async(() => fixture.detectChanges()));
 
   it('should not emit (validSubmit) when form is invalid', async(() => {
+    validSubmit = spyOn(instance.validSubmitDirective.validSubmit, 'emit');
     instance.value = ''; // required field -> no longer valid
     fixture.detectChanges();
     fixture.whenStable().then(() => {
@@ -45,6 +49,7 @@ describe('ValidSubmitDirective', () => {
   }));
 
   it('should not emit (validSubmit) when form is valid', async(() => {
+    validSubmit = spyOn(instance.validSubmitDirective.validSubmit, 'emit');
     instance.value = 'some new valid value';
     fixture.detectChanges();
     fixture.whenStable().then(() => {

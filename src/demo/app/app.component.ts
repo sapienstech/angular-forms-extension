@@ -5,7 +5,7 @@ import {LabelnputRelativeDisplayType} from 'quickstart-lib';
 @Component({
   selector: 'demo-app',
   template: `
-    <form ngForm (validSubmit)="onSubmit($event)" (unsaved)="onUnsavedChange($event)">
+    <form #ngForm="ngForm" (validSubmit)="onSubmit($event)" (unsaved)="onUnsavedChange($event)">
       <inner></inner>
       {{ngForm.form.value | json}}
       <button>submit</button>

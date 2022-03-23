@@ -5,8 +5,9 @@ const path = require('path');
 const glob = require('glob');
 const camelCase = require('camelcase');
 const ngc = require('@angular/compiler-cli/src/main').main;
+const ngFsUtils = require('@angular/compiler-cli/src/ngtsc/file_system');
 const rollup = require('rollup');
-const { uglify } = require('rollup-plugin-uglify');
+const uglify = require('rollup-plugin-uglify');
 const sourcemaps = require('rollup-plugin-sourcemaps');
 
 const inlineResources = require('./inline-resources');
@@ -57,11 +58,14 @@ return Promise.resolve()
 .then(() => console.log('Inlining succeeded.'))
 )
 // Compile to ES2015.
-.then(() => ngc(['-p', `${tempLibFolder}/tsconfig.lib.json`], (error) => {
+.then(() => {
+  ngFsUtils.setFileSystem(new ngFsUtils.NodeJSFileSystem());
+  ngc(['-p', `${tempLibFolder}/tsconfig.lib.json`], (error) => {
   if (error) {
     throw new Error('ngc ES2015 compilation failed: ' + error);
   }
 })
+}
 )
 .then(() => console.log('ES2015 compilation succeeded.'))
 
@@ -76,7 +80,6 @@ return Promise.resolve()
 // Copy typings and metadata to `dist/` folder.
 .then(() => Promise.resolve()
   .then(() => _relativeCopy('**/*.d.ts', es2015OutputFolder, distFolder))
-.then(() => _relativeCopy('**/*.metadata.json', es2015OutputFolder, distFolder))
 .then(() => console.log('Typings and metadata copy succeeded.'))
 )
 // Bundle lib.
