@@ -1,0 +1,12 @@
+{
+  "name": "angular-forms-extension",
+  "version": "0.1.94",
+  "peerDependencies": {
+    "@angular/common": "^12.2.7",
+    "@angular/core": "^12.2.7",
+    "@angular/forms": "12.2.7"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}
