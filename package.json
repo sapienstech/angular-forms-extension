@@ -9,7 +9,8 @@
     "test-lib": "ng test angular-forms-extension",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "release": "standard-version"
+    "release": "standard-version",
+    "publish": "npm publish ./dist/angular-forms-extension"
   },
   "private": true,
   "dependencies": {
@@ -41,6 +42,7 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "ng-packagr": "^12.1.1",
+    "standard-version": "^9.3.2",
     "typescript": "~4.3.5"
   },
   "husky": {
