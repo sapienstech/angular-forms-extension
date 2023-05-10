@@ -9,7 +9,7 @@ import {UnsavedDirective} from './unsaved.directive';
 describe('ValidSubmitDirective', () => {
   let unsaved: jasmine.Spy;
   let fixture: ComponentFixture<any>;
-  let instance;
+  let instance:any;
 
   function mostRecentUnsavedCallArgument() {
     return unsaved.calls.mostRecent().args[0];
@@ -18,18 +18,18 @@ describe('ValidSubmitDirective', () => {
   describe('a form with a submit button', () => {
     @Component({
       template: `
-        <form (validSubmit)="save()" (unsaved)="unsaved($event)">
+        <form (validSubmit)="save($event)" (unsaved)="unsaved($event)">
           <input [(ngModel)]="value" [name]="'input'" required [minlength]="3">
           <button #submit>Submit</button>
         </form>`
     })
     class TestComponent {
 
-      @ViewChild(NgForm) ngForm: NgForm;
+      @ViewChild(NgForm) ngForm!: NgForm;
 
-      @ViewChild('submit') button: ElementRef;
+      @ViewChild('submit') button!: ElementRef;
 
-      @ViewChild(UnsavedDirective) unsavedDirective: UnsavedDirective;
+      @ViewChild(UnsavedDirective) unsavedDirective!: UnsavedDirective;
 
       markAsDirty() {
         this.ngForm.controls['input'].markAsDirty();
@@ -37,10 +37,10 @@ describe('ValidSubmitDirective', () => {
 
       value = 'some valid value';
 
-      unsaved() {
+      unsaved(e:any) {
       }
 
-      save() {
+      save(e:any) {
       }
     }
 
@@ -115,13 +115,13 @@ describe('ValidSubmitDirective', () => {
         </form>`
     })
     class TestComponent {
-      @ViewChild(NgModel) ngModel: NgModel;
+      @ViewChild(NgModel) ngModel!: NgModel;
 
-      @ViewChild(NgForm) ngForm: NgForm;
+      @ViewChild(NgForm) ngForm!: NgForm;
 
-      @ViewChild(FxForm) fxForm: FxForm;
+      @ViewChild(FxForm) fxForm!: FxForm;
 
-      @ViewChild(UnsavedDirective) unsavedDirective: UnsavedDirective;
+      @ViewChild(UnsavedDirective) unsavedDirective!: UnsavedDirective;
 
       markAsDirty() {
         this.ngForm.controls['input'].markAsDirty();
@@ -129,7 +129,7 @@ describe('ValidSubmitDirective', () => {
 
       value = 'some valid value';
 
-      unsaved() {
+      unsaved(e:any) {
       }
     }
 

@@ -1,10 +1,12 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {LabelnputRelativeDisplayType} from 'quickstart-lib';
+import {LabelnputRelativeDisplayType} from "angular-forms-extension";
+
 
 @Component({
   selector: 'demo-app',
   template: `
+
     <form #ngForm="ngForm" (validSubmit)="onSubmit($event)" (unsaved)="onUnsavedChange($event)">
       <inner></inner>
       {{ngForm.form.value | json}}
@@ -12,21 +14,23 @@ import {LabelnputRelativeDisplayType} from 'quickstart-lib';
     </form>
     <br>
     {{unsaved}}
+
   `
 })
 export class AppComponent {
   unsaved = false;
   value = 'roni';
-  @ViewChild(NgForm) ngForm: NgForm;
-  onValidValueChange(e) {
+  @ViewChild(NgForm) ngForm!: NgForm;
+
+  onValidValueChange(e: any) {
     console.log(e);
   }
 
-  onSubmit(e) {
+  onSubmit(e: any) {
     console.log(e);
   }
 
-  onUnsavedChange(e) {
+  onUnsavedChange(e: any) {
     this.unsaved = e;
     console.log(e);
   }
@@ -69,19 +73,20 @@ export class AppComponent {
                email="">
       </fx-field>
       <fx-field [label]="'Email'"><label>HELLO WORLD!</label></fx-field>
-      <fx-field [label]="'Phone'" [inputStyles]="{'color': 'red'}" [labelWidthPercentage]="">
-          <input type="text" [name]="'Phone'" [(ngModel)]="phoneNumber">
+      <fx-field [label]="'Phone'" [inputStyles]="{'color': 'red'}" [labelWidthPercentage]="0">
+        <input type="text" [name]="'Phone'" [(ngModel)]="phoneNumber">
       </fx-field>
     </form>
   `
 })
-export class InnerAppComponent {
-  userName;
-  userDisplayName;
-  userMailAddress;
-  labelPos;
-  phoneNumber;
-  styleObj;
+export class InnerAppComponent implements OnInit {
+  userName: string = "";
+  userDisplayName: string = "";
+  userMailAddress: string = "";
+  labelPos!: LabelnputRelativeDisplayType;
+  phoneNumber: number = 0;
+  styleObj: any = undefined;
+
   ngOnInit() {
     setTimeout(() => {
       this.userName = 'ff';

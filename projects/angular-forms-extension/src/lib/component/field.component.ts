@@ -31,25 +31,25 @@ import {FormValidationMessageService} from '../service/form-validation-message.s
   `
 })
 export class FieldComponent {
-  @Input() label: string;
+  @Input() label!: string;
 
-  @Input() icon: string;
+  @Input() icon!: string;
 
-  @Input() tooltip: string;
+  @Input() tooltip!: string;
 
-  @Input() labelRelativePos: LabelnputRelativeDisplayType;
+  @Input() labelRelativePos!: LabelnputRelativeDisplayType;
 
-  @Input() labelWidthPercentage: number;
+  @Input() labelWidthPercentage!: number;
 
-  @Input() labelStyles;
-  @Input() inputStyles;
-  @Input() errorMsgStyles;
+  @Input() labelStyles!:any;
+  @Input() inputStyles!:any;
+  @Input() errorMsgStyles!:any;
 
   @ContentChild(RequiredValidator)
-  private requiredValidator: RequiredValidator;
+  private requiredValidator!: RequiredValidator;
 
   @ContentChild(FxModelDirective)
-  private formModel: FxModelDirective;
+  private formModel!: FxModelDirective;
 
   constructor(private messageService: FormValidationMessageService) {
   }
@@ -75,25 +75,28 @@ export class FieldComponent {
     return this.formModel && this.formModel.pending;
   }
 
-  private get errors() {
+  get errors() {
     if (this.formModel) {
       const errors = this.formModel.errors;
       return errors && Object.keys(errors).map(error =>
         this.messageService.getErrorMessage(this.label, error, errors[error]));
     }
+    return  undefined;
   }
 
-  private get labelWidth() {
+  get labelWidth() {
     if (this.labelWidthPercentage
       && Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
       return this.labelWidthPercentage;
     }
+    return  undefined;
   }
 
   get inputWidth() {
     if (Number(this.labelWidthPercentage) >= 0 && Number(this.labelWidthPercentage) <= 100) {
       return 100 - this.labelWidthPercentage;
     }
+    return  undefined;
   }
 
 }

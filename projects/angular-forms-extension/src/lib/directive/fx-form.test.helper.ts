@@ -18,15 +18,15 @@ import {AsyncValidator} from '@angular/forms';
 export class TestAsyncValidator implements AsyncValidator {
 
   @Input()
-  delay: number;
+  delay!: number;
   @Input()
-  validValue: string;
+  validValue!: string;
 
   constructor() {
   }
 
   validate(control: AbstractControl): Promise<ValidationErrors> | Observable<ValidationErrors> {
-    let returnValue = null;
+    let returnValue = {};
     if (!control.value || control.value !== this.validValue) {
       returnValue = {required: {value: 'true'}};
     }
@@ -43,9 +43,9 @@ export class TestAsyncValidator implements AsyncValidator {
     </form>`
 })
 export class AsyncValidatorFormComponent {
-  @ViewChild(FxForm) fxForm: FxForm;
-  @ViewChild(NgModel) ngModel: NgModel;
-  @ViewChild(FxModelDirective) fxModel: FxModelDirective;
+  @ViewChild(FxForm) fxForm!: FxForm;
+  @ViewChild(NgModel) ngModel!: NgModel;
+  @ViewChild(FxModelDirective) fxModel!: FxModelDirective;
   value = 'value';
   delay = AbstractFxDirective.defaultValidValueChangeDebounce - 1;
   validValue = 'someValidValue';
@@ -61,9 +61,9 @@ export class AsyncValidatorFormComponent {
     </form>`
 })
 export class AsyncValidatorFxFieldTestComponent {
-  @ViewChild(FxForm) fxForm: FxForm;
-  @ViewChild(NgModel) ngModel: NgModel;
-  @ViewChild(FxModelDirective) fxModel: FxModelDirective;
+  @ViewChild(FxForm) fxForm!: FxForm;
+  @ViewChild(NgModel) ngModel!: NgModel;
+  @ViewChild(FxModelDirective) fxModel!: FxModelDirective;
   value = 'value';
   delay = AbstractFxDirective.defaultValidValueChangeDebounce - 1;
   validValue = 'someValidValue';

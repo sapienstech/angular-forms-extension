@@ -17,7 +17,7 @@ describe('FxFormDirective', () => {
       </form>`
   })
   class NestedFormComponent {
-    @ViewChild(FxForm) fxForm: FxForm;
+    @ViewChild(FxForm) fxForm!: FxForm;
     value = 'nested-value';
   }
   @Component({
@@ -30,7 +30,7 @@ describe('FxFormDirective', () => {
   })
   class InnerForm1Component {
     value = 'inner1-value';
-    @ViewChild(NestedFormComponent) nested: NestedFormComponent;
+    @ViewChild(NestedFormComponent) nested!: NestedFormComponent;
   }
 
   @Component({
@@ -53,10 +53,10 @@ describe('FxFormDirective', () => {
       </form>`
   })
   class TestComponent {
-    @ViewChild(NgForm) ngForm: NgForm;
-    @ViewChild(FxForm) fxForm: FxForm;
-    @ViewChild(InnerForm1Component) inner1: InnerForm1Component;
-    @ViewChild(InnerForm2Component) inner2: InnerForm2Component;
+    @ViewChild(NgForm) ngForm!: NgForm;
+    @ViewChild(FxForm) fxForm!: FxForm;
+    @ViewChild(InnerForm1Component) inner1!: InnerForm1Component;
+    @ViewChild(InnerForm2Component) inner2!: InnerForm2Component;
     value = 'value';
   }
 
@@ -130,7 +130,7 @@ describe('FxFormDirective', () => {
             "inner2-input": "inner2-value"
           },
           "input": "value"
-        }      
+        }
       `.replace(/(?:\r\n|\r|\n)/g, '').split(' ').join('').trim());
     }));
 
@@ -161,7 +161,7 @@ describe('FxFormDirective', () => {
     }));
 
     it('should mark inner form as submitted when parent is submitted', async(() => {
-      instance.ngForm.onSubmit(null);
+      instance.ngForm.onSubmit(null as any);
       expect(instance.inner1.nested.fxForm.submitted).toBeTruthy();
     }));
   });

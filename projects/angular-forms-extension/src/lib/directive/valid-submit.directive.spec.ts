@@ -1,7 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {FormsExtensionModule} from '../forms-extension.module';
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {ValidSubmitDirective} from './valid-submit.directive';
+import { FormsExtensionModule } from '../forms-extension.module';
 
 describe('ValidSubmitDirective', () => {
 
@@ -13,9 +13,9 @@ describe('ValidSubmitDirective', () => {
       </form>`
   })
   class TestComponent {
-    @ViewChild('submit') button: ElementRef;
+    @ViewChild('submit') button!: ElementRef;
 
-    @ViewChild(ValidSubmitDirective) validSubmitDirective: ValidSubmitDirective;
+    @ViewChild(ValidSubmitDirective) validSubmitDirective!: ValidSubmitDirective;
 
     value = 'some valid value';
 

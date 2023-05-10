@@ -1,9 +1,8 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {FormsExtensionModule} from 'quickstart-lib';
-
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import {AppComponent, InnerAppComponent} from './app.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule} from "@angular/forms";
+import {FormsExtensionModule} from 'angular-forms-extension';
 
 @NgModule({
   imports: [BrowserModule, FormsExtensionModule.forRoot(), FormsModule],

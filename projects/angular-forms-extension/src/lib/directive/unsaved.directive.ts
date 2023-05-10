@@ -12,9 +12,9 @@ export class UnsavedDirective implements OnInit, OnDestroy {
 
   @Output('unsaved') unsavedChange = new EventEmitter();
 
-  unsaved: boolean;
+  unsaved!: boolean;
 
-  submitted: boolean;
+  submitted!: boolean;
 
   constructor(private subscriber: SubscriberService,
               @Self() private ngForm: NgForm,

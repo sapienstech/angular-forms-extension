@@ -35,9 +35,9 @@ describe('FieldComponent', () => {
       styleObj = {'color': 'black'};
       errMsgStyleObj = {'color': 'red'};
 
-      @ViewChild('submit') button: ElementRef;
+      @ViewChild('submit') button!: ElementRef;
 
-      @ViewChild(NgForm) ngForm: NgForm;
+      @ViewChild(NgForm) ngForm!: NgForm;
 
       save() {
       }
@@ -49,7 +49,7 @@ describe('FieldComponent', () => {
 
     let fixture: ComponentFixture<TestComponent>,
         instance: TestComponent,
-        iconClassName = 'icon-class',
+        iconClassName:string = 'icon-class',
         labelPos = LabelnputRelativeDisplayType.LABEL_ON_RIGHT.toString();
 
     beforeEach(() => {
@@ -75,7 +75,7 @@ describe('FieldComponent', () => {
     }));
 
     it('should render a icon for the control', async(() => {
-      expect(fixture.debugElement.query(By.css('.' + iconClassName))[0]).not.toBeNull();
+      expect(fixture.debugElement.queryAll(By.css('.' + iconClassName))[0]).not.toBeNull();
     }));
 
     it('should render the form control', async(() => {

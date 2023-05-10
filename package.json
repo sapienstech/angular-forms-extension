@@ -55,7 +55,7 @@
         "type": "json"
       },
       {
-        "filename": "./projects/angular-forms-extension/package.json",
+        "filename": "./projects/common/package.json",
         "type": "json"
       }
     ]

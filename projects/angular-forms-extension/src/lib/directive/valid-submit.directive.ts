@@ -10,7 +10,7 @@ export class ValidSubmitDirective {
   }
 
   @HostListener('submit', ['$event'])
-  onSubmit(e) {
+  onSubmit(e:any) {
     if (this.ngForm.valid) {
       this.validSubmit.emit(e);
     }

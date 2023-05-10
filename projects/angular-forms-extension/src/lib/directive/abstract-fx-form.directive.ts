@@ -63,7 +63,7 @@ export abstract class AbstractFxDirective implements OnInit, OnDestroy {
     this.subscriber.unsubscribe();
   }
 
-  private isViewToModelChange(eventValue) {
+  private isViewToModelChange(eventValue:any) {
     return eventValue === this.control.value;
   }
 

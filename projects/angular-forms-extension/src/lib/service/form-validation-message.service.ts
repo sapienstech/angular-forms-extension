@@ -10,13 +10,13 @@ export class FormValidationMessageService {
     email: '{{fieldName}} must be valid',
   };
 
-  private fieldsNames: { [key: string]: string };
+  private fieldsNames: { [key: string]: string }={};
 
   /**
    * Set custom error messages that override the default ones
    * @param errorMessages An object {key: message}
    */
-  setErrorMessages(errorMessages: { [key: string]: string; }) {
+  setErrorMessages(errorMessages: { [key: string]: string } | undefined) {
     this.errorMessages = Object.assign(this.errorMessages, errorMessages);
   }
 

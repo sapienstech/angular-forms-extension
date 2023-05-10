@@ -39,7 +39,7 @@ export class FxForm extends AbstractFxDirective implements OnInit, OnDestroy {
   }
 
 
-  get submitted() {
+  get submitted():any {
     return !!(this.parent && this.parent.submitted || this.self.submitted);
   }
 

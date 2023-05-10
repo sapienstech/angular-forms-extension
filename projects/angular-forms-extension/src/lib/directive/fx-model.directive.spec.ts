@@ -90,7 +90,7 @@ describe('fx-model-directive', () => {
         }
       }
 
-      function changeToValidValueProgrammatically(timeToWaitAfterChange) {
+      function changeToValidValueProgrammatically(timeToWaitAfterChange:any) {
         instance.delay = 1;
         fixture.detectChanges();
         tick(1);
@@ -121,13 +121,13 @@ describe('fx-model-directive', () => {
         </form>`
     })
     class TestComponent {
-      @ViewChild(FxModelDirective) hybridFormModel: FxModelDirective;
+      @ViewChild(FxModelDirective) hybridFormModel!: FxModelDirective;
 
-      @ViewChild(NgModel) ngModel: NgModel;
+      @ViewChild(NgModel) ngModel!: NgModel;
 
-      @ViewChild(NgForm) ngForm: NgForm;
+      @ViewChild(NgForm) ngForm!: NgForm;
 
-      value;
+      value!:any;
 
       markAsDirty() {
         this.ngForm.controls.input.markAsDirty();
@@ -255,14 +255,14 @@ describe('fx-model-directive', () => {
       beforeEach(async(() => fixture.destroy()));
 
       it('should clear the all form subscriptions when the component is destroyed', async(() => {
-        (instance.hybridFormModel as any).subscriber['subscriptions'].forEach(s => expect(s.closed).toBeTruthy());
+        (instance.hybridFormModel as any).subscriber['subscriptions'].forEach((s:any) => expect(s.closed).toBeTruthy());
       }));
     });
   });
 
 });
 
-function sendInputValue(fixture, cssElement, change) {
+function sendInputValue(fixture:any, cssElement:any, change:any) {
   const inputElement = fixture.debugElement.query(By.css('input')).nativeElement;
   inputElement.value = change;
   inputElement.dispatchEvent(new Event('input'));

@@ -1,4 +1,4 @@
-import {AfterViewInit, Directive, OnDestroy, OnInit, Optional, Self} from '@angular/core';
+import {Directive, OnDestroy, OnInit, Optional, Self} from '@angular/core';
 import {FormControl, NgModel} from '@angular/forms';
 import {FxForm} from './fx-form.directive';
 import {AbstractFxDirective} from './abstract-fx-form.directive';
