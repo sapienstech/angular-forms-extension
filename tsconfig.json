@@ -1,21 +1,41 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
-    "moduleResolution": "node",
+    "paths": {
+      "angular-forms-extension/*": [
+        "projects/angular-forms-extension/src/*",
+        "projects/angular-forms-extension/src",
+      ],
+
+      "angular-forms-extension": [
+        "dist/angular-forms-extension/angular-forms-extension",
+        "dist/angular-forms-extension"
+      ]
+    },
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
-    "inlineSources": true,
+    "declaration": false,
+    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
-    "skipLibCheck": true,
-    "stripInternal": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
     "lib": [
-      "es2015",
+      "es2018",
       "dom"
     ]
   },
   "angularCompilerOptions": {
-    "preserveWhitespaces": "off"
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }

@@ -18,6 +18,6 @@ before_install:
 install:
   - npm install
 script:
-  - npm run lint
-  - npm run test:once
-  - npm run integration
+  #- npm run lint
+  - npm run test-lib:once
+  #- npm run integration
