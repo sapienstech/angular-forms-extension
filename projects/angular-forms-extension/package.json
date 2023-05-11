@@ -1,6 +1,7 @@
 {
   "name": "angular-forms-extension",
   "version": "0.1.99",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^12.2.7",
     "@angular/core": "^12.2.7",
