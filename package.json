@@ -68,7 +68,7 @@
     "zone.js": "0.11.4"
   },
   "dependencies": {
-    "@angular/cli": "^12.2.7",
+    "@angular/cli": "^16.0.0",
     "rxjs": "6.6.7"
   }
 }
