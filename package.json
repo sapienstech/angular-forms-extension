@@ -45,7 +45,7 @@
     "camelcase": "4.1.0",
     "concurrently": "3.5.1",
     "core-js": "2.5.4",
-    "glob": "7.1.2",
+    "glob": "10.3.10",
     "jasmine-core": "^3.9.0",
     "karma": "6.3.4",
     "karma-chrome-launcher": "3.1.0",
